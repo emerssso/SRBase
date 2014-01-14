@@ -6,6 +6,11 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
+    <permission
+        android:authorities="com.gmail.emerssso.srbase.srcontentprovider"
+        android:name=".database.SRContentProvider"
+        android:exported="false" >
+    </permission>
 
     <application
         android:allowBackup="true"
