@@ -22,4 +22,12 @@
 
     <string name="comment">Comment</string>
 
+    <string name="part_number">Part Number</string>
+
+    <string name="quantity">Quantity</string>
+
+    <string name="source">Source</string>
+
+    <string name="used">Used</string>
+
 </resources>
