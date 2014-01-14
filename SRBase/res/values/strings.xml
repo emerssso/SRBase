@@ -2,4 +2,14 @@
 
     <string name="app_name">SR Base</string>
 
+    <string name="SRhint">SR Number</string>
+
+    <string name="customer_name">Customer Name</string>
+
+    <string name="model_number">Model Number</string>
+
+    <string name="serial_number">Serial Number</string>
+
+    <string name="description">Description</string>
+
 </resources>
