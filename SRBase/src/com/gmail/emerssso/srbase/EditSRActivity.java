@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+// TODO: Auto-generated Javadoc
 //TODO: Write Some more in the Javadoc header
 /**
  * This activity manages the creation and modification
@@ -25,15 +26,32 @@ import android.widget.Toast;
  * @author Conner Kasten
  */
 public class EditSRActivity extends Activity {
+	
+	/** The SR number. */
 	EditText mSRNumber;
+	
+	/** The customer. */
 	EditText mCustomer;
+	
+	/** The model number. */
 	EditText mModelNumber;
+	
+	/** The serial number. */
 	EditText mSerialNumber;
+	
+	/** The description. */
 	EditText mDescription;
+	
+	/** The Daily Button. */
 	Button mDaily;
+	
+	/** The Part Button. */
 	Button mPart;
+	
+	/** The Confirm Button. */
 	Button mEnter;
 	
+	/** The saved URI. */
 	Uri savedUri;
 	
 	/* (non-Javadoc)
@@ -74,6 +92,11 @@ public class EditSRActivity extends Activity {
 		});
 	}
 	
+	/**
+	 * Fill data.
+	 *
+	 * @param uri the uri
+	 */
 	private void fillData(Uri uri) {
 		String[] projection = { SRTable.COLUMN_CUSTOMER_NAME,
 				SRTable.COLUMN_DESCRIPTION, SRTable.COLUMN_MODEL_NUMBER,
@@ -98,18 +121,27 @@ public class EditSRActivity extends Activity {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
+	 */
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
 		outState.putParcelable(SRContentProvider.CONTENT_ITEM_TYPE, savedUri);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onPause()
+	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
 		saveState();
 	}
 	
+	/**
+	 * Save state.
+	 */
 	private void saveState() {
 		
 		String srNumber = mSRNumber.getText().toString();
