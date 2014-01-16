@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -70,6 +71,14 @@ public class EditPartActivity extends Activity {
 		
 	    	fillData(savedUri);
     	}
+	    
+	    confirm.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setResult(RESULT_OK);
+				finish();
+			}
+		});
 	}
 	
 	/**
@@ -137,7 +146,7 @@ public class EditPartActivity extends Activity {
 		
 
 		if (srId.length() == 0) {
-			Toast.makeText(EditPartActivity.this, "SR Number missing",
+			Toast.makeText(EditPartActivity.this, "Part Number missing",
 			        Toast.LENGTH_LONG).show();
 			return;
 		}
