@@ -1,9 +1,8 @@
+//TODO: Copyright
 package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.PartContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
-import com.gmail.emerssso.srbase.database.SRContentProvider;
-import com.gmail.emerssso.srbase.database.SRTable;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -15,17 +14,39 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class EditPartActivity.
+ */
 public class EditPartActivity extends Activity {
 	
+	/** The part number. */
 	private EditText partNumber;
+	
+	/** The part quantity. */
 	private EditText partQuantity;
+	
+	/** The part source. */
 	private EditText partSource;
+	
+	/** The part description. */
 	private EditText partDescription;
+	
+	/** The part used. */
 	private CheckBox partUsed;
+	
+	/** The saved uri. */
 	private Uri savedUri;
+	
+	/** The confirm. */
 	private Button confirm;
+	
+	/** The sr id. */
 	private String srId;
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle bundle) {
 		partNumber = (EditText) findViewById(R.id.part_number);
@@ -50,6 +71,11 @@ public class EditPartActivity extends Activity {
     	}
 	}
 	
+	/**
+	 * Fill data.
+	 *
+	 * @param uri the uri
+	 */
 	private void fillData(Uri uri) {
 		String[] projection = { PartTable.COLUMN_PART_NUMBER,
 				PartTable.COLUMN_QUANTITY, PartTable.COLUMN_SOURCE,
@@ -78,6 +104,9 @@ public class EditPartActivity extends Activity {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
+	 */
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
@@ -129,5 +158,4 @@ public class EditPartActivity extends Activity {
 	      getContentResolver().update(savedUri, values, null, null);
 	    }
     }
-
 }
