@@ -53,6 +53,15 @@
         android:columnCount="1" >
 
         <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="0"
+            android:text="@string/add_daily" />
+
+        <Button
             android:id="@+id/add_daily"
             android:layout_column="0"
             android:layout_gravity="center_horizontal|top"
@@ -65,15 +74,6 @@
             android:layout_gravity="right|top"
             android:layout_row="0"
             android:text="@string/confirm" />
-
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="left|top"
-            android:layout_row="0"
-            android:text="@string/add_daily" />
 
     </GridLayout>
 

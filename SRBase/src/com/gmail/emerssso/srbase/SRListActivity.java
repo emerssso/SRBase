@@ -6,6 +6,9 @@ import com.gmail.emerssso.srbase.database.SRTable;
 import android.app.ListActivity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -25,6 +28,25 @@ public class SRListActivity extends ListActivity
 		setContentView(R.layout.list_sr_activity);
 		this.getListView().setDividerHeight(2);
 		fillData();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.sr_list_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.new_sr:
+			Intent i = new Intent(this, EditSRActivity.class);
+		    startActivity(i);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	private void fillData() {

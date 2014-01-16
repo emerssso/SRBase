@@ -38,4 +38,6 @@
 
     <string name="confirm">Confirm</string>
 
+    <string name="action_new_sr">New SR</string>
+
 </resources>

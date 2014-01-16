@@ -61,6 +61,9 @@ public class EditSRActivity extends Activity {
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.edit_sr_activity);
+		
 		mSRNumber = (EditText) findViewById(R.id.SRNumber);
 		mCustomer = (EditText) findViewById(R.id.customerName);
 		mModelNumber = (EditText) findViewById(R.id.modelNumber);
