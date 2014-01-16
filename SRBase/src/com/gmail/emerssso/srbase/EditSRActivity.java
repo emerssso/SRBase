@@ -4,11 +4,14 @@
 
 package com.gmail.emerssso.srbase;
 
+import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,6 +59,8 @@ public class EditSRActivity extends Activity {
 	/** The saved URI. */
 	private Uri savedUri;
 	
+	private String myId;
+	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
@@ -82,7 +87,6 @@ public class EditSRActivity extends Activity {
 	    if (extras != null) {
 	    	savedUri = extras
 	    			.getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
-		
 	    	fillData(savedUri);
     	}
 		
@@ -93,6 +97,36 @@ public class EditSRActivity extends Activity {
 				finish();
 			}
 		});
+		
+		mPart.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				addPart();
+			}
+		});
+		
+		mDaily.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				addDaily();
+			}
+		});
+	}
+	
+	private void addPart() {
+		saveState();
+		Intent i = new Intent(this, EditPartActivity.class);
+		i.putExtra(PartTable.COLUMN_SR_ID, myId);
+		startActivity(i);
+	}
+	
+	private void addDaily() {
+		saveState();
+		Intent i = new Intent(this, EditDailyActivity.class);
+		i.putExtra(DailyTable.COLUMN_SR_ID, myId);
+		startActivity(i);
 	}
 	
 	/**
@@ -119,6 +153,7 @@ public class EditSRActivity extends Activity {
 		    		.getColumnIndexOrThrow(SRTable.COLUMN_SERIAL_NUMBER)));
 		    mDescription.setText(cursor.getString(cursor
 		    		.getColumnIndexOrThrow(SRTable.COLUMN_DESCRIPTION)));
+		    myId = Integer.toString(cursor.getInt(0));
 
 		    cursor.close();
 		}
@@ -167,13 +202,22 @@ public class EditSRActivity extends Activity {
 		values.put(SRTable.COLUMN_DESCRIPTION, description);
 
 	    if (savedUri == null) {
-	      // New SR
-	      savedUri = getContentResolver()
-	    		  .insert(SRContentProvider.CONTENT_URI, values);
-	    } else {
+	    	// New SR
+	    	savedUri = getContentResolver()
+	    			.insert(SRContentProvider.CONTENT_URI, values);
+  
+	    	Cursor cursor = getContentResolver().query(savedUri, 
+	    			new String[] {SRTable.COLUMN_ID}, 
+	    			SRTable.COLUMN_SR_NUMBER + " = ?", 
+	    			new String[] {srNumber}, null);
+	    	if(cursor != null) {
+	    		cursor.moveToFirst();
+	    		myId = Integer.toString(cursor.getInt(0));
+    		}
+	    } 
+	    else {
 	      // Update SR
 	      getContentResolver().update(savedUri, values, null, null);
 	    }
     }
-
 }

@@ -50,6 +50,9 @@ public class EditPartActivity extends Activity {
 	 */
 	@Override
 	public void onCreate(Bundle bundle) {
+		super.onCreate(bundle);
+		setContentView(R.layout.edit_part_activity);
+		
 		partNumber = (EditText) findViewById(R.id.part_number);
 		partQuantity = (EditText) findViewById(R.id.part_quantity);
 		partSource = (EditText) findViewById(R.id.part_source);
@@ -59,7 +62,7 @@ public class EditPartActivity extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 		
-		srId = extras.getParcelable(PartTable.COLUMN_SR_ID);
+		srId = extras.getString(PartTable.COLUMN_SR_ID);
 		
 		savedUri = (bundle == null) ? null : 
 			(Uri) bundle.getParcelable(

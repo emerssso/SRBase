@@ -26,6 +26,9 @@ public class EditDailyActivity extends Activity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.edit_daily_activity);
+		
 		date = (EditText) findViewById(R.id.date);
 		startTime = (EditText) findViewById(R.id.start_time);
 		endTime = (EditText) findViewById(R.id.end_time);
@@ -35,7 +38,7 @@ public class EditDailyActivity extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 		
-		srId = extras.getParcelable(DailyTable.COLUMN_SR_ID);
+		srId = extras.getString(DailyTable.COLUMN_SR_ID);
 		
 		savedUri = (savedInstanceState == null) ? null : 
 			(Uri) savedInstanceState.getParcelable(
