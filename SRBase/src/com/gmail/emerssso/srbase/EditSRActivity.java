@@ -38,7 +38,7 @@ public class EditSRActivity extends Activity {
 		mModelNumber = (EditText) findViewById(R.id.modelNumber);
 		mSerialNumber = (EditText) findViewById(R.id.serialNumber);
 		mDescription = (EditText) findViewById(R.id.description);
-		mEnter = (Button) findViewById(R.id.enter);
+		mEnter = (Button) findViewById(R.id.confirm);
 		
 		//Bundle extras = getIntent().getExtras();
 		

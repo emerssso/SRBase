@@ -32,4 +32,10 @@
 
     <string name="enter">Enter</string>
 
+    <string name="add_daily">Add Daily Log</string>
+
+    <string name="add_part">Add Part</string>
+
+    <string name="confirm">Confirm</string>
+
 </resources>
