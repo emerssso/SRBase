@@ -61,7 +61,8 @@ public class EditPartActivity extends Activity {
 		srId = extras.getParcelable(PartTable.COLUMN_SR_ID);
 		
 		savedUri = (bundle == null) ? null : 
-			(Uri) bundle.getParcelable(PartContentProvider.CONTENT_ITEM_TYPE);
+			(Uri) bundle.getParcelable(
+					PartContentProvider.CONTENT_ITEM_TYPE);
 		
 	    if (extras != null) {
 	    	savedUri = extras
@@ -110,7 +111,8 @@ public class EditPartActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
-		outState.putParcelable(PartContentProvider.CONTENT_ITEM_TYPE, savedUri);
+		outState.putParcelable(
+				PartContentProvider.CONTENT_ITEM_TYPE, savedUri);
 	}
 
 	/* (non-Javadoc)
