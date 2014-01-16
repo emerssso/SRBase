@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+//TODO: Add methods for calling EditPart and EditDaily
+//and make sure to pass SR ID in Intent extras
 // TODO: Auto-generated Javadoc
 //TODO: Write Some more in the Javadoc header
 /**
@@ -28,31 +30,31 @@ import android.widget.Toast;
 public class EditSRActivity extends Activity {
 	
 	/** The SR number. */
-	EditText mSRNumber;
+	private EditText mSRNumber;
 	
 	/** The customer. */
-	EditText mCustomer;
+	private EditText mCustomer;
 	
 	/** The model number. */
-	EditText mModelNumber;
+	private EditText mModelNumber;
 	
 	/** The serial number. */
-	EditText mSerialNumber;
+	private EditText mSerialNumber;
 	
 	/** The description. */
-	EditText mDescription;
+	private EditText mDescription;
 	
 	/** The Daily Button. */
-	Button mDaily;
+	private Button mDaily;
 	
 	/** The Part Button. */
-	Button mPart;
+	private Button mPart;
 	
 	/** The Confirm Button. */
-	Button mEnter;
+	private Button mEnter;
 	
 	/** The saved URI. */
-	Uri savedUri;
+	private Uri savedUri;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -70,8 +72,6 @@ public class EditSRActivity extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 		
-
-
 		savedUri = (savedInstanceState == null) ? null : 
 			(Uri) savedInstanceState
 	        .getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
