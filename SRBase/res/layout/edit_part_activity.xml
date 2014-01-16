@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/part_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/part_number" >
+        android:hint="@string/part_number"
+        tools:ignore="TextFields" >
 
         <requestFocus />
     </EditText>
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/part_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -23,13 +25,13 @@
         android:inputType="number" />
 
     <CheckBox
-        android:id="@+id/checkBox1"
+        android:id="@+id/part_used"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/used" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/part_source"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -37,11 +39,17 @@
         android:inputType="textMultiLine" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/part_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/description"
         android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/part_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm" />
 
 </LinearLayout>

@@ -30,11 +30,14 @@ public class PartTable {
 	/** The Constant COLUMN_DESCRIPTION. */
 	public static final String COLUMN_DESCRIPTION = "description";
 	
+	public static final String COLUMN_PART_NUMBER = "part_number";
+	
 	/** The Constant DATABASE_CREATE. */
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_PART + "(" + COLUMN_ID
 			+ " integer primary key autoincrement, "
 			+ COLUMN_SR_ID + " text not null, "
+			+ COLUMN_PART_NUMBER + " text not null, "
 			+ COLUMN_QUANTITY + " text not null, "
 			+ COLUMN_USED + " text not null, "
 			+ COLUMN_SOURCE + " text not null, "
