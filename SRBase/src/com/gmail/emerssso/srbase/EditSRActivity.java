@@ -193,6 +193,10 @@ public class EditSRActivity extends Activity {
 	private void saveState() {
 		
 		String srNumber = mSRNumber.getText().toString();
+		
+		if(srNumber.length() == 0)
+			return;
+		
 		String customer = mCustomer.getText().toString();
 		String modelNumber = mModelNumber.getText().toString();
 		String serialNumber = mSerialNumber.getText().toString();

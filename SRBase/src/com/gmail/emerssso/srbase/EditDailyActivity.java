@@ -113,6 +113,10 @@ public class EditDailyActivity extends Activity {
 	private void saveState() {
 		
 		String dayDate = date.getText().toString();
+		
+		if(dayDate.length() == 0)
+			return;
+		
 		String start = startTime.getText().toString();
 		String end = endTime.getText().toString();
 		String travel = travelTime.getText().toString();

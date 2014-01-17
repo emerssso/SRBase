@@ -148,6 +148,10 @@ public class EditPartActivity extends Activity {
 	private void saveState() {
 		
 		String number = partNumber.getText().toString();
+		
+		if(partNumber.length() == 0)
+			return;
+		
 		String quantity = partQuantity.getText().toString();
 		String description = partDescription.getText().toString();
 		String source = partSource.getText().toString();
