@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/SRhint"
+        android:maxLines="1"
         tools:ignore="TextFields" >
 
         <requestFocus />
@@ -21,7 +22,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/customer_name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName" 
+        android:maxLines="1"/>
 
     <EditText
         android:id="@+id/modelNumber"
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/model_number"
+        android:maxLines="1"
         tools:ignore="TextFields" />
 
     <EditText
@@ -37,6 +40,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/serial_number"
+        android:maxLines="1"
         tools:ignore="TextFields" />
 
     <EditText
