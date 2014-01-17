@@ -47,8 +47,9 @@ public class EditDailyActivity extends Activity {
 	    if (extras != null) {
 	    	savedUri = extras
 	    			.getParcelable(DailyContentProvider.CONTENT_ITEM_TYPE);
-		
-	    	fillData(savedUri);
+	    	
+	    	if(savedUri != null)
+	    		fillData(savedUri);
     	}
 	    
 	    confirm.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +109,7 @@ public class EditDailyActivity extends Activity {
 		String start = startTime.getText().toString();
 		String end = endTime.getText().toString();
 		String travel = travelTime.getText().toString();
-		String dayComment = comment.getTag().toString();
+		String dayComment = comment.getText().toString();
 		
 
 		if (dayDate.length() == 0) {
