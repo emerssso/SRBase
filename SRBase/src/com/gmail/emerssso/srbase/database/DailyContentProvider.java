@@ -115,7 +115,7 @@ public class DailyContentProvider extends ContentProvider {
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
 		getContext().getContentResolver().notifyChange(uri, null);
-		return Uri.parse(BASE_PATH + "/" + id);
+		return Uri.parse(CONTENT_URI.toString() + "/" + id);
 	}
 	
 	/* (non-Javadoc)

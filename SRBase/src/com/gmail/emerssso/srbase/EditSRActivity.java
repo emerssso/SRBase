@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 //TODO: Add methods for calling EditPart and EditDaily
 //and make sure to pass SR ID in Intent extras
 // TODO: Auto-generated Javadoc
@@ -109,6 +110,7 @@ public class EditSRActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				saveState();
 				addPart();
 			}
 		});
@@ -117,20 +119,19 @@ public class EditSRActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				saveState();
 				addDaily();
 			}
 		});
 	}
 	
 	private void addPart() {
-		saveState();
 		Intent i = new Intent(this, EditPartActivity.class);
 		i.putExtra(PartTable.COLUMN_SR_ID, myId);
 		startActivity(i);
 	}
 	
 	private void addDaily() {
-		saveState();
 		Intent i = new Intent(this, EditDailyActivity.class);
 		i.putExtra(DailyTable.COLUMN_SR_ID, myId);
 		startActivity(i);
@@ -144,7 +145,8 @@ public class EditSRActivity extends Activity {
 	private void fillData(Uri uri) {
 		String[] projection = { SRTable.COLUMN_CUSTOMER_NAME,
 				SRTable.COLUMN_DESCRIPTION, SRTable.COLUMN_MODEL_NUMBER,
-				SRTable.COLUMN_SERIAL_NUMBER, SRTable.COLUMN_SR_NUMBER};
+				SRTable.COLUMN_SERIAL_NUMBER, SRTable.COLUMN_SR_NUMBER,
+				SRTable.COLUMN_ID};
 		Cursor cursor = getContentResolver()
 				.query(uri, projection, null, null,null);
 		if (cursor != null) {
@@ -160,7 +162,8 @@ public class EditSRActivity extends Activity {
 		    		.getColumnIndexOrThrow(SRTable.COLUMN_SERIAL_NUMBER)));
 		    mDescription.setText(cursor.getString(cursor
 		    		.getColumnIndexOrThrow(SRTable.COLUMN_DESCRIPTION)));
-		    myId = Integer.toString(cursor.getInt(0));
+		    myId = Integer.toString(cursor.getInt(cursor
+		    		.getColumnIndexOrThrow(SRTable.COLUMN_ID)));
 
 		    cursor.close();
 		}
@@ -213,8 +216,12 @@ public class EditSRActivity extends Activity {
 	    			new String[] {srNumber}, null);
 	    	if(cursor != null) {
 	    		cursor.moveToFirst();
-	    		myId = Integer.toString(cursor.getInt(0));
+	    		int myIdNum = cursor.getInt(cursor
+			    		.getColumnIndexOrThrow(SRTable.COLUMN_ID));
+	    		myId = String.valueOf(myIdNum);
     		}
+	    	
+	    	cursor.close();
 	    } 
 	    else {
 	      // Update SR
