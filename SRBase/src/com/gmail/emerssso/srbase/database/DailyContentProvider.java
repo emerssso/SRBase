@@ -67,17 +67,17 @@ public class DailyContentProvider extends ContentProvider {
 		
 		switch(uriType) {
 		case DAILIES:
-			rowsDeleted = wDB.delete(SRTable.TABLE_SR, selection,
+			rowsDeleted = wDB.delete(DailyTable.TABLE_DAILY, selection,
 					selArgs);
 			break;
 		case DAILY_ID:
 			String id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = wDB.delete(SRTable.TABLE_SR,
+				rowsDeleted = wDB.delete(DailyTable.TABLE_DAILY,
 						SRTable.COLUMN_ID + "=" + id, 
 						null);
 			} else {
-				rowsDeleted = wDB.delete(SRTable.TABLE_SR,
+				rowsDeleted = wDB.delete(DailyTable.TABLE_DAILY,
 						SRTable.COLUMN_ID + "=" + id 
 						+ " and " + selection,
 						selArgs);
@@ -109,7 +109,7 @@ public class DailyContentProvider extends ContentProvider {
 		long id = 0;
 		switch (uriType) {
 		case DAILIES:
-			id = sqlDB.insert(SRTable.TABLE_SR, null, values);
+			id = sqlDB.insert(DailyTable.TABLE_DAILY, null, values);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -140,7 +140,7 @@ public class DailyContentProvider extends ContentProvider {
 		checkColumns(projection);
 		
 		// Set the table
-		queryBuilder.setTables(SRTable.TABLE_SR);
+		queryBuilder.setTables(DailyTable.TABLE_DAILY);
 		
 		int uriType = sURIMatcher.match(uri);
 		switch (uriType) {
@@ -175,7 +175,7 @@ public class DailyContentProvider extends ContentProvider {
 		int rowsUpdated = 0;
 		switch (uriType) {
 		case DAILIES:
-			rowsUpdated = sqlDB.update(SRTable.TABLE_SR, 
+			rowsUpdated = sqlDB.update(DailyTable.TABLE_DAILY, 
 					values, 
 					selection,
 					selArgs);
@@ -183,12 +183,12 @@ public class DailyContentProvider extends ContentProvider {
 		case DAILY_ID:
 			String id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(SRTable.TABLE_SR, 
+				rowsUpdated = sqlDB.update(DailyTable.TABLE_DAILY, 
 						values,
 						SRTable.COLUMN_ID + "=" + id, 
 						null);
 			} else {
-				rowsUpdated = sqlDB.update(SRTable.TABLE_SR, 
+				rowsUpdated = sqlDB.update(DailyTable.TABLE_DAILY, 
 						values,
 						SRTable.COLUMN_ID + "=" + id 
 						+ " and " 

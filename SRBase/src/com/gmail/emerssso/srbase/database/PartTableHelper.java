@@ -31,7 +31,7 @@ public class PartTableHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		SRTable.onCreate(database);
+		PartTable.onCreate(database);
 	}
 
 	/* (non-Javadoc)

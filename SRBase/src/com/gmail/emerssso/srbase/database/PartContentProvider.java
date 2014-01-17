@@ -66,17 +66,17 @@ public class PartContentProvider extends ContentProvider {
 		
 		switch(uriType) {
 		case PARTS:
-			rowsDeleted = wDB.delete(SRTable.TABLE_SR, selection,
+			rowsDeleted = wDB.delete(PartTable.TABLE_PART, selection,
 					selArgs);
 			break;
 		case PART_ID:
 			String id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = wDB.delete(SRTable.TABLE_SR,
+				rowsDeleted = wDB.delete(PartTable.TABLE_PART,
 						SRTable.COLUMN_ID + "=" + id, 
 						null);
 			} else {
-				rowsDeleted = wDB.delete(SRTable.TABLE_SR,
+				rowsDeleted = wDB.delete(PartTable.TABLE_PART,
 						SRTable.COLUMN_ID + "=" + id 
 						+ " and " + selection,
 						selArgs);
@@ -108,7 +108,7 @@ public class PartContentProvider extends ContentProvider {
 		long id = 0;
 		switch (uriType) {
 		case PARTS:
-			id = sqlDB.insert(SRTable.TABLE_SR, null, values);
+			id = sqlDB.insert(PartTable.TABLE_PART, null, values);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -139,7 +139,7 @@ public class PartContentProvider extends ContentProvider {
 		checkColumns(projection);
 		
 		// Set the table
-		queryBuilder.setTables(SRTable.TABLE_SR);
+		queryBuilder.setTables(PartTable.TABLE_PART);
 		
 		int uriType = sURIMatcher.match(uri);
 		switch (uriType) {
@@ -174,7 +174,7 @@ public class PartContentProvider extends ContentProvider {
 		int rowsUpdated = 0;
 		switch (uriType) {
 		case PARTS:
-			rowsUpdated = sqlDB.update(SRTable.TABLE_SR, 
+			rowsUpdated = sqlDB.update(PartTable.TABLE_PART, 
 					values, 
 					selection,
 					selArgs);
@@ -182,12 +182,12 @@ public class PartContentProvider extends ContentProvider {
 		case PART_ID:
 			String id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(SRTable.TABLE_SR, 
+				rowsUpdated = sqlDB.update(PartTable.TABLE_PART, 
 						values,
 						SRTable.COLUMN_ID + "=" + id, 
 						null);
 			} else {
-				rowsUpdated = sqlDB.update(SRTable.TABLE_SR, 
+				rowsUpdated = sqlDB.update(PartTable.TABLE_PART, 
 						values,
 						SRTable.COLUMN_ID + "=" + id 
 						+ " and " 

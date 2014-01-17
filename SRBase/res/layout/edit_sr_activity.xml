@@ -11,6 +11,8 @@
         android:ems="10"
         android:hint="@string/SRhint"
         android:maxLines="1"
+        android:singleLine="true"
+        android:nextFocusDown="@+id/customerName"
         android:imeOptions="actionNext"
         tools:ignore="TextFields" >
 
@@ -25,6 +27,8 @@
         android:hint="@string/customer_name"
         android:inputType="textPersonName" 
         android:maxLines="1"
+        android:singleLine="true"
+        android:nextFocusDown="@+id/modelNumber"
         android:imeOptions="actionNext"/>
 
     <EditText
@@ -34,7 +38,9 @@
         android:ems="10"
         android:hint="@string/model_number"
         android:maxLines="1"
+        android:singleLine="true"
         android:imeOptions="actionNext"
+        android:nextFocusDown="@+id/serialNumber"
         tools:ignore="TextFields" />
 
     <EditText
@@ -44,7 +50,9 @@
         android:ems="10"
         android:hint="@string/serial_number"
         android:maxLines="1"
+        android:singleLine="true"
         android:imeOptions="actionNext"
+        android:nextFocusDown="@+id/description"
         tools:ignore="TextFields" />
 
     <EditText
@@ -70,19 +78,18 @@
             android:text="@string/add_daily" />
 
         <Button
-            android:id="@+id/add_part"
-            android:layout_column="0"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_row="0"
-            android:text="@string/add_part" />
-
-        <Button
             android:id="@+id/confirm"
             android:layout_column="0"
             android:layout_gravity="right|top"
             android:layout_row="0"
             android:text="@string/confirm" />
 
+        <Button
+            android:id="@+id/add_part"
+            android:layout_column="0"
+            android:layout_gravity="left|top"
+            android:layout_row="1"
+            android:text="@string/add_part" />
     </GridLayout>
 
 </LinearLayout>
