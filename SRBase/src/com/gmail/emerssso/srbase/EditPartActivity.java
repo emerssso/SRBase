@@ -71,8 +71,8 @@ public class EditPartActivity extends Activity {
 	    if (extras != null) {
 	    	savedUri = extras
 	    			.getParcelable(PartContentProvider.CONTENT_ITEM_TYPE);
-		
-	    	fillData(savedUri);
+	    	if(savedUri != null)
+	    		fillData(savedUri);
     	}
 	    
 	    confirm.setOnClickListener(new View.OnClickListener() {
@@ -90,9 +90,7 @@ public class EditPartActivity extends Activity {
 	 * @param uri the uri
 	 */
 	private void fillData(Uri uri) {
-		String[] projection = { PartTable.COLUMN_PART_NUMBER,
-				PartTable.COLUMN_QUANTITY, PartTable.COLUMN_SOURCE,
-				PartTable.COLUMN_DESCRIPTION, PartTable.COLUMN_USED};
+		String[] projection = { "*" };
 		Cursor cursor = getContentResolver()
 				.query(uri, projection, null, null,null);
 		if (cursor != null) {

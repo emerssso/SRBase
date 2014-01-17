@@ -11,6 +11,7 @@
         android:ems="10"
         android:hint="@string/SRhint"
         android:maxLines="1"
+        android:imeOptions="actionNext"
         tools:ignore="TextFields" >
 
         <requestFocus />
@@ -23,7 +24,8 @@
         android:ems="10"
         android:hint="@string/customer_name"
         android:inputType="textPersonName" 
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:imeOptions="actionNext"/>
 
     <EditText
         android:id="@+id/modelNumber"
@@ -32,6 +34,7 @@
         android:ems="10"
         android:hint="@string/model_number"
         android:maxLines="1"
+        android:imeOptions="actionNext"
         tools:ignore="TextFields" />
 
     <EditText
@@ -41,6 +44,7 @@
         android:ems="10"
         android:hint="@string/serial_number"
         android:maxLines="1"
+        android:imeOptions="actionNext"
         tools:ignore="TextFields" />
 
     <EditText
