@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.app.LoaderManager;
@@ -26,7 +28,24 @@ public class SRListActivity extends ListActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_sr_activity);
-		this.getListView().setDividerHeight(2);
+		ListView lv = this.getListView();
+		lv.setDividerHeight(2);
+		lv.setLongClickable(true);
+		
+		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+			public boolean onItemLongClick(AdapterView<?> parent, View v,
+					int position, long id) {
+				Intent i = new Intent(parent.getContext(),
+						EditSRActivity.class);
+				Uri todoUri = Uri.parse(SRContentProvider.CONTENT_URI +
+						"/" + id);
+			  	i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, todoUri);
+
+			  	startActivity(i);
+				return true;
+			}
+		});
+		
 		fillData();
 	}
 	
