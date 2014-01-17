@@ -55,8 +55,15 @@ public class EditDailyActivity extends Activity {
 	    confirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_OK);
-				finish();
+				if (date.getText().toString().length() == 0) {
+					Toast.makeText(EditDailyActivity.this, "Date missing",
+					        Toast.LENGTH_LONG).show();
+					return;
+				}
+				else {
+					setResult(RESULT_OK);
+					finish();
+				}
 			}
 		});
 	}
@@ -110,13 +117,6 @@ public class EditDailyActivity extends Activity {
 		String end = endTime.getText().toString();
 		String travel = travelTime.getText().toString();
 		String dayComment = comment.getText().toString();
-		
-
-		if (dayDate.length() == 0) {
-			Toast.makeText(EditDailyActivity.this, "Date missing",
-			        Toast.LENGTH_LONG).show();
-			return;
-		}
 
 		ContentValues values = new ContentValues();
 		values.put(DailyTable.COLUMN_DATE, dayDate);

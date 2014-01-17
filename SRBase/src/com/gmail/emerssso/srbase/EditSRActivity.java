@@ -93,8 +93,15 @@ public class EditSRActivity extends Activity {
 		mEnter.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_OK);
-				finish();
+				if (mSRNumber.getText().toString().length() == 0) {
+					Toast.makeText(EditSRActivity.this, "SR Number missing",
+					        Toast.LENGTH_LONG).show();
+					return;
+				}
+				else {
+					setResult(RESULT_OK);
+					finish();
+				}
 			}
 		});
 		
@@ -187,12 +194,6 @@ public class EditSRActivity extends Activity {
 		String modelNumber = mModelNumber.getText().toString();
 		String serialNumber = mSerialNumber.getText().toString();
 		String description = mDescription.getText().toString();
-
-		if (srNumber.length() == 0) {
-			Toast.makeText(EditSRActivity.this, "SR Number missing",
-			        Toast.LENGTH_LONG).show();
-			return;
-		}
 
 		ContentValues values = new ContentValues();
 		values.put(SRTable.COLUMN_SR_NUMBER, srNumber);

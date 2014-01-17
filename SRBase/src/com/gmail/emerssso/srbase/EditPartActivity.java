@@ -78,8 +78,16 @@ public class EditPartActivity extends Activity {
 	    confirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setResult(RESULT_OK);
-				finish();
+				
+				if (partNumber.getText().toString().length() == 0) {
+					Toast.makeText(EditPartActivity.this, "Part Number missing",
+					        Toast.LENGTH_LONG).show();
+					return;
+				}
+				else {
+					setResult(RESULT_OK);
+					finish();
+				}
 			}
 		});
 	}
@@ -144,13 +152,6 @@ public class EditPartActivity extends Activity {
 		String description = partDescription.getText().toString();
 		String source = partSource.getText().toString();
 		String used = partUsed.isChecked() ? "yes" : "no";
-		
-
-		if (srId.length() == 0) {
-			Toast.makeText(EditPartActivity.this, "Part Number missing",
-			        Toast.LENGTH_LONG).show();
-			return;
-		}
 
 		ContentValues values = new ContentValues();
 		values.put(PartTable.COLUMN_PART_NUMBER, number);
