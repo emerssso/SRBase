@@ -40,4 +40,24 @@
 
     <string name="action_new_sr">New SR</string>
 
+    <string name="blank"></string>
+
+    <string name="start_date">Start Date</string>
+
+    <string name="end_date">End Date</string>
+
+    <string name="total_work_time">Total Work Time: </string>
+
+    <string name="total_travel_time">Total Travel Time: </string>
+
+    <string name="sr_number_header">"Sr Number: "</string>
+
+    <string name="parts_header">"Parts List: "</string>
+
+    <string name="description_header">Description:</string>
+
+    <string name="comments">Comments</string>
+    
+    <string name="parts">Parts</string>
+
 </resources>
