@@ -3,11 +3,5 @@
     android:id="@+id/sr_label"
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
-    android:textSize="30sp"
-    android:longClickable="true"
-    android:clickable="true"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
-    
-
+    android:textSize="30sp">
 </TextView>
