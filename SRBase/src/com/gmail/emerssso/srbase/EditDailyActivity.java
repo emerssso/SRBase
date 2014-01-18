@@ -19,13 +19,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class EditDailyActivity extends Activity {
 	
 	private DatePicker date;
-	private Button startTime;
-	private Button endTime;
 	private EditText travelTime;
 	private EditText comment;
 	private Button confirm;
@@ -47,8 +44,6 @@ public class EditDailyActivity extends Activity {
 		date.init(1,1,1,null);
 		travelTime = (EditText) findViewById(R.id.travel_time);
 		comment = (EditText) findViewById(R.id.comment);
-		startTime = (Button) findViewById(R.id.start_time_button);
-		endTime = (Button) findViewById(R.id.end_time_button);
 		confirm = (Button) findViewById(R.id.daily_confirm);
 		
 		Bundle extras = getIntent().getExtras();
@@ -65,6 +60,13 @@ public class EditDailyActivity extends Activity {
 	    	
 	    	if(savedUri != null)
 	    		fillData(savedUri);
+	    	else
+		    {
+	    		final Calendar c = Calendar.getInstance();
+				date.updateDate(c.get(Calendar.YEAR), 
+						c.get(Calendar.MONTH), 
+						c.get(Calendar.DAY_OF_MONTH));
+		    }
     	}
 	    
 	    confirm.setOnClickListener(new View.OnClickListener() {
