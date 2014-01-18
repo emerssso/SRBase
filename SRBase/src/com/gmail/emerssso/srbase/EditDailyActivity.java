@@ -138,6 +138,12 @@ public class EditDailyActivity extends Activity {
 		int year = date.getYear();
 		String travel = travelTime.getText().toString();
 		String dayComment = comment.getText().toString();
+		
+		final Calendar c = Calendar.getInstance();
+		if(startHour == -1) startHour = c.get(Calendar.HOUR_OF_DAY);
+		if(startMin == -1) startMin = c.get(Calendar.MINUTE);
+		if(endMin == -1) endMin = c.get(Calendar.MINUTE);
+		if(endHour == -1) endHour = c.get(Calendar.HOUR_OF_DAY);
 
 		ContentValues values = new ContentValues();
 		values.put(DailyTable.COLUMN_DAY, day);
