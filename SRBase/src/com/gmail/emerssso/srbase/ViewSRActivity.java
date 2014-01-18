@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -128,12 +130,14 @@ public class ViewSRActivity extends Activity {
 					.getColumnIndexOrThrow(SRTable.COLUMN_SERIAL_NUMBER)));
 			description.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(SRTable.COLUMN_DESCRIPTION)));
-			srId = cursor.getString(cursor
-					.getColumnIndexOrThrow(SRTable.COLUMN_SR_NUMBER));
+			srId = Integer.toString(cursor.getInt(cursor
+					.getColumnIndexOrThrow(SRTable.COLUMN_ID)));
 			
 			cursor.close();
 			
 			//gather rows of dailies for this SR
+			Log.w("SRBase:ViewSR", "querying for dailies matching SR_ID"
+					+ srId);
 			String [] dailyProjection = {DailyTable.COLUMN_DAY,
 					DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
 					DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_END_HOUR,
@@ -146,35 +150,132 @@ public class ViewSRActivity extends Activity {
 			
 			//load daily data
 			if(cursor != null) {
-				ArrayList<String> dates = new ArrayList();
+				Log.w("SRBase:ViewSR", "cursor has " + cursor.getCount() 
+						+ " rows");
 				double workTime = 0;
 				double travelTime = 0;
+				int startDay = Integer.MAX_VALUE;
+				int startMonth = Integer.MAX_VALUE;
+				int startYear = Integer.MAX_VALUE;
+				int endDay = Integer.MIN_VALUE;
+				int endMonth = Integer.MIN_VALUE;
+				int endYear = Integer.MIN_VALUE;
+				int firstStartHour = Integer.MAX_VALUE;
+				int firstStartMin = Integer.MAX_VALUE;
+				int lastEndHour = Integer.MIN_VALUE;
+				int lastEndMin = Integer.MIN_VALUE;
 				cursor.moveToFirst();
 				
 				//probably ought to move this to another thread...
-				/*while(!cursor.isAfterLast()) {
-					dates.add(cursor.getString(cursor
-							.getColumnIndexOrThrow(DailyTable.COLUMN_DATE)));
-					String start = cursor.getString
-							(cursor.getColumnIndexOrThrow
-							(DailyTable.COLUMN_START_TIME));
-					String end = cursor.getString
-							(cursor.getColumnIndexOrThrow
-							(DailyTable.COLUMN_END_TIME));
-					String travel = cursor.getString
-							(cursor.getColumnIndexOrThrow
-							(DailyTable.COLUMN_TRAVEL_TIME));
-					travelTime += Double.valueOf(travel);
-					//workTime += getDuration(start, end);
-				}*/
+				while(!cursor.isAfterLast()) {
+					Log.w("SRBase:ViewSR", "Iteration of while Loop");
+					//add in travel time
+					double travel = Double.valueOf(cursor.getString(cursor
+							.getColumnIndexOrThrow(DailyTable
+							.COLUMN_TRAVEL_TIME)));
+					travelTime += travel;
+					int day = cursor.getInt(cursor
+							.getColumnIndexOrThrow(DailyTable.COLUMN_DAY));
+					int month = cursor.getInt(cursor
+							.getColumnIndexOrThrow(DailyTable.COLUMN_MONTH));
+					int year = cursor.getInt(cursor
+							.getColumnIndexOrThrow(DailyTable.COLUMN_YEAR));
+					int startHour = cursor.getInt(cursor
+							.getColumnIndexOrThrow(DailyTable
+							.COLUMN_START_HOUR));
+					int startMin = cursor.getInt(cursor
+							.getColumnIndexOrThrow(DailyTable
+							.COLUMN_START_MIN));
+					int endHour = cursor.getInt(cursor
+							.getColumnIndexOrThrow(DailyTable
+							.COLUMN_END_HOUR));
+					int endMin = cursor.getInt(cursor
+							.getColumnIndexOrThrow(DailyTable
+							.COLUMN_END_MIN));
+					workTime += (endHour - startHour) + 
+							(endMin - startMin)/60.0;
+					
+					//find if this is a boundary day
+					if(year < startYear) {
+						startYear = year;
+						startMonth = month;
+						startDay = day;
+						firstStartHour = startHour;
+						firstStartMin = startMin;
+					}
+					else if(year == startYear) {
+						if(month < startMonth) {
+							startMonth = month;
+							startDay = day;
+							firstStartHour = startHour;
+							firstStartMin = startMin;
+						}
+						else if(month == startMonth) {
+							if(day < startDay) {
+								startDay = day;
+								firstStartHour = startHour;
+								firstStartMin = startMin;
+							}
+						}
+					}
+					
+					if(year > endYear) {
+						endYear = year;
+						endMonth = month;
+						endDay = day;
+						lastEndHour = endHour;
+						lastEndMin = endMin;
+					}
+					else if(year == startYear) {
+						if(month > endMonth) {
+							endMonth = month;
+							endDay = day;
+							lastEndHour = endHour;
+							lastEndMin = endMin;
+						}
+						else if(day > endDay) {
+							endDay = day;
+							lastEndHour = endHour;
+							lastEndMin = endMin;
+						}
+					}
+					cursor.moveToNext();
+				}
 				
 				//set screen text
+				startDate.setText((startMonth + 1) + "/" + startDay 
+						+ "/" + startYear);
+				endDate.setText((endMonth + 1) + "/" + endDay 
+						+ "/" + endYear);
+				
+				if(DateFormat.is24HourFormat(this)) {
+					startTime.setText(firstStartHour + ":" + firstStartMin);
+					endTime.setText(lastEndHour + ":" + lastEndMin);
+				}
+				else {
+					if(firstStartHour > 12) {
+						startTime.setText((firstStartHour % 12) + ":" 
+								+ firstStartMin + "PM");
+					}
+					else {
+						startTime.setText(firstStartHour + ":" 
+								+ firstStartMin + "AM");
+					}
+					
+					if(lastEndHour > 12) {
+						endTime.setText((lastEndHour % 12) + ":" 
+					+ lastEndMin + "PM");
+					}
+					else {
+						endTime.setText(lastEndHour + ":" 
+					+ lastEndMin + "AM");
+					}
+				}
+				
 				totalWorkTime.setText(Double.toString(workTime)
 						+ " hours");
 				totalTravelTime.setText(Double.toString(travelTime)
 						+ " hours");
-				//startDate.setText(getFirstDate(dates));
-				//endDate.setText(getLastDate(dates));
 				cursor.close();
 			}
 			else { //if no dailies found, update screen with warning
