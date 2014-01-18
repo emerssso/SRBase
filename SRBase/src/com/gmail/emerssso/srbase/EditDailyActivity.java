@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class EditDailyActivity extends Activity {
 	
@@ -72,6 +73,13 @@ public class EditDailyActivity extends Activity {
 	    confirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(startHour > endHour || 
+						(startHour == endHour && startMin > endMin)) {
+					Toast.makeText(EditDailyActivity.this, 
+							"Start Time is after End Time!",
+					        Toast.LENGTH_LONG).show();
+					return;
+				}
 				setResult(RESULT_OK);
 				finish();
 			}
@@ -171,12 +179,12 @@ public class EditDailyActivity extends Activity {
 		if(start) {
 			startHour = hour;
 			startMin = minute;
-			//startTime.setText((hour % 12) + ":" + minute);
+			
 		}
 		else {
 			endHour = hour;
 			endMin = minute;
-			//endTime.setText((hour % 12) + ":" + minute);
+			
 		}
 	}
 	
