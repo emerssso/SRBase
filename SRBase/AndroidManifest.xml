@@ -32,6 +32,10 @@
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
         <activity
+            android:name=".ViewSRActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+        <activity
             android:name=".EditDailyActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>

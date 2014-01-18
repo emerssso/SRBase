@@ -6,11 +6,13 @@ import com.gmail.emerssso.srbase.database.SRTable;
 import android.app.ListActivity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -31,8 +33,10 @@ public class SRListActivity extends ListActivity
 		ListView lv = this.getListView();
 		lv.setDividerHeight(2);
 		lv.setLongClickable(true);
+		lv.setClickable(true);
 		
 		lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				Intent i = new Intent(parent.getContext(),
@@ -43,6 +47,20 @@ public class SRListActivity extends ListActivity
 
 			  	startActivity(i);
 				return true;
+			}
+		});
+		
+		lv.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
+				Log.w("SRBase:SRList", "List item clicked");
+				Intent i = new Intent(parent.getContext(), 
+						ViewSRActivity.class);
+				Uri srUri = Uri.parse(SRContentProvider.CONTENT_URI + 
+						"/" + id);
+				i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, srUri);
+				startActivity(i);
 			}
 		});
 		
@@ -87,8 +105,9 @@ public class SRListActivity extends ListActivity
 	@Override
 	protected void onListItemClick(ListView l, 
 			View v, int position, long id) {
+		Log.w("SRBase:SRList", "onListItemClick called");
 		super.onListItemClick(l, v, position, id);
-		Intent i = new Intent(this, EditSRActivity.class);
+		Intent i = new Intent(this, ViewSRActivity.class);
 		Uri todoUri = Uri.parse(SRContentProvider.CONTENT_URI + "/" + id);
 	  	i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, todoUri);
 
