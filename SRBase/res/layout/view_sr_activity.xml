@@ -5,15 +5,6 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/sr_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/sr_number_header"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/sr_number_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/start_time_header"
+        android:layout_alignBottom="@+id/total_work_time"
         android:text="@string/total_work_time"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -71,8 +62,8 @@
         android:id="@+id/total_work_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/total_work_header"
         android:layout_toRightOf="@+id/total_work_header"
+        android:layout_below="@+id/end_time_header"
         android:text="@string/blank"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -81,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/total_work_time"
+        android:layout_alignBottom="@+id/total_travel_time"
         android:text="@string/total_travel_time"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -89,7 +80,7 @@
         android:id="@+id/total_travel_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/total_travel_header"
+        android:layout_below="@+id/total_work_time"
         android:layout_toRightOf="@+id/total_travel_header"
         android:text="@string/blank"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -99,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/customer_view"
+        android:layout_alignBottom="@+id/model_number_view"
         android:text="@string/model_number_header"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -107,7 +98,7 @@
         android:id="@+id/model_number_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/model_number_header"
+        android:layout_below="@+id/customer_view"
         android:layout_toRightOf="@+id/model_number_header"
         android:text="@string/blank"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -183,5 +174,14 @@
         android:layout_toRightOf="@+id/customer_header"
         android:text="@string/blank"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/sr_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/sr_number_view"
+        android:layout_alignParentLeft="true"
+        android:text="@string/sr_number_header"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
