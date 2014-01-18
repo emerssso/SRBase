@@ -210,9 +210,11 @@ public class DailyContentProvider extends ContentProvider {
 	 */
 	private void checkColumns(String[] projection) {
 		String[] available = { DailyTable.COLUMN_COMMENT,
-				DailyTable.COLUMN_DATE, DailyTable.COLUMN_END_TIME,
+				DailyTable.COLUMN_DAY, DailyTable.COLUMN_END_HOUR,
 				DailyTable.COLUMN_ID, DailyTable.COLUMN_SR_ID,
-				DailyTable.COLUMN_START_TIME, 
+				DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_MONTH,
+				DailyTable.COLUMN_YEAR, DailyTable.COLUMN_START_MIN,
+				DailyTable.COLUMN_END_MIN,
 				DailyTable.COLUMN_TRAVEL_TIME};
 		if (projection != null) {
 			HashSet<String> requestedColumns = new 

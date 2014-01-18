@@ -10,14 +10,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class EditDailyActivity extends Activity {
 	
-	private EditText date;
-	private EditText startTime;
-	private EditText endTime;
+	private DatePicker date;
+	private TimePicker startTime;
+	private TimePicker endTime;
 	private EditText travelTime;
 	private EditText comment;
 	private Button confirm;
@@ -29,9 +31,10 @@ public class EditDailyActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_daily_activity);
 		
-		date = (EditText) findViewById(R.id.date);
-		startTime = (EditText) findViewById(R.id.start_time);
-		endTime = (EditText) findViewById(R.id.end_time);
+		date = (DatePicker) findViewById(R.id.date_picker);
+		date.init(1,1,1,null);
+		startTime = (TimePicker) findViewById(R.id.start_time_picker);
+		endTime = (TimePicker) findViewById(R.id.end_time_picker);
 		travelTime = (EditText) findViewById(R.id.travel_time);
 		comment = (EditText) findViewById(R.id.comment);
 		confirm = (Button) findViewById(R.id.daily_confirm);
@@ -55,34 +58,40 @@ public class EditDailyActivity extends Activity {
 	    confirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (date.getText().toString().length() == 0) {
-					Toast.makeText(EditDailyActivity.this, "Date missing",
-					        Toast.LENGTH_LONG).show();
-					return;
-				}
-				else {
-					setResult(RESULT_OK);
-					finish();
-				}
+				setResult(RESULT_OK);
+				finish();
 			}
 		});
 	}
 	
 	private void fillData(Uri uri){
 		String[] projection = { DailyTable.COLUMN_COMMENT,
-				DailyTable.COLUMN_DATE, DailyTable.COLUMN_END_TIME,
-				DailyTable.COLUMN_START_TIME, DailyTable.COLUMN_TRAVEL_TIME};
+				DailyTable.COLUMN_DAY, DailyTable.COLUMN_END_HOUR,
+				DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
+				DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_TRAVEL_TIME,
+				DailyTable.COLUMN_START_MIN, DailyTable.COLUMN_END_MIN};
 		Cursor cursor = getContentResolver()
 				.query(uri, projection, null, null,null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 			
-			date.setText(cursor.getString(cursor
-					.getColumnIndexOrThrow(DailyTable.COLUMN_DATE)));
-		    startTime.setText(cursor.getString(cursor
-					.getColumnIndexOrThrow(DailyTable.COLUMN_START_TIME)));
-		    endTime.setText(cursor.getString(cursor
-					.getColumnIndexOrThrow(DailyTable.COLUMN_END_TIME)));
+			
+			date.updateDate(cursor.getInt(cursor
+					.getColumnIndexOrThrow(DailyTable.COLUMN_YEAR)),
+					cursor.getInt(cursor.getColumnIndexOrThrow
+					(DailyTable.COLUMN_MONTH)), cursor.getInt(
+					cursor.getColumnIndexOrThrow(DailyTable.COLUMN_DAY)));
+			
+		    startTime.setCurrentHour(cursor.getInt(cursor
+		    		.getColumnIndexOrThrow(DailyTable.COLUMN_START_HOUR)));
+		    startTime.setCurrentMinute(cursor.getInt(cursor
+		    		.getColumnIndexOrThrow(DailyTable.COLUMN_START_MIN)));
+		    
+		    endTime.setCurrentHour(cursor.getInt(cursor
+		    		.getColumnIndexOrThrow(DailyTable.COLUMN_END_HOUR)));
+		    endTime.setCurrentMinute(cursor.getInt(cursor
+		    		.getColumnIndexOrThrow(DailyTable.COLUMN_END_MIN)));
+		    
 		    travelTime.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(DailyTable.COLUMN_TRAVEL_TIME)));
 		    comment.setText(cursor.getString(cursor
@@ -112,20 +121,24 @@ public class EditDailyActivity extends Activity {
 	
 	private void saveState() {
 		
-		String dayDate = date.getText().toString();
-		
-		if(dayDate.length() == 0)
-			return;
-		
-		String start = startTime.getText().toString();
-		String end = endTime.getText().toString();
+		int day = date.getDayOfMonth();
+		int month = date.getMonth();
+		int year = date.getYear();
+		int startHour = startTime.getCurrentHour();
+		int startMin = startTime.getCurrentMinute();
+		int endHour = endTime.getCurrentHour();
+		int endMin = endTime.getCurrentMinute();
 		String travel = travelTime.getText().toString();
 		String dayComment = comment.getText().toString();
 
 		ContentValues values = new ContentValues();
-		values.put(DailyTable.COLUMN_DATE, dayDate);
-		values.put(DailyTable.COLUMN_START_TIME, start);
-		values.put(DailyTable.COLUMN_END_TIME, end);
+		values.put(DailyTable.COLUMN_DAY, day);
+		values.put(DailyTable.COLUMN_MONTH, month);
+		values.put(DailyTable.COLUMN_YEAR, year);
+		values.put(DailyTable.COLUMN_START_HOUR, startHour);
+		values.put(DailyTable.COLUMN_START_MIN, startMin);
+		values.put(DailyTable.COLUMN_END_HOUR, endHour);
+		values.put(DailyTable.COLUMN_END_MIN, endMin);
 		values.put(DailyTable.COLUMN_TRAVEL_TIME, travel);
 		values.put(DailyTable.COLUMN_COMMENT, dayComment);
 		values.put(DailyTable.COLUMN_SR_ID, srId);

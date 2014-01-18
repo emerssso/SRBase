@@ -128,8 +128,10 @@ public class ViewSRActivity extends Activity {
 			cursor.close();
 			
 			//gather rows of dailies for this SR
-			String [] dailyProjection = {DailyTable.COLUMN_DATE, 
-					DailyTable.COLUMN_START_TIME, DailyTable.COLUMN_END_TIME,
+			String [] dailyProjection = {DailyTable.COLUMN_DAY,
+					DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
+					DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_END_HOUR,
+					DailyTable.COLUMN_START_MIN, DailyTable.COLUMN_END_MIN,
 					DailyTable.COLUMN_TRAVEL_TIME};
 			cursor = getContentResolver().query(null, dailyProjection,
 					DailyTable.COLUMN_SR_ID + " = ? ", 
@@ -143,7 +145,7 @@ public class ViewSRActivity extends Activity {
 				cursor.moveToFirst();
 				
 				//probably ought to move this to another thread...
-				while(!cursor.isAfterLast()) {
+				/*while(!cursor.isAfterLast()) {
 					dates.add(cursor.getString(cursor
 							.getColumnIndexOrThrow(DailyTable.COLUMN_DATE)));
 					String start = cursor.getString
@@ -157,7 +159,7 @@ public class ViewSRActivity extends Activity {
 							(DailyTable.COLUMN_TRAVEL_TIME));
 					travelTime += Double.valueOf(travel);
 					//workTime += getDuration(start, end);
-				}
+				}*/
 				
 				//set screen text
 				totalWorkTime.setText(Double.toString(workTime)

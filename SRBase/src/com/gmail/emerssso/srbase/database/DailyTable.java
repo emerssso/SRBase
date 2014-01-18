@@ -19,13 +19,17 @@ public class DailyTable {
 	public static final String COLUMN_SR_ID = "SR_id";
 	
 	/** The Constant COLUMN_DATE. */
-	public static final String COLUMN_DATE = "date";
+	public static final String COLUMN_DAY="day";
+	public static final String COLUMN_MONTH="month";
+	public static final String COLUMN_YEAR="year";
 	
 	/** The Constant COLUMN_START_TIME. */
-	public static final String COLUMN_START_TIME = "start_time";
+	public static final String COLUMN_START_HOUR = "start_hour";
+	public static final String COLUMN_START_MIN = "start_min";
 	
 	/** The Constant COLUMN_END_TIME. */
-	public static final String COLUMN_END_TIME = "end_time";
+	public static final String COLUMN_END_HOUR = "end_hour";
+	public static final String COLUMN_END_MIN = "end_min";
 	
 	/** The Constant COLUMN_TRAVEL_TIME. */
 	public static final String COLUMN_TRAVEL_TIME = "travel_time";
@@ -38,9 +42,13 @@ public class DailyTable {
 			+ TABLE_DAILY + "(" + COLUMN_ID
 			+ " integer primary key autoincrement, "
 			+ COLUMN_SR_ID + " text not null, "
-			+ COLUMN_DATE + " text not null, "
-			+ COLUMN_START_TIME + " text not null, "
-			+ COLUMN_END_TIME + " text not null, "
+			+ COLUMN_DAY + " integer, "
+			+ COLUMN_MONTH  + " integer, "
+			+ COLUMN_YEAR + " integer, "
+			+ COLUMN_START_HOUR + " integer, "
+			+ COLUMN_START_MIN + " integer, "
+			+ COLUMN_END_HOUR + " integer, "
+			+ COLUMN_END_MIN + " integer, "
 			+ COLUMN_TRAVEL_TIME + " text not null, "
 			+ COLUMN_COMMENT + " text not null);";
 	
