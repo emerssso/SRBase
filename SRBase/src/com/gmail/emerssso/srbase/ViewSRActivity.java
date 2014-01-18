@@ -170,9 +170,15 @@ public class ViewSRActivity extends Activity {
 				while(!cursor.isAfterLast()) {
 					Log.w("SRBase:ViewSR", "Iteration of while Loop");
 					//add in travel time
-					double travel = Double.valueOf(cursor.getString(cursor
+					String travelString = cursor.getString(cursor
 							.getColumnIndexOrThrow(DailyTable
-							.COLUMN_TRAVEL_TIME)));
+							.COLUMN_TRAVEL_TIME));
+					
+					double travel;
+					if(travelString.length() > 0)
+						travel = Double.valueOf(travelString);
+					else
+						travel =  0;
 					travelTime += travel;
 					int day = cursor.getInt(cursor
 							.getColumnIndexOrThrow(DailyTable.COLUMN_DAY));
@@ -272,7 +278,7 @@ public class ViewSRActivity extends Activity {
 					}
 				}
 				
-				totalWorkTime.setText(Double.toString(workTime)
+				totalWorkTime.setText(truncate(Double.toString(workTime))
 						+ " hours");
 				totalTravelTime.setText(Double.toString(travelTime)
 						+ " hours");
@@ -287,6 +293,13 @@ public class ViewSRActivity extends Activity {
 				totalTravelTime.setText("0 hours");
 			}
 		}
+	}
+	
+	private String truncate(String num) {
+		if(num.contains(".")) {
+			 return num.substring(0, num.indexOf('.') + 3);
+		}
+		else return num;
 	}
 	
 	@Override

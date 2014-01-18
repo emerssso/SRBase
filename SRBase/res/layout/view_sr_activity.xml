@@ -162,7 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/sr_number_view"
+        android:layout_alignBottom="@+id/customer_view"
         android:text="@string/customer_header"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -170,7 +170,7 @@
         android:id="@+id/customer_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/customer_header"
+        android:layout_below="@+id/sr_number_view"
         android:layout_toRightOf="@+id/customer_header"
         android:text="@string/blank"
         android:textAppearance="?android:attr/textAppearanceLarge" />
