@@ -2,16 +2,22 @@ package com.gmail.emerssso.srbase;
 
 import java.util.ArrayList;
 
+import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.DailyTableHelper;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,31 +31,31 @@ import android.widget.EditText;
 public class ViewSRActivity extends Activity {
 	
 	/** The SR. */
-	private EditText sr;
-	private EditText customer;
+	private TextView sr;
+	private TextView customer;
 	
 	/** The start date. */
-	private EditText startDate;
+	private TextView startDate;
 	
 	/** The start time. */
-	private EditText startTime;
+	private TextView startTime;
 	
 	/** The end date. */
-	private EditText endDate;
+	private TextView endDate;
 	
 	/** The end time. */
-	private EditText endTime;
+	private TextView endTime;
 	
 	/** The total work time. */
-	private EditText totalWorkTime;
+	private TextView totalWorkTime;
 	
 	/** The total travel time. */
-	private EditText totalTravelTime;
+	private TextView totalTravelTime;
 	
 	/** The description. */
-	private EditText description;
-	private EditText modelNumber;
-	private EditText serialNumber;
+	private TextView description;
+	private TextView modelNumber;
+	private TextView serialNumber;
 	
 	/** The parts list button. */
 	private Button partsListButton;
@@ -67,17 +73,17 @@ public class ViewSRActivity extends Activity {
 		super.onCreate(bundle);
 		setContentView(R.layout.view_sr_activity);
 		
-		sr = (EditText) findViewById(R.id.sr_number_view);
-		customer = (EditText) findViewById(R.id.customer_view);
-		startDate = (EditText) findViewById(R.id.start_date_header);
-		startTime = (EditText) findViewById(R.id.start_time_header);
-		endDate = (EditText) findViewById(R.id.end_date_header);
-		endTime = (EditText) findViewById(R.id.end_time_header);
-		totalWorkTime = (EditText) findViewById(R.id.total_work_time);
-		totalTravelTime = (EditText) findViewById(R.id.total_travel_time);
-		description = (EditText) findViewById(R.id.view_description);
-		modelNumber = (EditText) findViewById(R.id.model_number_view);
-		serialNumber = (EditText) findViewById(R.id.serial_number_view);
+		sr = (TextView) findViewById(R.id.sr_number_view);
+		customer = (TextView) findViewById(R.id.customer_view);
+		startDate = (TextView) findViewById(R.id.start_date_header);
+		startTime = (TextView) findViewById(R.id.start_time_header);
+		endDate = (TextView) findViewById(R.id.end_date_header);
+		endTime = (TextView) findViewById(R.id.end_time_header);
+		totalWorkTime = (TextView) findViewById(R.id.total_work_time);
+		totalTravelTime = (TextView) findViewById(R.id.total_travel_time);
+		description = (TextView) findViewById(R.id.view_description);
+		modelNumber = (TextView) findViewById(R.id.model_number_view);
+		serialNumber = (TextView) findViewById(R.id.serial_number_view);
 		partsListButton = (Button) findViewById(R.id.view_parts_list);
 		commentsListButton = (Button) findViewById(R.id.view_comments_list);
 		
@@ -133,7 +139,8 @@ public class ViewSRActivity extends Activity {
 					DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_END_HOUR,
 					DailyTable.COLUMN_START_MIN, DailyTable.COLUMN_END_MIN,
 					DailyTable.COLUMN_TRAVEL_TIME};
-			cursor = getContentResolver().query(null, dailyProjection,
+			cursor = getContentResolver().query(
+					DailyContentProvider.CONTENT_URI, dailyProjection,
 					DailyTable.COLUMN_SR_ID + " = ? ", 
 					new String[] {srId}, null);
 			
@@ -168,6 +175,7 @@ public class ViewSRActivity extends Activity {
 						+ " hours");
 				//startDate.setText(getFirstDate(dates));
 				//endDate.setText(getLastDate(dates));
+				cursor.close();
 			}
 			else { //if no dailies found, update screen with warning
 				startDate.setText("No Dates Logged");
@@ -180,12 +188,23 @@ public class ViewSRActivity extends Activity {
 		}
 	}
 	
-	//TODO: figure out if this is even necessary
-	private double getDuration(String start, String end) {
-		String[] startParts = start.split(":");
-		String[] endParts = start.split(":");
-		
-		return 0;
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.view_sr_menu, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
-
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.edit_sr:
+			Intent i = new Intent(this, EditSRActivity.class);
+			i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, srUri);
+		    startActivity(i);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 }

@@ -40,7 +40,7 @@ public class SRListActivity extends ListActivity
 			public boolean onItemLongClick(AdapterView<?> parent, View v,
 					int position, long id) {
 				Intent i = new Intent(parent.getContext(),
-						EditSRActivity.class);
+						ViewSRActivity.class);
 				Uri todoUri = Uri.parse(SRContentProvider.CONTENT_URI +
 						"/" + id);
 			  	i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, todoUri);

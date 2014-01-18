@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/new_sr"
+    <item 
+        android:id="@+id/new_sr"
         android:title="@string/action_new_sr" 
-        android:showAsAction="ifRoom" android:icon="@drawable/ic_action_new">
+        android:showAsAction="ifRoom" 
+        android:icon="@drawable/ic_action_new">
     </item>
     
 

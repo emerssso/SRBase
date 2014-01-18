@@ -69,5 +69,7 @@
     <string name="start_time_header">"Start Time: "</string>
     
     <string name="end_time_header">End Time: </string>
+    
+    <string name="edit_sr">Edit SR</string>
 
 </resources>
