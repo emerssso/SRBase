@@ -1,10 +1,7 @@
 package com.gmail.emerssso.srbase;
 
-import java.util.ArrayList;
-
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
-import com.gmail.emerssso.srbase.database.DailyTableHelper;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
 
@@ -254,29 +251,36 @@ public class ViewSRActivity extends Activity {
 				endDate.setText((endMonth + 1) + "/" + endDay 
 						+ "/" + endYear);
 				
-				if(DateFormat.is24HourFormat(this)) {
-					startTime.setText(firstStartHour + ":" + firstStartMin);
-					endTime.setText(lastEndHour + ":" + lastEndMin);
-				}
-				else {
-					if(firstStartHour > 12) {
-						startTime.setText((firstStartHour % 12) + ":" 
-								+ firstStartMin + "PM");
+				String startampm = "";
+				String endampm = "";
+				if(!DateFormat.is24HourFormat(this)) {
+					if(firstStartHour > 12) { 
+						firstStartHour = firstStartHour % 12;
+						startampm = "pm";
 					}
-					else {
-						startTime.setText(firstStartHour + ":" 
-								+ firstStartMin + "AM");
-					}
-					
+					else startampm = "am";
 					if(lastEndHour > 12) {
-						endTime.setText((lastEndHour % 12) + ":" 
-					+ lastEndMin + "PM");
+						lastEndHour = lastEndHour % 12;
+						endampm = "pm";
 					}
-					else {
-						endTime.setText(lastEndHour + ":" 
-					+ lastEndMin + "AM");
-					}
+					else endampm = "am";
 				}
+				
+				if(firstStartMin < 10)
+					startTime.setText(firstStartHour + ":0" 
+							+ firstStartMin + startampm);
+				else
+					startTime.setText(firstStartHour + ":" 
+							+ firstStartMin + startampm);
+				
+				if(lastEndMin < 10)
+					endTime.setText(lastEndHour + ":0"
+							+ lastEndMin + endampm);
+				else
+					endTime.setText(lastEndHour + ":"
+							+ lastEndMin + endampm);
+					
+				
 				
 				totalWorkTime.setText(truncate(Double.toString(workTime))
 						+ " hours");
