@@ -1,13 +1,19 @@
 package com.gmail.emerssso.srbase;
 
+import java.util.Calendar;
+
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,25 +24,31 @@ import android.widget.Toast;
 public class EditDailyActivity extends Activity {
 	
 	private DatePicker date;
-	private TimePicker startTime;
-	private TimePicker endTime;
+	private Button startTime;
+	private Button endTime;
 	private EditText travelTime;
 	private EditText comment;
 	private Button confirm;
 	private String srId;
 	private Uri savedUri;
+	private int startHour;
+	private int startMin;
+	private int endHour;
+	private int endMin;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_daily_activity);
 		
+		startHour = startMin = endHour = endMin = -1;
+		
 		date = (DatePicker) findViewById(R.id.date_picker);
 		date.init(1,1,1,null);
-		startTime = (TimePicker) findViewById(R.id.start_time_picker);
-		endTime = (TimePicker) findViewById(R.id.end_time_picker);
 		travelTime = (EditText) findViewById(R.id.travel_time);
 		comment = (EditText) findViewById(R.id.comment);
+		startTime = (Button) findViewById(R.id.start_time_button);
+		endTime = (Button) findViewById(R.id.end_time_button);
 		confirm = (Button) findViewById(R.id.daily_confirm);
 		
 		Bundle extras = getIntent().getExtras();
@@ -81,16 +93,14 @@ public class EditDailyActivity extends Activity {
 					cursor.getInt(cursor.getColumnIndexOrThrow
 					(DailyTable.COLUMN_MONTH)), cursor.getInt(
 					cursor.getColumnIndexOrThrow(DailyTable.COLUMN_DAY)));
-			
-		    startTime.setCurrentHour(cursor.getInt(cursor
-		    		.getColumnIndexOrThrow(DailyTable.COLUMN_START_HOUR)));
-		    startTime.setCurrentMinute(cursor.getInt(cursor
-		    		.getColumnIndexOrThrow(DailyTable.COLUMN_START_MIN)));
-		    
-		    endTime.setCurrentHour(cursor.getInt(cursor
-		    		.getColumnIndexOrThrow(DailyTable.COLUMN_END_HOUR)));
-		    endTime.setCurrentMinute(cursor.getInt(cursor
-		    		.getColumnIndexOrThrow(DailyTable.COLUMN_END_MIN)));
+			startHour = cursor.getInt(cursor
+					.getColumnIndexOrThrow(DailyTable.COLUMN_START_HOUR));
+			startMin = cursor.getInt(cursor
+					.getColumnIndexOrThrow(DailyTable.COLUMN_START_MIN));
+			endHour = cursor.getInt(cursor
+					.getColumnIndexOrThrow(DailyTable.COLUMN_END_HOUR));
+			endMin = cursor.getInt(cursor
+					.getColumnIndexOrThrow(DailyTable.COLUMN_END_MIN));
 		    
 		    travelTime.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(DailyTable.COLUMN_TRAVEL_TIME)));
@@ -124,10 +134,6 @@ public class EditDailyActivity extends Activity {
 		int day = date.getDayOfMonth();
 		int month = date.getMonth();
 		int year = date.getYear();
-		int startHour = startTime.getCurrentHour();
-		int startMin = startTime.getCurrentMinute();
-		int endHour = endTime.getCurrentHour();
-		int endMin = endTime.getCurrentMinute();
 		String travel = travelTime.getText().toString();
 		String dayComment = comment.getText().toString();
 
@@ -152,4 +158,64 @@ public class EditDailyActivity extends Activity {
 	      getContentResolver().update(savedUri, values, null, null);
 	    }
     }
+	
+	protected void setTime(int hour, int minute, boolean start) {
+		if(start) {
+			startHour = hour;
+			startMin = minute;
+			//startTime.setText((hour % 12) + ":" + minute);
+		}
+		else {
+			endHour = hour;
+			endMin = minute;
+			//endTime.setText((hour % 12) + ":" + minute);
+		}
+	}
+	
+	public void showStartTimePickerDialog(View v) {
+		TimePickerFragment newFragment = new TimePickerFragment();
+		newFragment.parent = this;
+		newFragment.start = true;
+		newFragment.hour = startHour;
+		newFragment.minute = startMin;
+		newFragment.show(getFragmentManager(), "startTimePicker");
+	}
+	
+	public void showEndTimePickerDialog(View v) {
+		TimePickerFragment newFragment = new TimePickerFragment();
+		newFragment.parent = this;
+		newFragment.start = false;
+		newFragment.hour = endHour;
+		newFragment.minute = endMin;
+		newFragment.show(getFragmentManager(), "endTimePicker");
+	}
+	
+	public static class TimePickerFragment extends DialogFragment 
+			implements TimePickerDialog.OnTimeSetListener {
+		public EditDailyActivity parent;
+		public boolean start;
+		public int hour = -1;
+		public int minute = -1;
+		
+		public void setArguments(Bundle bundle) {
+			this.parent = bundle.getParcelable("parent");
+			this.start = bundle.getBoolean("start");
+		}
+		
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			if(hour == -1 || minute == -1) {
+				final Calendar c = Calendar.getInstance();
+				hour = c.get(Calendar.HOUR_OF_DAY);
+				minute = c.get(Calendar.MINUTE);
+			}
+			
+			return new TimePickerDialog(getActivity(), this, hour, minute,
+					DateFormat.is24HourFormat(getActivity()));
+		}
+		
+		public void onTimeSet(TimePicker view, int hour, int minute) {
+			parent.setTime(hour, minute, start);
+		}
+	}
 }

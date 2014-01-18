@@ -22,30 +22,20 @@
 	        android:calendarViewShown="false"
 	        android:spinnersShown="true" 
 	        android:startYear="2014"/>
-	
-	    <TextView
-	        android:id="@+id/start_time_header"
+
+	    <Button
+	        android:id="@+id/start_time_button"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/start_time_header"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	
-	    <TimePicker
-	        android:id="@+id/start_time_picker"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" />
-	
-	    <TextView
-	        android:id="@+id/end_time_header"
+	        android:text="@string/start_time" 
+	        android:onClick="showStartTimePickerDialog"/>
+
+	    <Button
+	        android:id="@+id/end_time_button"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/end_time_header"
-	        android:textAppearance="?android:attr/textAppearanceLarge" />
-	
-	    <TimePicker
-	        android:id="@+id/end_time_picker"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" />
+	        android:text="@string/end_time" 
+	        android:onClick="showEndTimePickerDialog"/>
 	
 	    <EditText
 	        android:id="@+id/travel_time"
