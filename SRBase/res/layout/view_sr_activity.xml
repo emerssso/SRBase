@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/customer_view"
+        android:layout_below="@+id/serial_number_view"
         android:text="@string/start_date"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/customer_view"
+        android:layout_below="@+id/serial_number_view"
         android:text="@string/end_date"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -99,7 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/total_travel_time"
+        android:layout_below="@+id/customer_view"
         android:text="@string/model_number_header"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/model_number_header"
-        android:layout_toRightOf="@+id/view_comments_list"
+        android:layout_toRightOf="@+id/model_number_header"
         android:text="@string/blank"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -136,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/serial_number_view"
+        android:layout_below="@+id/total_travel_time"
         android:text="@string/description_header"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
