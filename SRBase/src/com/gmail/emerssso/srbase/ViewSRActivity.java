@@ -99,12 +99,12 @@ public class ViewSRActivity extends Activity {
 	    	fillData(srUri);
     	}
 	    
-	    partsListButton.setOnClickListener(new View.OnClickListener() {
+	    commentsListButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getBaseContext(),
-						EditSRActivity.class);
+						ListCommentsActivity.class);
 			  	i.putExtra(DailyTable.COLUMN_SR_ID, srId);
 			  	startActivity(i);
 			}
