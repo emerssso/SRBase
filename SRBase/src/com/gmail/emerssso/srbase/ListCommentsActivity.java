@@ -16,12 +16,13 @@ public class ListCommentsActivity extends ListActivity
 		implements LoaderManager.LoaderCallbacks<Cursor> {
 	private SimpleCursorAdapter adapter;
 	private String srId;
+	private ListView lv;
 
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.list_comments_activity);
-		ListView lv = this.getListView();
+		lv = this.getListView();
 		lv.setDividerHeight(2);
 		
 		Bundle extras = getIntent().getExtras();
@@ -36,7 +37,7 @@ public class ListCommentsActivity extends ListActivity
 	    // Must include the _id column for the adapter to work
 	    String[] from = new String[] { DailyTable.COLUMN_DAY,
 	    		DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
-	    		DailyTable.COLUMN_COMMENT };
+	    		DailyTable.COLUMN_COMMENT, DailyTable.COLUMN_ID };
 	    // Fields on the UI to which we map
 	    int[] to = new int[] { R.id.day, R.id.month, R.id.year, 
 	    		R.id.comment_body };
@@ -45,14 +46,14 @@ public class ListCommentsActivity extends ListActivity
 	    Cursor cursor = getContentResolver().query(
 				DailyContentProvider.CONTENT_URI, from,
 				DailyTable.COLUMN_SR_ID + " = ? and " +
-				DailyTable.COLUMN_COMMENT + " != ?", 
-				new String[] {srId, ""}, null);
+				DailyTable.COLUMN_COMMENT + " != ''", 
+				new String[] {srId}, null);
 	    
-	    getLoaderManager().initLoader(0, null, this);
 	    adapter = new SimpleCursorAdapter(this, R.layout.list_comment_row, 
-	    		null, from, to, 0);
+	    		cursor, from, to, 0);
 
 	    setListAdapter(adapter);
+	    getLoaderManager().initLoader(0, null, this);
 	}
 
 	@Override
@@ -61,7 +62,10 @@ public class ListCommentsActivity extends ListActivity
 				DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
 				DailyTable.COLUMN_COMMENT};
 	    CursorLoader cursorLoader = new CursorLoader(this,
-	        DailyContentProvider.CONTENT_URI, projection, null, null, null);
+	        DailyContentProvider.CONTENT_URI, projection, 
+	        		DailyTable.COLUMN_SR_ID + " = ? and " +
+					DailyTable.COLUMN_COMMENT + " != ''", 
+					new String[] {srId}, null);
 	    return cursorLoader;
 	}
 
