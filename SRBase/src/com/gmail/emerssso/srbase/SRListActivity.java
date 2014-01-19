@@ -23,7 +23,7 @@ import android.content.Loader;
 import android.database.Cursor;
 
 public class SRListActivity extends ListActivity 
-	implements LoaderManager.LoaderCallbacks<Cursor> {
+		implements LoaderManager.LoaderCallbacks<Cursor> {
 	private SimpleCursorAdapter adapter;
 	
 	@Override
