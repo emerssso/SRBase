@@ -98,7 +98,10 @@ public class EditPartActivity extends Activity {
 	 * @param uri the uri
 	 */
 	private void fillData(Uri uri) {
-		String[] projection = { "*" };
+		String[] projection = { PartTable.COLUMN_DESCRIPTION,
+				PartTable.COLUMN_PART_NUMBER, PartTable.COLUMN_QUANTITY,
+				PartTable.COLUMN_SOURCE, PartTable.COLUMN_USED,
+				PartTable.COLUMN_SR_ID};
 		Cursor cursor = getContentResolver()
 				.query(uri, projection, null, null,null);
 		if (cursor != null) {
@@ -106,12 +109,26 @@ public class EditPartActivity extends Activity {
 		    
 		    partNumber.setText(cursor.getString(cursor
 		    		.getColumnIndexOrThrow(PartTable.COLUMN_PART_NUMBER)));
-		    partQuantity.setText(cursor.getString(cursor
-		    		.getColumnIndexOrThrow(PartTable.COLUMN_QUANTITY)));
-		    partSource.setText(cursor.getString(cursor
-		    		.getColumnIndexOrThrow(PartTable.COLUMN_SOURCE)));
-		    partDescription.setText(cursor.getString(cursor
-		    		.getColumnIndexOrThrow(PartTable.COLUMN_DESCRIPTION)));
+		    
+		    String temp = cursor.getString(cursor
+		    		.getColumnIndexOrThrow(PartTable.COLUMN_QUANTITY));
+		    
+		    if(!temp.equals("Unknown"))
+		    	partQuantity.setText(temp);
+		    	
+		    temp = cursor.getString(cursor
+		    		.getColumnIndexOrThrow(PartTable.COLUMN_SOURCE));
+		    if(!temp.equals("Unknown"))
+		    	partSource.setText(temp);
+		    
+		    temp = cursor.getString(cursor
+		    		.getColumnIndexOrThrow(PartTable.COLUMN_DESCRIPTION));
+		    
+		    if(!temp.equals("No Description")) 
+		    	partDescription.setText(temp);
+		    
+		    srId = cursor.getString(cursor
+		    		.getColumnIndexOrThrow(PartTable.COLUMN_SR_ID));
 		    
 		    if(cursor.getString(cursor.getColumnIndexOrThrow
 		    		(PartTable.COLUMN_USED)).equals("Used"))
