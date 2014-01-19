@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -97,6 +98,17 @@ public class ViewSRActivity extends Activity {
 	    			.getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
 	    	fillData(srUri);
     	}
+	    
+	    partsListButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getBaseContext(),
+						EditSRActivity.class);
+			  	i.putExtra(DailyTable.COLUMN_SR_ID, srId);
+			  	startActivity(i);
+			}
+		});
 	}
 	
 	/**

@@ -15,6 +15,7 @@ import android.widget.SimpleCursorAdapter;
 public class ListCommentsActivity extends ListActivity 
 		implements LoaderManager.LoaderCallbacks<Cursor> {
 	private SimpleCursorAdapter adapter;
+	private String srId;
 
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -22,6 +23,10 @@ public class ListCommentsActivity extends ListActivity
 		setContentView(R.layout.list_comments_activity);
 		ListView lv = this.getListView();
 		lv.setDividerHeight(2);
+		
+		Bundle extras = getIntent().getExtras();
+		
+		srId = extras.getString(DailyTable.COLUMN_SR_ID);
 		
 		fillData();
 	}
@@ -35,7 +40,13 @@ public class ListCommentsActivity extends ListActivity
 	    // Fields on the UI to which we map
 	    int[] to = new int[] { R.id.day, R.id.month, R.id.year, 
 	    		R.id.comment_body };
-
+	    
+	    //create cursor so that we only list relevant comments
+	    Cursor cursor = getContentResolver().query(
+				DailyContentProvider.CONTENT_URI, from,
+				DailyTable.COLUMN_SR_ID + " = ? ", 
+				new String[] {srId}, null);
+	    
 	    getLoaderManager().initLoader(0, null, this);
 	    adapter = new SimpleCursorAdapter(this, R.layout.list_comment_row, 
 	    		null, from, to, 0);
