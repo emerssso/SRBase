@@ -79,5 +79,12 @@
     <string name="day">Day</string>
     
     <string name="Year">year</string>
+    
+    <string name="unused">Unused</string>
+    
+    <string name="no_description">No Description</string>
+    <color name="orange">#ffa500</color>
+    <string name="unkown">Unknown</string>
+    <color name="blue">#00ddff</color>
 
 </resources>
