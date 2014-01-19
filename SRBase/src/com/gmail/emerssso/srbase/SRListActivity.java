@@ -6,7 +6,6 @@ import com.gmail.emerssso.srbase.database.SRTable;
 import android.app.ListActivity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,7 +53,6 @@ public class SRListActivity extends ListActivity
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				Log.w("SRBase:SRList", "List item clicked");
 				Intent i = new Intent(parent.getContext(), 
 						ViewSRActivity.class);
 				Uri srUri = Uri.parse(SRContentProvider.CONTENT_URI + 
@@ -105,7 +103,6 @@ public class SRListActivity extends ListActivity
 	@Override
 	protected void onListItemClick(ListView l, 
 			View v, int position, long id) {
-		Log.w("SRBase:SRList", "onListItemClick called");
 		super.onListItemClick(l, v, position, id);
 		Intent i = new Intent(this, ViewSRActivity.class);
 		Uri todoUri = Uri.parse(SRContentProvider.CONTENT_URI + "/" + id);

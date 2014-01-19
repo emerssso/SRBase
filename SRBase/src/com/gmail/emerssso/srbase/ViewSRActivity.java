@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -145,8 +144,6 @@ public class ViewSRActivity extends Activity {
 			cursor.close();
 			
 			//gather rows of dailies for this SR
-			Log.w("SRBase:ViewSR", "querying for dailies matching SR_ID"
-					+ srId);
 			String [] dailyProjection = {DailyTable.COLUMN_DAY,
 					DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
 					DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_END_HOUR,
@@ -159,8 +156,6 @@ public class ViewSRActivity extends Activity {
 			
 			//load daily data
 			if(cursor != null) {
-				Log.w("SRBase:ViewSR", "cursor has " + cursor.getCount() 
-						+ " rows");
 				double workTime = 0;
 				double travelTime = 0;
 				int startDay = Integer.MAX_VALUE;
@@ -177,7 +172,6 @@ public class ViewSRActivity extends Activity {
 				
 				//probably ought to move this to another thread...
 				while(!cursor.isAfterLast()) {
-					Log.w("SRBase:ViewSR", "Iteration of while Loop");
 					//add in travel time
 					String travelString = cursor.getString(cursor
 							.getColumnIndexOrThrow(DailyTable
