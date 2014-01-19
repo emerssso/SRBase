@@ -313,7 +313,11 @@ public class ViewSRActivity extends Activity {
 	
 	private String truncate(String num) {
 		if(num.contains(".")) {
-			 return num.substring(0, num.indexOf('.') + 3);
+			int dotIndex = num.indexOf('.');
+			if(dotIndex + 3 < num.length())
+				return num.substring(0, dotIndex+3);
+			else
+				return num;
 		}
 		else return num;
 	}
