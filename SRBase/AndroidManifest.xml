@@ -40,6 +40,10 @@
             android:windowSoftInputMode="stateHidden|adjustResize" >
         </activity>
         <activity
+            android:name=".ListCommentsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+        </activity>
+        <activity
             android:name=".EditPartActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>

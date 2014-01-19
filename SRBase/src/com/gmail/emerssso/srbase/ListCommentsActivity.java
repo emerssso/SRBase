@@ -44,8 +44,9 @@ public class ListCommentsActivity extends ListActivity
 	    //create cursor so that we only list relevant comments
 	    Cursor cursor = getContentResolver().query(
 				DailyContentProvider.CONTENT_URI, from,
-				DailyTable.COLUMN_SR_ID + " = ? ", 
-				new String[] {srId}, null);
+				DailyTable.COLUMN_SR_ID + " = ? and " +
+				DailyTable.COLUMN_COMMENT + " != ?", 
+				new String[] {srId, ""}, null);
 	    
 	    getLoaderManager().initLoader(0, null, this);
 	    adapter = new SimpleCursorAdapter(this, R.layout.list_comment_row, 

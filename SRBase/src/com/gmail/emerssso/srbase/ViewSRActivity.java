@@ -258,9 +258,9 @@ public class ViewSRActivity extends Activity {
 				}
 				
 				//set screen text
-				startDate.setText((startMonth + 1) + "/" + startDay 
+				startDate.setText(startMonth + "/" + startDay 
 						+ "/" + startYear);
-				endDate.setText((endMonth + 1) + "/" + endDay 
+				endDate.setText(endMonth + "/" + endDay 
 						+ "/" + endYear);
 				
 				String startampm = "";

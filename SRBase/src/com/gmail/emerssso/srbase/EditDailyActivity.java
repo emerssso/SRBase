@@ -155,7 +155,7 @@ public class EditDailyActivity extends Activity {
 
 		ContentValues values = new ContentValues();
 		values.put(DailyTable.COLUMN_DAY, day);
-		values.put(DailyTable.COLUMN_MONTH, month);
+		values.put(DailyTable.COLUMN_MONTH, month+1);
 		values.put(DailyTable.COLUMN_YEAR, year);
 		values.put(DailyTable.COLUMN_START_HOUR, startHour);
 		values.put(DailyTable.COLUMN_START_MIN, startMin);
