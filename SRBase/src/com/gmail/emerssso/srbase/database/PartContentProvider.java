@@ -211,7 +211,7 @@ public class PartContentProvider extends ContentProvider {
 		String[] available = { PartTable.COLUMN_DESCRIPTION,
 				PartTable.COLUMN_ID, PartTable.COLUMN_QUANTITY,
 				PartTable.COLUMN_SOURCE, PartTable.COLUMN_SR_ID,
-				PartTable.COLUMN_USED};
+				PartTable.COLUMN_USED, PartTable.COLUMN_PART_NUMBER};
 		if (projection != null) {
 			HashSet<String> requestedColumns = new 
 					HashSet<String>(Arrays.asList(projection));
@@ -219,8 +219,11 @@ public class PartContentProvider extends ContentProvider {
 					HashSet<String>(Arrays.asList(available));
 			// check if all columns which are requested are available
 			if (!availableColumns.containsAll(requestedColumns)) {
+				String except = "";
+				for(int i = 0; i < projection.length; i++)
+					except = except + projection[i] + ", ";
 				throw new IllegalArgumentException(
-						"Unknown columns in projection");
+						"Unknown columns in projection: " + except);
 			}
 		}
 	}

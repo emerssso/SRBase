@@ -114,7 +114,7 @@ public class EditPartActivity extends Activity {
 		    		.getColumnIndexOrThrow(PartTable.COLUMN_DESCRIPTION)));
 		    
 		    if(cursor.getString(cursor.getColumnIndexOrThrow
-		    		(PartTable.COLUMN_USED)).equals("yes"))
+		    		(PartTable.COLUMN_USED)).equals("Used"))
 		    	partUsed.setChecked(true);
 		    else
 		    	partUsed.setChecked(false);
@@ -155,7 +155,11 @@ public class EditPartActivity extends Activity {
 		String quantity = partQuantity.getText().toString();
 		String description = partDescription.getText().toString();
 		String source = partSource.getText().toString();
-		String used = partUsed.isChecked() ? "yes" : "no";
+		String used = partUsed.isChecked() ? "Used" : "Unused";
+		
+		if(quantity.length() == 0) quantity = "Unknown";
+		if(description.length() == 0) description = "No Description";
+		if(source.length() == 0) source = "Unknown";
 
 		ContentValues values = new ContentValues();
 		values.put(PartTable.COLUMN_PART_NUMBER, number);

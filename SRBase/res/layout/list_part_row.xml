@@ -28,8 +28,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/part_source_header"
         android:text="@string/unused"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/orange" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/part_source_header"

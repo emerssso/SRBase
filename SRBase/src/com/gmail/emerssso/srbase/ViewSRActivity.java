@@ -2,6 +2,7 @@ package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
 
@@ -105,6 +106,17 @@ public class ViewSRActivity extends Activity {
 				Intent i = new Intent(getBaseContext(),
 						ListCommentsActivity.class);
 			  	i.putExtra(DailyTable.COLUMN_SR_ID, srId);
+			  	startActivity(i);
+			}
+		});
+	    
+	    partsListButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getBaseContext(),
+						ListPartsActivity.class);
+			  	i.putExtra(PartTable.COLUMN_SR_ID, srId);
 			  	startActivity(i);
 			}
 		});
