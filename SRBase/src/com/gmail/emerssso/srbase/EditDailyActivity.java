@@ -73,6 +73,12 @@ public class EditDailyActivity extends Activity {
 	    confirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				final Calendar c = Calendar.getInstance();
+				if(startHour == -1) startHour = c.get(Calendar.HOUR_OF_DAY);
+				if(startMin == -1) startMin = c.get(Calendar.MINUTE);
+				if(endMin == -1) endMin = c.get(Calendar.MINUTE);
+				if(endHour == -1) endHour = c.get(Calendar.HOUR_OF_DAY);
+					
 				if(startHour > endHour || 
 						(startHour == endHour && startMin > endMin)) {
 					Toast.makeText(EditDailyActivity.this, 
