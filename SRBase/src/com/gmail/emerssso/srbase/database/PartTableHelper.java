@@ -1,4 +1,5 @@
-//TODO: Copyright Info
+//This Software is distributed under The Apache License, Version 2.0
+//The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase.database;
 
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 // TODO: Auto-generated Javadoc
 /**
  * The Class PartTableHelper.
+ * @author Conner Kasten
  */
 public class PartTableHelper extends SQLiteOpenHelper {
 

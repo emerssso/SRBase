@@ -1,3 +1,5 @@
+//This Software is distributed under The Apache License, Version 2.0
+//The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.SRContentProvider;
@@ -21,10 +23,19 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 
+/**
+ * The SRListActivity lists all of the SRs currently listed in the 
+ * database.
+ */
 public class SRListActivity extends ListActivity 
 		implements LoaderManager.LoaderCallbacks<Cursor> {
+	
+	/** The adapter to the cursor for loading data. */
 	private SimpleCursorAdapter adapter;
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,6 +76,9 @@ public class SRListActivity extends ListActivity
 		fillData();
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -72,6 +86,9 @@ public class SRListActivity extends ListActivity
 		return super.onCreateOptionsMenu(menu);
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
@@ -84,6 +101,9 @@ public class SRListActivity extends ListActivity
 		}
 	}
 	
+	/**
+	 * Fill data from the database to the ListView.
+	 */
 	private void fillData() {
 
 	    // Fields from the database (projection)
@@ -100,6 +120,9 @@ public class SRListActivity extends ListActivity
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see android.app.ListActivity#onListItemClick(android.widget.ListView, android.view.View, int, long)
+	 */
 	@Override
 	protected void onListItemClick(ListView l, 
 			View v, int position, long id) {
@@ -111,6 +134,9 @@ public class SRListActivity extends ListActivity
 	  	startActivity(i);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onCreateLoader(int, android.os.Bundle)
+	 */
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		String[] projection = { SRTable.COLUMN_ID, SRTable.COLUMN_SR_NUMBER };
@@ -119,11 +145,17 @@ public class SRListActivity extends ListActivity
 	    return cursorLoader;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onLoadFinished(android.content.Loader, java.lang.Object)
+	 */
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 		adapter.swapCursor(data);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onLoaderReset(android.content.Loader)
+	 */
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);

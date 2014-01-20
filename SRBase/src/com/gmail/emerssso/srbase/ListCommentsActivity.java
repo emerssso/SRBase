@@ -1,3 +1,5 @@
+//This Software is distributed under The Apache License, Version 2.0
+//The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
@@ -17,12 +19,28 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * The ListCommentsActivity class implements an activity which
+ * lists all of the Daily Logs' comments associated with a particular
+ * SR (passed as an extra to the activity).  These can be clicked to open
+ * and edit that Daily in the EditDailyActivity.
+ * @author Conner Kasten
+ */
 public class ListCommentsActivity extends ListActivity 
 		implements LoaderManager.LoaderCallbacks<Cursor> {
+	
+	/** The adapter for the cursor to access the data. */
 	private SimpleCursorAdapter adapter;
+	
+	/** The ID of the target SR. */
 	private String srId;
+	
+	/** The ListView listing the comments. */
 	private ListView lv;
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -50,6 +68,9 @@ public class ListCommentsActivity extends ListActivity
 		});
 	}
 	
+	/**
+	 * Fill data from the database into the ListView.
+	 */
 	private void fillData() {
 		// Fields from the database (projection)
 	    // Must include the _id column for the adapter to work
@@ -73,6 +94,9 @@ public class ListCommentsActivity extends ListActivity
 	    getLoaderManager().initLoader(0, null, this);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onCreateLoader(int, android.os.Bundle)
+	 */
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		String[] projection = { DailyTable.COLUMN_ID, DailyTable.COLUMN_DAY,
@@ -85,11 +109,17 @@ public class ListCommentsActivity extends ListActivity
 	    return cursorLoader;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onLoadFinished(android.content.Loader, java.lang.Object)
+	 */
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 		adapter.swapCursor(data);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onLoaderReset(android.content.Loader)
+	 */
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);

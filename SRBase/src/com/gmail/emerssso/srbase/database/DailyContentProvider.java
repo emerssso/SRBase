@@ -1,4 +1,5 @@
-//TODO: Copyright
+//This Software is distributed under The Apache License, Version 2.0
+//The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase.database;
 
 import java.util.Arrays;
@@ -14,9 +15,9 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DailyContentProvider.
+ * A content provider for the Daily Logs.
+ * @author Conner Kasten
  */
 public class DailyContentProvider extends ContentProvider {
 	
@@ -204,9 +205,9 @@ public class DailyContentProvider extends ContentProvider {
 	}
 
 	/**
-	 * Check columns.
+	 * Check columns to ensure validity.
 	 *
-	 * @param projection the projection
+	 * @param projection the projection to be checked.
 	 */
 	private void checkColumns(String[] projection) {
 		String[] available = { DailyTable.COLUMN_COMMENT,

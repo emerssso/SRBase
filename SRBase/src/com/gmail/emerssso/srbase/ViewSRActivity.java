@@ -38,6 +38,8 @@ public class ViewSRActivity extends Activity {
 	
 	/** The SR. */
 	private TextView sr;
+	
+	/** the customer name. */
 	private TextView customer;
 	
 	/** The start date. */
@@ -60,7 +62,11 @@ public class ViewSRActivity extends Activity {
 	
 	/** The description. */
 	private TextView description;
+	
+	/** The model number of the part to be serviced. */
 	private TextView modelNumber;
+	
+	/** The serial number of the device to be serviced. */
 	private TextView serialNumber;
 	
 	/** The parts list button. */
@@ -69,7 +75,10 @@ public class ViewSRActivity extends Activity {
 	/** The comments list button. */
 	private Button commentsListButton;
 	
+	/** The sr uri. */
 	private Uri srUri;
+	
+	/** The sr id. */
 	private String srId;
 	
 	/* (non-Javadoc)
@@ -323,6 +332,13 @@ public class ViewSRActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Truncates a floating point represented as a string
+	 * down to two decimal places.
+	 *
+	 * @param num the String to be truncated
+	 * @return a truncated version of the String
+	 */
 	private String truncate(String num) {
 		if(num.contains(".")) {
 			int dotIndex = num.indexOf('.');
@@ -334,6 +350,9 @@ public class ViewSRActivity extends Activity {
 		else return num;
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -341,6 +360,9 @@ public class ViewSRActivity extends Activity {
 		return super.onCreateOptionsMenu(menu);
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
@@ -358,8 +380,16 @@ public class ViewSRActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * The DeleteFragmentClass implements a dialog fragment
+	 * to ask the user whether they are sure they want to delete 
+	 * the SR or not.
+	 */
 	public static class DeleteFragment extends DialogFragment {
 		
+		/* (non-Javadoc)
+		 * @see android.app.DialogFragment#onCreateDialog(android.os.Bundle)
+		 */
 		@Override
 		public Dialog onCreateDialog(Bundle bundle) {
 			final Activity activity = getActivity();
@@ -400,7 +430,7 @@ public class ViewSRActivity extends Activity {
 	}
 	
 	/**
-	 * Convenience method to request SR deletion
+	 * Convenience method to request SR deletion.
 	 */
 	public void deleteSR() {
 		this.deleteSR(srId, srUri);

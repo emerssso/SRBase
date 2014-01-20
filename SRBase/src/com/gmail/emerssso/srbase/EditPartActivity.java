@@ -1,4 +1,5 @@
-//TODO: Copyright
+//This Software is distributed under The Apache License, Version 2.0
+//The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.PartContentProvider;
@@ -15,34 +16,36 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-// TODO: Auto-generated Javadoc
+
 /**
- * The Class EditPartActivity.
+ * The EditPartActivity class implements an activity which provides
+ * a form for users to enter new parts to be associated with a particular
+ * SR, and certain information associated with that part.
  */
 public class EditPartActivity extends Activity {
 	
 	/** The part number. */
 	private EditText partNumber;
 	
-	/** The part quantity. */
+	/** The number of parts in question. */
 	private EditText partQuantity;
 	
-	/** The part source. */
+	/** The part source (i.e. work, home, Japan). */
 	private EditText partSource;
 	
 	/** The part description. */
 	private EditText partDescription;
 	
-	/** The part used. */
+	/** Indicates whether the part was used or not. */
 	private CheckBox partUsed;
 	
-	/** The saved uri. */
+	/** The Uri to load saved data from. */
 	private Uri savedUri;
 	
-	/** The confirm. */
+	/** The confirm button to save data. */
 	private Button confirm;
 	
-	/** The sr id. */
+	/** The ID of the associated SR. */
 	private String srId;
 	
 	/* (non-Javadoc)
@@ -93,9 +96,9 @@ public class EditPartActivity extends Activity {
 	}
 	
 	/**
-	 * Fill data.
+	 * Fill data from the database entry at Uri into the form.
 	 *
-	 * @param uri the uri
+	 * @param uri the Source of data to be loaded.
 	 */
 	private void fillData(Uri uri) {
 		String[] projection = { PartTable.COLUMN_DESCRIPTION,
@@ -160,7 +163,7 @@ public class EditPartActivity extends Activity {
 	}
 	
 	/**
-	 * Save state.
+	 * Save the state of the form into the database.
 	 */
 	private void saveState() {
 		

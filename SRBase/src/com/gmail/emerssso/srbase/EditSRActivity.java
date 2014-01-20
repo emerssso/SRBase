@@ -1,7 +1,5 @@
-/*
- * TODO: Figure out Copyright stuff
- */
-
+//This Software is distributed under The Apache License, Version 2.0
+//The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.DailyTable;
@@ -20,14 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-//TODO: Add methods for calling EditPart and EditDaily
-//and make sure to pass SR ID in Intent extras
-// TODO: Auto-generated Javadoc
-//TODO: Write Some more in the Javadoc header
 /**
- * This activity manages the creation and modification
- * of SR elements in the database.
+ * This activity implements an activity that provides a form
+ * for users to add new Service Records (SRs) into the database,
+ * or edit old SRs already present.
  *
  * @author Conner Kasten
  */
@@ -36,30 +30,33 @@ public class EditSRActivity extends Activity {
 	/** The SR number. */
 	private EditText mSRNumber;
 	
-	/** The customer. */
+	/** The customer's name. */
 	private EditText mCustomer;
 	
-	/** The model number. */
+	/** The model number of the device being serviced. */
 	private EditText mModelNumber;
 	
-	/** The serial number. */
+	/** The serial number of the device being serviced. */
 	private EditText mSerialNumber;
 	
-	/** The description. */
+	/** The description of the call. */
 	private EditText mDescription;
 	
-	/** The Daily Button. */
+	/** The Daily Button opens a dialog to add a new daily
+	 * associated with this SR. */
 	private Button mDaily;
 	
-	/** The Part Button. */
+	/** The Part Button opens a new dialog to add a new part
+	 * associated with this SR.. */
 	private Button mPart;
 	
-	/** The Confirm Button. */
+	/** The Confirm Button saves the SR to the database. */
 	private Button mEnter;
 	
-	/** The saved URI. */
+	/** The saved URI to load SR information from. */
 	private Uri savedUri;
 	
+	/** The _id number in the database of the SR. */
 	private String myId;
 	
 	/* (non-Javadoc)
@@ -138,9 +135,9 @@ public class EditSRActivity extends Activity {
 	}
 	
 	/**
-	 * Fill data.
+	 * Fill data from the database into the form.
 	 *
-	 * @param uri the uri
+	 * @param uri the uri of the database entry to load
 	 */
 	private void fillData(Uri uri) {
 		String[] projection = { SRTable.COLUMN_CUSTOMER_NAME,
@@ -188,7 +185,7 @@ public class EditSRActivity extends Activity {
 	}
 	
 	/**
-	 * Save state.
+	 * Save state from the form into the database.
 	 */
 	private void saveState() {
 		

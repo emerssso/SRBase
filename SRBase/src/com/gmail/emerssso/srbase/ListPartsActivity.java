@@ -1,3 +1,5 @@
+//This Software is distributed under The Apache License, Version 2.0
+//The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.PartContentProvider;
@@ -17,12 +19,25 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * This class lists a summary of all part entries associated with
+ * a particular SR. These may be clicked to edit the associated part entry.
+ */
 public class ListPartsActivity extends ListActivity 
 		implements LoaderManager.LoaderCallbacks<Cursor> {
+	
+	/** The adapter for the cursor used to load data. */
 	private SimpleCursorAdapter adapter;
+	
+	/** The ID of the target SR. */
 	private String srId;
+	
+	/** The ListView of parts. */
 	private ListView lv;
 	
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -54,6 +69,9 @@ public class ListPartsActivity extends ListActivity
 		});
 	}
 	
+	/**
+	 * Fill data into the ListView from the database.
+	 */
 	private void fillData() {
 		// Fields from the database (projection)
 	    // Must include the _id column for the adapter to work
@@ -73,6 +91,9 @@ public class ListPartsActivity extends ListActivity
 	    getLoaderManager().initLoader(0, null, this);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onCreateLoader(int, android.os.Bundle)
+	 */
 	@Override
 	public Loader<Cursor> onCreateLoader(int number, Bundle bundle) {
 		String[] projection = { PartTable.COLUMN_ID, 
@@ -86,11 +107,17 @@ public class ListPartsActivity extends ListActivity
 	    return cursorLoader;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onLoadFinished(android.content.Loader, java.lang.Object)
+	 */
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 		adapter.swapCursor(data);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.LoaderManager.LoaderCallbacks#onLoaderReset(android.content.Loader)
+	 */
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);
