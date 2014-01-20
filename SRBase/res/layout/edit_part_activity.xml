@@ -11,7 +11,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/part_number"
-        tools:ignore="TextFields" >
+        tools:ignore="TextFields" 
+        android:maxLines="1"
+        android:singleLine="true"
+        android:nextFocusDown="@+id/part_quantity"
+        android:imeOptions="actionNext">
 
         <requestFocus />
     </EditText>
@@ -22,7 +26,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/quantity"
-        android:inputType="number" />
+        android:inputType="number" 
+        android:maxLines="1"
+        android:singleLine="true"
+        android:nextFocusDown="@+id/part_source"
+        android:imeOptions="actionNext"/>
 
     <CheckBox
         android:id="@+id/part_used"
@@ -36,7 +44,10 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/source"
-        android:inputType="textMultiLine" />
+        android:maxLines="1"
+        android:singleLine="true"
+        android:nextFocusDown="@+id/part_description"
+        android:imeOptions="actionNext"/>
 
     <EditText
         android:id="@+id/part_description"
