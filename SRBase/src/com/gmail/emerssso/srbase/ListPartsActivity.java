@@ -2,7 +2,6 @@ package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.PartContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
-import com.gmail.emerssso.srbase.database.SRContentProvider;
 
 import android.app.ListActivity;
 import android.app.LoaderManager;

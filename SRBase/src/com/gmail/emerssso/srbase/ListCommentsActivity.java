@@ -2,7 +2,6 @@ package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
-import com.gmail.emerssso.srbase.database.PartContentProvider;
 
 import android.app.ListActivity;
 import android.app.LoaderManager;
