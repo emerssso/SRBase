@@ -8,11 +8,16 @@ import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -346,12 +351,60 @@ public class ViewSRActivity extends Activity {
 		    startActivity(i);
 			return true;
 		case R.id.delete_sr:
-			deleteSR(srId, srUri);
-			finish();
+			DeleteFragment dfrag = new DeleteFragment();
+			dfrag.show(getFragmentManager(), "Delete Fragment");
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public static class DeleteFragment extends DialogFragment {
+		
+		@Override
+		public Dialog onCreateDialog(Bundle bundle) {
+			final Activity activity = getActivity();
+			return new AlertDialog.Builder(activity)
+					.setTitle("Delete SR?")
+					.setMessage("Are you sure you want to delete this SR?")
+					.setPositiveButton("Yes", 
+							new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, 
+								int which) {
+							//Some chicanery to get the SR deleted
+							//There is probably a better way to do this
+							if(activity instanceof ViewSRActivity) {
+								((ViewSRActivity) activity).deleteSR();
+								activity.finish();
+							}
+							else {
+								Log.w("SRBase:DeleteFragment", 
+										"DeleteFragment called by non" +
+										"ViewSRActivity!");
+								dialog.cancel();
+							}
+						}
+					})
+					.setNegativeButton("No", 
+							new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, 
+								int which) {
+							dialog.cancel();
+						}
+					}).create();
+		}
+		
+	}
+	
+	/**
+	 * Convenience method to request SR deletion
+	 */
+	public void deleteSR() {
+		this.deleteSR(srId, srUri);
 	}
 	
 	/**
