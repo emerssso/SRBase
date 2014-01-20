@@ -1,5 +1,7 @@
 package com.gmail.emerssso.srbase;
 
+import java.util.Calendar;
+
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
 import com.gmail.emerssso.srbase.database.PartContentProvider;
@@ -75,6 +77,9 @@ public class ViewSRActivity extends Activity {
 	/** The comments list button. */
 	private Button commentsListButton;
 	
+	/** Button to edit today's entry in the Dailies */
+	private Button today;
+	
 	/** The sr uri. */
 	private Uri srUri;
 	
@@ -101,6 +106,7 @@ public class ViewSRActivity extends Activity {
 		serialNumber = (TextView) findViewById(R.id.serial_number_view);
 		partsListButton = (Button) findViewById(R.id.view_parts_list);
 		commentsListButton = (Button) findViewById(R.id.view_comments_list);
+		today = (Button) findViewById(R.id.edit_today);
 		
 		Bundle extras = getIntent().getExtras();
 		
@@ -135,6 +141,61 @@ public class ViewSRActivity extends Activity {
 			  	startActivity(i);
 			}
 		});
+	    
+	    //This button should take us to an edit for today's daily
+	    today.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startDaily();
+			}
+		});
+	}
+	
+	/**
+	 * Callback to start the daily associated with today's date.
+	 * Note that if multiple dailies are found with today's date and
+	 * associated with the current SR
+	 * we only return the first one.  The app does not assume
+	 * one daily per date.
+	 */
+	public void startDaily() {
+		//first, we have to find it if it exits
+		final Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH) + 1;
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		
+		Cursor cursor = getContentResolver()
+				.query(DailyContentProvider.CONTENT_URI,
+				new String[] {DailyTable.COLUMN_ID},
+				DailyTable.COLUMN_YEAR + " = ? and " + 
+				DailyTable.COLUMN_MONTH + " = ? and " + 
+				DailyTable.COLUMN_DAY + " = ?",
+				new String[] {String.valueOf(year),
+				String.valueOf(month), String.valueOf(day)},
+				null);
+		
+		//if it exists, load the necessary data and start 
+		//a new EditDailyActivity
+		if(cursor != null && cursor.getCount() > 0) {
+			Log.w("SRBase:ViewSR", "Daily Found");
+			cursor.moveToFirst();
+			int id = cursor.getInt(cursor
+					.getColumnIndexOrThrow(DailyTable.COLUMN_ID));
+			
+			Intent i = new Intent(this, EditDailyActivity.class);
+			Uri partUri = Uri.parse(DailyContentProvider.CONTENT_URI + 
+					"/" + id);
+			i.putExtra(DailyContentProvider.CONTENT_ITEM_TYPE, partUri);
+			startActivity(i);
+		}
+		else { //otherwise start a blank one
+			Log.w("SRBase:ViewSR", "No Daily Found");
+			Intent i = new Intent(this, EditDailyActivity.class);
+			i.putExtra(DailyTable.COLUMN_SR_ID, srId);
+			startActivity(i);
+		}
 	}
 	
 	/**

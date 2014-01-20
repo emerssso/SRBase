@@ -184,4 +184,12 @@
         android:text="@string/sr_number_header"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <Button
+        android:id="@+id/edit_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/view_comments_list"
+        android:text="@string/today" />
+
 </RelativeLayout>
