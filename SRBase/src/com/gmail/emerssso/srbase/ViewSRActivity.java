@@ -169,7 +169,7 @@ public class ViewSRActivity extends Activity {
 					new String[] {srId}, null);
 			
 			//load daily data
-			if(cursor != null) {
+			if(cursor != null && cursor.getCount() > 0) {
 				double workTime = 0;
 				double travelTime = 0;
 				int startDay = Integer.MAX_VALUE;
