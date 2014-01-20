@@ -87,5 +87,7 @@
     <string name="unkown">Unknown</string>
     <color name="blue">#00ddff</color>
     <string name="daily_logs">Daily Logs</string>
+    <string name="today">Today</string>
+    <string name="delete_sr">Delete SR</string>
 
 </resources>

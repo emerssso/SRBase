@@ -5,6 +5,11 @@
         android:icon="@drawable/ic_action_edit" 
         android:title="@string/edit_sr" android:showAsAction="ifRoom">
     </item>
+    <item 
+        android:id="@+id/delete_sr" 
+        android:icon="@drawable/ic_action_discard" 
+        android:title="@string/delete_sr" android:showAsAction="ifRoom">
+    </item>
     
 
 </menu>

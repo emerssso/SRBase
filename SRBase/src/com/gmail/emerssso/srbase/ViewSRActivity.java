@@ -2,6 +2,7 @@ package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -343,8 +345,33 @@ public class ViewSRActivity extends Activity {
 			i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, srUri);
 		    startActivity(i);
 			return true;
+		case R.id.delete_sr:
+			deleteSR(srId, srUri);
+			finish();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	/**
+	 * This method deletes the passed SR, and all parts and dailies
+	 * associated with it.
+	 * @param id _id number of the SR
+	 * @param uri URI to the SR
+	 */
+	private void deleteSR(String id, Uri uri) {
+		
+		//first: find and delete all associated parts
+		getContentResolver().delete(PartContentProvider.CONTENT_URI, 
+				PartTable.COLUMN_SR_ID + " = ?", new String[] {id});
+		
+		//second: delete all associated dailies
+		getContentResolver().delete(DailyContentProvider.CONTENT_URI,
+				DailyTable.COLUMN_SR_ID + " = ?", new String[] {id});
+		
+		//last: delete the SR itself
+		getContentResolver().delete(uri, null, null);
+		
 	}
 }
