@@ -91,17 +91,17 @@ public class EditDailyActivity extends Activity {
 				DailyTable.COLUMN_DAY, DailyTable.COLUMN_END_HOUR,
 				DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
 				DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_TRAVEL_TIME,
-				DailyTable.COLUMN_START_MIN, DailyTable.COLUMN_END_MIN};
+				DailyTable.COLUMN_START_MIN, DailyTable.COLUMN_END_MIN,
+				DailyTable.COLUMN_SR_ID};
 		Cursor cursor = getContentResolver()
 				.query(uri, projection, null, null,null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 			
-			
 			date.updateDate(cursor.getInt(cursor
 					.getColumnIndexOrThrow(DailyTable.COLUMN_YEAR)),
 					cursor.getInt(cursor.getColumnIndexOrThrow
-					(DailyTable.COLUMN_MONTH)), cursor.getInt(
+					(DailyTable.COLUMN_MONTH))-1, cursor.getInt(
 					cursor.getColumnIndexOrThrow(DailyTable.COLUMN_DAY)));
 			startHour = cursor.getInt(cursor
 					.getColumnIndexOrThrow(DailyTable.COLUMN_START_HOUR));
@@ -116,6 +116,8 @@ public class EditDailyActivity extends Activity {
 					.getColumnIndexOrThrow(DailyTable.COLUMN_TRAVEL_TIME)));
 		    comment.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(DailyTable.COLUMN_COMMENT)));
+		    srId = cursor.getString(cursor
+		    		.getColumnIndexOrThrow(DailyTable.COLUMN_SR_ID));
 
 		    cursor.close();
 		}

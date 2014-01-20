@@ -2,15 +2,21 @@ package com.gmail.emerssso.srbase;
 
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartContentProvider;
 
 import android.app.ListActivity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ListCommentsActivity extends ListActivity 
 		implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -30,6 +36,19 @@ public class ListCommentsActivity extends ListActivity
 		srId = extras.getString(DailyTable.COLUMN_SR_ID);
 		
 		fillData();
+		
+		lv.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
+				Intent i = new Intent(parent.getContext(), 
+						EditDailyActivity.class);
+				Uri dayUri = Uri.parse(DailyContentProvider.CONTENT_URI + 
+						"/" + id);
+				i.putExtra(DailyContentProvider.CONTENT_ITEM_TYPE, dayUri);
+				startActivity(i);
+			}
+		});
 	}
 	
 	private void fillData() {
@@ -45,8 +64,7 @@ public class ListCommentsActivity extends ListActivity
 	    //create cursor so that we only list relevant comments
 	    Cursor cursor = getContentResolver().query(
 				DailyContentProvider.CONTENT_URI, from,
-				DailyTable.COLUMN_SR_ID + " = ? and " +
-				DailyTable.COLUMN_COMMENT + " != ''", 
+				DailyTable.COLUMN_SR_ID + " = ? ", 
 				new String[] {srId}, null);
 	    
 	    adapter = new SimpleCursorAdapter(this, R.layout.list_comment_row, 
@@ -63,8 +81,7 @@ public class ListCommentsActivity extends ListActivity
 				DailyTable.COLUMN_COMMENT};
 	    CursorLoader cursorLoader = new CursorLoader(this,
 	        DailyContentProvider.CONTENT_URI, projection, 
-	        		DailyTable.COLUMN_SR_ID + " = ? and " +
-					DailyTable.COLUMN_COMMENT + " != ''", 
+	        		DailyTable.COLUMN_SR_ID + " = ? ", 
 					new String[] {srId}, null);
 	    return cursorLoader;
 	}
