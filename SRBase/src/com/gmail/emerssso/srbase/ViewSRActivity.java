@@ -125,7 +125,7 @@ public class ViewSRActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getBaseContext(),
-						ListCommentsActivity.class);
+						ListDailiesActivity.class);
 			  	i.putExtra(DailyTable.COLUMN_SR_ID, srId);
 			  	startActivity(i);
 			}
