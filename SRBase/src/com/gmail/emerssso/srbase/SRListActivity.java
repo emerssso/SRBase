@@ -108,13 +108,14 @@ public class SRListActivity extends ListActivity
 
 	    // Fields from the database (projection)
 	    // Must include the _id column for the adapter to work
-	    String[] from = new String[] { SRTable.COLUMN_SR_NUMBER };
+	    String[] from = new String[] { SRTable.COLUMN_SR_NUMBER,
+	    		SRTable.COLUMN_CUSTOMER_NAME };
 	    // Fields on the UI to which we map
-	    int[] to = new int[] { R.id.sr_label };
+	    int[] to = new int[] { R.id.sr_label, R.id.customer_label };
 
 	    getLoaderManager().initLoader(0, null, this);
-	    adapter = new SimpleCursorAdapter(this, R.layout.list_sr_row, null, from,
-	        to, 0);
+	    adapter = new SimpleCursorAdapter(this, R.layout.list_sr_row, null, 
+	    		from, to, 0);
 
 	    setListAdapter(adapter);
 	}
@@ -139,7 +140,8 @@ public class SRListActivity extends ListActivity
 	 */
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-		String[] projection = { SRTable.COLUMN_ID, SRTable.COLUMN_SR_NUMBER };
+		String[] projection = { SRTable.COLUMN_ID, SRTable.COLUMN_SR_NUMBER, 
+				SRTable.COLUMN_CUSTOMER_NAME};
 	    CursorLoader cursorLoader = new CursorLoader(this,
 	        SRContentProvider.CONTENT_URI, projection, null, null, null);
 	    return cursorLoader;
