@@ -89,5 +89,6 @@
     <string name="daily_logs">Daily Logs</string>
     <string name="today">Today</string>
     <string name="delete_sr">Delete SR</string>
+    <string name="zero_hours">0.0 hours</string>
 
 </resources>
