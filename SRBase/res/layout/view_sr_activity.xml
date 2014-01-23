@@ -5,15 +5,6 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/sr_number_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/sr_header"
-        android:text="@string/blank"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
         android:id="@+id/start_date_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -189,6 +180,15 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/total_travel_header"
         android:layout_below="@+id/model_number_view"
+        android:text="@string/unkown"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/sr_number_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/total_travel_header"
         android:text="@string/unkown"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
