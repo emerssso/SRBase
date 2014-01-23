@@ -486,7 +486,8 @@ public class EditDailyActivity extends Activity {
 	 * @param uri URI to the Daily to delete
 	 */
 	private void deleteDaily(Uri uri) {
-		getContentResolver().delete(uri,
-				null, null);
+		if(uri != null)
+			getContentResolver().delete(uri,
+					null, null);
 	}
 }

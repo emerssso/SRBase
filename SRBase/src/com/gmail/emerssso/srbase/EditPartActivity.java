@@ -296,7 +296,8 @@ public class EditPartActivity extends Activity {
 	 * @param uri URI to the Daily to delete
 	 */
 	private void deletePart(Uri uri) {
-		getContentResolver().delete(uri,
-				null, null);
+		if(uri != null)
+			getContentResolver().delete(uri,
+					null, null);
 	}
 }
