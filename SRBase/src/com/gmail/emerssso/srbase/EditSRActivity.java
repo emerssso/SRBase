@@ -245,17 +245,17 @@ public class EditSRActivity extends DeletableActivity {
 	 */
 	@Override
 	protected void delete(Uri uri) {
-		
-		//first: find and delete all associated parts
-		getContentResolver().delete(PartContentProvider.CONTENT_URI, 
-				PartTable.COLUMN_SR_ID + " = ?", new String[] {myId});
-		
-		//second: delete all associated dailies
-		getContentResolver().delete(DailyContentProvider.CONTENT_URI,
-				DailyTable.COLUMN_SR_ID + " = ?", new String[] {myId});
-		
-		//last: delete the SR itself
-		getContentResolver().delete(uri, null, null);
-		
+		if(uri != null) {
+			//first: find and delete all associated parts
+			getContentResolver().delete(PartContentProvider.CONTENT_URI, 
+					PartTable.COLUMN_SR_ID + " = ?", new String[] {myId});
+			
+			//second: delete all associated dailies
+			getContentResolver().delete(DailyContentProvider.CONTENT_URI,
+					DailyTable.COLUMN_SR_ID + " = ?", new String[] {myId});
+			
+			//last: delete the SR itself
+			getContentResolver().delete(uri, null, null);
+		}
 	}
 }
