@@ -77,7 +77,7 @@ public class ViewSRActivity extends Activity {
 	/** The comments list button. */
 	private Button commentsListButton;
 	
-	/** Button to edit today's entry in the Dailies */
+	/** Button to edit today's entry in the Dailies. */
 	private Button today;
 	
 	/** The sr uri. */
@@ -150,6 +150,15 @@ public class ViewSRActivity extends Activity {
 				startDaily();
 			}
 		});
+	}
+	
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	protected void onResume() {
+		super.onResume();
+		fillData(srUri);
 	}
 	
 	/**
