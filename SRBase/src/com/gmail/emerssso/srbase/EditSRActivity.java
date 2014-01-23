@@ -25,7 +25,7 @@ import android.widget.Toast;
  *
  * @author Conner Kasten
  */
-public class EditSRActivity extends Activity {
+public class EditSRActivity extends DeletableActivity {
 	
 	/** The SR number. */
 	private EditText mSRNumber;
