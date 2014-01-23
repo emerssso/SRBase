@@ -4,12 +4,9 @@ package com.gmail.emerssso.srbase;
 
 import java.util.Calendar;
 
-import com.gmail.emerssso.srbase.ViewSRActivity.DeleteFragment;
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
-import com.gmail.emerssso.srbase.database.PartContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
-import com.gmail.emerssso.srbase.database.SRContentProvider;
 
 import android.app.Activity;
 import android.app.AlertDialog;
