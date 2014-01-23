@@ -15,5 +15,7 @@ modifications/improvements/optimizations, let me know! I started this as a learn
 to see how Android development has changed since I first wrote apps for Gingerbread, and 
 I feel like there's definitely room for improvement.
 
+This app is available for use from Google Play at: <https://play.google.com/store/apps/details?id=com.gmail.emerssso.srbase>.
+
 This app is Copyright Conner Kasten, 2014, and distributed under the Apache Licence, Version 2.0.
 That license is available at <http://www.apache.org/licenses/LICENSE-2.0>.
