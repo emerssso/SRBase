@@ -2,7 +2,6 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import com.gmail.emerssso.srbase.EditDailyActivity.DeleteFragment;
 import com.gmail.emerssso.srbase.database.PartContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
 
@@ -215,7 +214,7 @@ public class EditPartActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.edit_menu, menu);
+		inflater.inflate(R.menu.delete_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 	

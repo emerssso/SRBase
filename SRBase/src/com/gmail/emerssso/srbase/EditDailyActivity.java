@@ -8,22 +8,15 @@ import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
 import com.gmail.emerssso.srbase.database.PartTable;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -32,14 +25,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-// TODO: Auto-generated Javadoc
 /**
  * This class implements an activity to allow users to create 
  * or edit logs of daily activity.  This information includes a
  * date, start and end times, travel time, and a comment section.
  * @author Conner Kasten
  */
-public class EditDailyActivity extends Activity {
+public class EditDailyActivity extends DeletableActivity {
 	
 	/** The date for the log. */
 	private DatePicker date;
@@ -110,10 +102,14 @@ public class EditDailyActivity extends Activity {
 		savedUri = (savedInstanceState == null) ? null : 
 			(Uri) savedInstanceState.getParcelable(
 					DailyContentProvider.CONTENT_ITEM_TYPE);
+    	//any time savedUri is set, we also want to set
+    	//super.savedUri, so that we delete the right thing.
+		super.savedUri = savedUri;
 		
 	    if (extras != null) {
 	    	savedUri = extras
 	    			.getParcelable(DailyContentProvider.CONTENT_ITEM_TYPE);
+	    	super.savedUri = savedUri;
 	    	
 	    	if(savedUri != null)
 	    		fillData(savedUri);
@@ -294,6 +290,7 @@ public class EditDailyActivity extends Activity {
 	      // New Daily
 	      savedUri = getContentResolver()
 	    		  .insert(DailyContentProvider.CONTENT_URI, values);
+	      super.savedUri = savedUri;
 	    } else {
 	      // Update Daily
 	      getContentResolver().update(savedUri, values, null, null);
@@ -397,97 +394,5 @@ public class EditDailyActivity extends Activity {
 		public void onTimeSet(TimePicker view, int hour, int minute) {
 			parent.setTime(hour, minute, start);
 		}
-	}
-	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.edit_menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()) {
-		case R.id.delete_item:
-			DeleteFragment dfrag = new DeleteFragment();
-			dfrag.show(getFragmentManager(), "Delete Fragment");
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-	
-	/**
-	 * The DeleteFragmentClass implements a dialog fragment
-	 * to ask the user whether they are sure they want to delete 
-	 * the Daily or not.
-	 */
-	public static class DeleteFragment extends DialogFragment {
-		
-		/* (non-Javadoc)
-		 * @see android.app.DialogFragment#onCreateDialog(android.os.Bundle)
-		 */
-		@Override
-		public Dialog onCreateDialog(Bundle bundle) {
-			final Activity activity = getActivity();
-			return new AlertDialog.Builder(activity)
-					.setTitle("Delete Daily?")
-					.setMessage("Are you sure you want to delete this Log?")
-					.setPositiveButton("Yes", 
-							new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, 
-								int which) {
-							//Some chicanery to get the SR deleted
-							//There is probably a better way to do this
-							if(activity instanceof EditDailyActivity) {
-								((EditDailyActivity) activity).deleteDaily();
-								activity.finish();
-							}
-							else {
-								Log.w("SRBase:DeleteFragment", 
-										"DeleteFragment called by non" +
-										"ViewDailyActivity!");
-								dialog.cancel();
-							}
-						}
-					})
-					.setNegativeButton("No", 
-							new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, 
-								int which) {
-							dialog.cancel();
-						}
-					}).create();
-		}
-		
-	}
-	
-	/**
-	 * Convenience method to request Daily deletion.
-	 */
-	public void deleteDaily() {
-		this.deleteDaily(savedUri);
-	}
-	
-	/**
-	 * This method deletes the passed Daily, and all parts and dailies
-	 * associated with it.
-	 * @param uri URI to the Daily to delete
-	 */
-	private void deleteDaily(Uri uri) {
-		if(uri != null)
-			getContentResolver().delete(uri,
-					null, null);
 	}
 }
