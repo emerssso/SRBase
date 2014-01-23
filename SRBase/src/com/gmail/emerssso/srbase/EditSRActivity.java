@@ -99,6 +99,7 @@ public class EditSRActivity extends DeletableActivity {
 					return;
 				}
 				else {
+					saveState();
 					setResult(RESULT_OK);
 					finish();
 				}
@@ -181,15 +182,6 @@ public class EditSRActivity extends DeletableActivity {
 		super.onSaveInstanceState(outState);
 		saveState();
 		outState.putParcelable(SRContentProvider.CONTENT_ITEM_TYPE, savedUri);
-	}
-
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onPause()
-	 */
-	@Override
-	protected void onPause() {
-		super.onPause();
-		saveState();
 	}
 	
 	/**

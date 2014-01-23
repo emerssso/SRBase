@@ -144,6 +144,7 @@ public class EditDailyActivity extends DeletableActivity {
 					        Toast.LENGTH_LONG).show();
 					return;
 				}
+				saveState();
 				setResult(RESULT_OK);
 				finish();
 			}
@@ -246,15 +247,6 @@ public class EditDailyActivity extends DeletableActivity {
 		super.onSaveInstanceState(outState);
 		saveState();
 		outState.putParcelable(DailyContentProvider.CONTENT_ITEM_TYPE, savedUri);
-	}
-
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onPause()
-	 */
-	@Override
-	protected void onPause() {
-		super.onPause();
-		saveState();
 	}
 	
 	/**

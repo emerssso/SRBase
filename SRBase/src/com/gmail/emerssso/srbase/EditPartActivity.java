@@ -88,6 +88,7 @@ public class EditPartActivity extends DeletableActivity {
 					return;
 				}
 				else {
+					saveState();
 					setResult(RESULT_OK);
 					finish();
 				}
@@ -151,15 +152,6 @@ public class EditPartActivity extends DeletableActivity {
 		saveState();
 		outState.putParcelable(
 				PartContentProvider.CONTENT_ITEM_TYPE, savedUri);
-	}
-
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onPause()
-	 */
-	@Override
-	protected void onPause() {
-		super.onPause();
-		saveState();
 	}
 	
 	/**
