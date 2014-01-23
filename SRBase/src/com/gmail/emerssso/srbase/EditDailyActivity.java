@@ -427,7 +427,7 @@ public class EditDailyActivity extends Activity {
 	/**
 	 * The DeleteFragmentClass implements a dialog fragment
 	 * to ask the user whether they are sure they want to delete 
-	 * the SR or not.
+	 * the Daily or not.
 	 */
 	public static class DeleteFragment extends DialogFragment {
 		
@@ -483,8 +483,7 @@ public class EditDailyActivity extends Activity {
 	/**
 	 * This method deletes the passed Daily, and all parts and dailies
 	 * associated with it.
-	 * @param id _id number of the SR
-	 * @param uri URI to the SR
+	 * @param uri URI to the Daily to delete
 	 */
 	private void deleteDaily(Uri uri) {
 		getContentResolver().delete(uri,
