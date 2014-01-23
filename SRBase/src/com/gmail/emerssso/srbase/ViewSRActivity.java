@@ -36,7 +36,7 @@ import android.widget.TextView;
  * 
  * @author Conner Kasten
  */
-public class ViewSRActivity extends Activity {
+public class ViewSRActivity extends DeletableActivity {
 	
 	/** The SR. */
 	private TextView sr;
@@ -113,10 +113,12 @@ public class ViewSRActivity extends Activity {
 		srUri = (bundle == null) ? null : 
 			(Uri) bundle
 	        .getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
+		super.savedUri = srUri;
 		
 	    if (extras != null) {
 	    	srUri = extras
 	    			.getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
+	    	super.savedUri = srUri;
 	    	fillData(srUri);
     	}
 	    
@@ -441,86 +443,25 @@ public class ViewSRActivity extends Activity {
 			i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, srUri);
 		    startActivity(i);
 			return true;
-		case R.id.delete_sr:
-			DeleteFragment dfrag = new DeleteFragment();
-			dfrag.show(getFragmentManager(), "Delete Fragment");
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 	
-	/**
-	 * The DeleteFragmentClass implements a dialog fragment
-	 * to ask the user whether they are sure they want to delete 
-	 * the SR or not.
+	/* (non-Javadoc)
+	 * Overriden so we can delete associated dailies and parts as well
+	 * @see com.gmail.emerssso.srbase.DeletableActivity#delete(android.net.Uri)
 	 */
-	public static class DeleteFragment extends DialogFragment {
-		
-		/* (non-Javadoc)
-		 * @see android.app.DialogFragment#onCreateDialog(android.os.Bundle)
-		 */
-		@Override
-		public Dialog onCreateDialog(Bundle bundle) {
-			final Activity activity = getActivity();
-			return new AlertDialog.Builder(activity)
-					.setTitle("Delete SR?")
-					.setMessage("Are you sure you want to delete this SR?")
-					.setPositiveButton("Yes", 
-							new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, 
-								int which) {
-							//Some chicanery to get the SR deleted
-							//There is probably a better way to do this
-							if(activity instanceof ViewSRActivity) {
-								((ViewSRActivity) activity).deleteSR();
-								activity.finish();
-							}
-							else {
-								Log.w("SRBase:DeleteFragment", 
-										"DeleteFragment called by non" +
-										"ViewSRActivity!");
-								dialog.cancel();
-							}
-						}
-					})
-					.setNegativeButton("No", 
-							new DialogInterface.OnClickListener() {
-						
-						@Override
-						public void onClick(DialogInterface dialog, 
-								int which) {
-							dialog.cancel();
-						}
-					}).create();
-		}
-		
-	}
-	
-	/**
-	 * Convenience method to request SR deletion.
-	 */
-	public void deleteSR() {
-		this.deleteSR(srId, srUri);
-	}
-	
-	/**
-	 * This method deletes the passed SR, and all parts and dailies
-	 * associated with it.
-	 * @param id _id number of the SR
-	 * @param uri URI to the SR
-	 */
-	private void deleteSR(String id, Uri uri) {
+	@Override
+	protected void delete(Uri uri) {
 		
 		//first: find and delete all associated parts
 		getContentResolver().delete(PartContentProvider.CONTENT_URI, 
-				PartTable.COLUMN_SR_ID + " = ?", new String[] {id});
+				PartTable.COLUMN_SR_ID + " = ?", new String[] {srId});
 		
 		//second: delete all associated dailies
 		getContentResolver().delete(DailyContentProvider.CONTENT_URI,
-				DailyTable.COLUMN_SR_ID + " = ?", new String[] {id});
+				DailyTable.COLUMN_SR_ID + " = ?", new String[] {srId});
 		
 		//last: delete the SR itself
 		getContentResolver().delete(uri, null, null);
