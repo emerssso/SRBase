@@ -1,3 +1,5 @@
+//This Software is distributed under The Apache License, Version 2.0
+//The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
 import android.app.Activity;
@@ -12,6 +14,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+/**
+ * This abstract class is intended to represent an object in a database
+ * It provides its descendants with the ability to delete the represented
+ * database object via a menu press.
+ * 
+ * @author Conner Kasten
+ */
 public abstract class DeletableActivity extends Activity {
 	
 	protected Uri savedUri;
