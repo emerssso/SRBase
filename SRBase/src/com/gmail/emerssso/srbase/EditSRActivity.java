@@ -2,12 +2,13 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
+import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+// TODO: Auto-generated Javadoc
 /**
  * This activity implements an activity that provides a form
  * for users to add new Service Records (SRs) into the database,
@@ -122,12 +124,18 @@ public class EditSRActivity extends DeletableActivity {
 		});
 	}
 	
+	/**
+	 * Adds the part.
+	 */
 	private void addPart() {
 		Intent i = new Intent(this, EditPartActivity.class);
 		i.putExtra(PartTable.COLUMN_SR_ID, myId);
 		startActivity(i);
 	}
 	
+	/**
+	 * Adds the daily.
+	 */
 	private void addDaily() {
 		Intent i = new Intent(this, EditDailyActivity.class);
 		i.putExtra(DailyTable.COLUMN_SR_ID, myId);
@@ -229,4 +237,25 @@ public class EditSRActivity extends DeletableActivity {
 	      getContentResolver().update(savedUri, values, null, null);
 	    }
     }
+	
+	/* (non-Javadoc)
+	 * We Override the DeletableActivity version so that we can delete
+	 * all associated entries
+	 * @see com.gmail.emerssso.srbase.DeletableActivity#delete(android.net.Uri)
+	 */
+	@Override
+	protected void delete(Uri uri) {
+		
+		//first: find and delete all associated parts
+		getContentResolver().delete(PartContentProvider.CONTENT_URI, 
+				PartTable.COLUMN_SR_ID + " = ?", new String[] {myId});
+		
+		//second: delete all associated dailies
+		getContentResolver().delete(DailyContentProvider.CONTENT_URI,
+				DailyTable.COLUMN_SR_ID + " = ?", new String[] {myId});
+		
+		//last: delete the SR itself
+		getContentResolver().delete(uri, null, null);
+		
+	}
 }
