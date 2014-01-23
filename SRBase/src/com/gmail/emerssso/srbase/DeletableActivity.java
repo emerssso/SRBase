@@ -55,8 +55,9 @@ public abstract class DeletableActivity extends Activity {
 		public Dialog onCreateDialog(Bundle bundle) {
 			final Activity activity = getActivity();
 			return new AlertDialog.Builder(activity)
-					.setTitle("Delete Daily?")
-					.setMessage("Are you sure you want to delete this Log?")
+					.setTitle("Delete Entry?")
+					.setMessage("Are you sure you want to " +
+							"delete this entry?")
 					.setPositiveButton("Yes", 
 							new DialogInterface.OnClickListener() {
 						
@@ -102,7 +103,7 @@ public abstract class DeletableActivity extends Activity {
 	 * associated with it.
 	 * @param uri URI to the Daily to delete
 	 */
-	private void delete(Uri uri) {
+	protected void delete(Uri uri) {
 		if(uri != null)
 			getContentResolver().delete(uri,
 					null, null);
