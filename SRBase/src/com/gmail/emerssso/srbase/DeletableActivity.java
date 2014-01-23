@@ -22,7 +22,7 @@ public abstract class DeletableActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.edit_menu, menu);
+		inflater.inflate(R.menu.delete_menu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 	
