@@ -43,6 +43,12 @@ public class EditDailyActivity extends Activity {
 	/** The comment. */
 	private EditText comment;
 	
+	/** Displays the start time. */
+	private EditText startTime;
+	
+	/** Displays the end time. */
+	private EditText endTime;
+	
 	/** The confirm button to save the log. */
 	private Button confirm;
 	
@@ -85,6 +91,8 @@ public class EditDailyActivity extends Activity {
 		date.init(1,1,1,null);
 		travelTime = (EditText) findViewById(R.id.travel_time);
 		comment = (EditText) findViewById(R.id.comment);
+		startTime = (EditText) findViewById(R.id.display_start_time);
+		endTime = (EditText) findViewById(R.id.display_end_time);
 		confirm = (Button) findViewById(R.id.daily_confirm);
 		addPart = (Button) findViewById(R.id.add_part_from_daily);
 		
@@ -108,6 +116,8 @@ public class EditDailyActivity extends Activity {
 				date.updateDate(c.get(Calendar.YEAR), 
 						c.get(Calendar.MONTH), 
 						c.get(Calendar.DAY_OF_MONTH));
+				startTime.setText(displayTime(c.get(Calendar.HOUR_OF_DAY),
+						c.get(Calendar.MINUTE)));
 		    }
     	}
 	    
@@ -155,6 +165,31 @@ public class EditDailyActivity extends Activity {
 	}
 	
 	/**
+	 * Convenience method to generate properly formated time string
+	 * @param hour Hour of time to produce
+	 * @param min Minute of time to produce
+	 * @return A String containing the passed time, formatted according
+	 * to system settings.
+	 */
+	private String displayTime(int hour, int min) {
+		String ampm = "";
+		if(!DateFormat.is24HourFormat(this)) {
+			if(hour > 12) { 
+				hour = hour % 12;
+				ampm = "pm";
+			}
+			else ampm = "am";
+		}
+		
+
+		if(min < 10)
+			return hour + ":0" + min + ampm;
+		else
+			return hour + ":" + min + ampm;
+		
+	}
+	
+	/**
 	 * Fill data into the form from the database entry targeted by the Uri.
 	 *
 	 * @param uri the Uri to load data from
@@ -191,6 +226,9 @@ public class EditDailyActivity extends Activity {
 					.getColumnIndexOrThrow(DailyTable.COLUMN_COMMENT)));
 		    srId = cursor.getString(cursor
 		    		.getColumnIndexOrThrow(DailyTable.COLUMN_SR_ID));
+		    
+		    startTime.setText(displayTime(startHour, startMin));
+		    endTime.setText(displayTime(endHour, endMin));
 
 		    cursor.close();
 		}
@@ -265,12 +303,12 @@ public class EditDailyActivity extends Activity {
 		if(start) {
 			startHour = hour;
 			startMin = minute;
-			
+			startTime.setText(displayTime(startHour, startMin));
 		}
 		else {
 			endHour = hour;
 			endMin = minute;
-			
+			endTime.setText(displayTime(endHour, endMin));
 		}
 	}
 	

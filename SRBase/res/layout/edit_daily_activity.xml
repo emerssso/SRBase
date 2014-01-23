@@ -16,15 +16,6 @@
         	android:layout_alignParentTop="true"
 	        android:text="@string/date"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-	    <Button
-	        android:id="@+id/start_time_button"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/date_picker"
-	        android:text="@string/start_time" 
-	        android:onClick="showStartTimePickerDialog"/>
 	
 	    <EditText
 	        android:id="@+id/travel_time"
@@ -56,15 +47,6 @@
 	        android:inputType="textMultiLine" >
 	    </EditText>
 
-	    <Button
-	        android:id="@+id/end_time_button"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentRight="true"
-	        android:layout_below="@+id/date_picker"
-	        android:onClick="showEndTimePickerDialog"
-	        android:text="@string/end_time" />
-
 	    <DatePicker
 	        android:id="@+id/date_picker"
 	        android:layout_width="wrap_content"
@@ -82,6 +64,43 @@
 	        android:layout_alignParentBottom="true"
 	        android:layout_alignParentLeft="true"
 	        android:text="@string/add_part" />
+
+	    <TextView
+	        android:id="@+id/display_start_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/date_picker"
+	        android:text="@string/start_time"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <Button
+	        android:id="@+id/start_time_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/display_start_time"
+	        android:onClick="showStartTimePickerDialog"
+	        android:text="@string/start_time" />
+
+	    <Button
+	        android:id="@+id/end_time_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/start_time_button"
+	        android:layout_alignBottom="@+id/start_time_button"
+	        android:layout_alignParentRight="true"
+	        android:onClick="showEndTimePickerDialog"
+	        android:text="@string/end_time" />
+
+	    <TextView
+	        android:id="@+id/display_end_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/date_picker"
+	        android:text="@string/end_time"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	
 	</RelativeLayout>
 </ScrollView>
