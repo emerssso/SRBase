@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -44,10 +45,10 @@ public class EditDailyActivity extends Activity {
 	private EditText comment;
 	
 	/** Displays the start time. */
-	private EditText startTime;
+	private TextView startTime;
 	
 	/** Displays the end time. */
-	private EditText endTime;
+	private TextView endTime;
 	
 	/** The confirm button to save the log. */
 	private Button confirm;
@@ -91,8 +92,8 @@ public class EditDailyActivity extends Activity {
 		date.init(1,1,1,null);
 		travelTime = (EditText) findViewById(R.id.travel_time);
 		comment = (EditText) findViewById(R.id.comment);
-		startTime = (EditText) findViewById(R.id.display_start_time);
-		endTime = (EditText) findViewById(R.id.display_end_time);
+		startTime = (TextView) findViewById(R.id.display_start_time);
+		endTime = (TextView) findViewById(R.id.display_end_time);
 		confirm = (Button) findViewById(R.id.daily_confirm);
 		addPart = (Button) findViewById(R.id.add_part_from_daily);
 		
@@ -117,6 +118,8 @@ public class EditDailyActivity extends Activity {
 						c.get(Calendar.MONTH), 
 						c.get(Calendar.DAY_OF_MONTH));
 				startTime.setText(displayTime(c.get(Calendar.HOUR_OF_DAY),
+						c.get(Calendar.MINUTE)));
+				endTime.setText(displayTime(c.get(Calendar.HOUR_OF_DAY),
 						c.get(Calendar.MINUTE)));
 		    }
     	}
