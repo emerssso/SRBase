@@ -6,12 +6,14 @@ import java.util.Calendar;
 
 import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartTable;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +45,9 @@ public class EditDailyActivity extends Activity {
 	
 	/** The confirm button to save the log. */
 	private Button confirm;
+	
+	/** Add a part associated with the same SR as the daily. */
+	private Button addPart;
 	
 	/** The SR ID associated with the day. */
 	private String srId;
@@ -81,6 +86,7 @@ public class EditDailyActivity extends Activity {
 		travelTime = (EditText) findViewById(R.id.travel_time);
 		comment = (EditText) findViewById(R.id.comment);
 		confirm = (Button) findViewById(R.id.daily_confirm);
+		addPart = (Button) findViewById(R.id.add_part_from_daily);
 		
 		Bundle extras = getIntent().getExtras();
 		
@@ -127,6 +133,25 @@ public class EditDailyActivity extends Activity {
 				finish();
 			}
 		});
+	    
+	    addPart.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				saveState();
+				addPart();
+			}
+		});
+	}
+	
+	/**
+	 * Convenience method to add a new part with the same SR ID as
+	 * The current Daily.
+	 */
+	private void addPart() {
+		Intent i = new Intent(this, EditPartActivity.class);
+		i.putExtra(PartTable.COLUMN_SR_ID, srId);
+		startActivity(i);
 	}
 	
 	/**
