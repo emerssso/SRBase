@@ -91,5 +91,6 @@
     <string name="delete_sr">Delete SR</string>
     <string name="zero_hours">0.0 hours</string>
     <string name="dete_entry">Delete This Entry</string>
+    <color name="link_blue">#0000FF</color>
 
 </resources>

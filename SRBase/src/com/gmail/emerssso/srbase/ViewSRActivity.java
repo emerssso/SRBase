@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -80,6 +83,8 @@ public class ViewSRActivity extends DeletableActivity {
 	
 	/** The sr id. */
 	private String srId;
+	
+	private Uri contactUri = null;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -221,11 +226,13 @@ public class ViewSRActivity extends DeletableActivity {
 		if(cursor != null) {
 			cursor.moveToFirst();
 			
+			final String name = cursor.getString(cursor
+					.getColumnIndexOrThrow(SRTable.COLUMN_CUSTOMER_NAME));
+			
 			//load data garnered from SR table
 			sr.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(SRTable.COLUMN_SR_NUMBER)));
-			customer.setText(cursor.getString(cursor
-					.getColumnIndexOrThrow(SRTable.COLUMN_CUSTOMER_NAME)));
+			customer.setText(name);
 			modelNumber.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(SRTable.COLUMN_MODEL_NUMBER)));
 			serialNumber.setText(cursor.getString(cursor
@@ -236,6 +243,64 @@ public class ViewSRActivity extends DeletableActivity {
 					.getColumnIndexOrThrow(SRTable.COLUMN_ID)));
 			
 			cursor.close();
+			
+			//This listener allows us to look up customers in contact list
+			customer.setOnClickListener(new View.OnClickListener() {
+		    	
+		    	@Override
+		    	public void onClick(View v) {
+		    		if(contactUri != null) { //if already looked up
+		    			Intent i = new Intent(Intent.ACTION_VIEW);
+		    			i.setData(contactUri);
+		    			startActivity(i);
+		    		}
+		    		else{ //find URI to use if never looked up
+		    			String[] projection = {ContactsContract.Contacts
+		    					.LOOKUP_KEY,
+		    					ContactsContract.Contacts._ID};
+		    			String selection = 
+		    					ContactsContract.Contacts.DISPLAY_NAME 
+		    					+ " = ?";
+		    			
+		    			Cursor cursor = getContentResolver().query(
+		    					ContactsContract.Contacts.CONTENT_URI,
+		    					projection, selection, 
+		    					new String[] {name}, null
+		    					);
+		    			
+		    			//handle list of contacts with matching name
+		    			if(cursor != null) {
+		    				cursor.moveToFirst();
+		    				// if exactly one contact has this name
+		    				if(cursor.getCount() >= 1) {
+		    					String key = cursor.getString(cursor
+		    							.getColumnIndexOrThrow(
+    									ContactsContract
+    									.Contacts.LOOKUP_KEY));
+		    					long id = cursor.getLong(cursor
+		    							.getColumnIndexOrThrow(
+    									ContactsContract.Contacts._ID));
+		    					contactUri = Contacts.getLookupUri(id, key);
+		    					
+		    					//create and start intent for contact
+		    					Intent i = new Intent(Intent.ACTION_VIEW);
+		    					i.setDataAndType(contactUri, 
+		    							Contacts.CONTENT_ITEM_TYPE);
+		    					
+		    					startActivity(i);
+		    				}
+		    				else {
+		    					Toast.makeText(ViewSRActivity.this, 
+		    							"No Matching Contact Found",
+		    					        Toast.LENGTH_LONG).show();
+		    				}
+		    			}
+		    			
+		    			cursor.close();
+		    		}
+		    	}
+		    	
+		    });
 			
 			//gather rows of dailies for this SR
 			String [] dailyProjection = {DailyTable.COLUMN_DAY,
