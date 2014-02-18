@@ -384,7 +384,7 @@ public class ViewSRActivity extends DeletableActivity {
 				
 				totalWorkTime.setText(truncate(Double.toString(workTime))
 						+ " hours");
-				totalTravelTime.setText(Double.toString(travelTime)
+				totalTravelTime.setText(truncate(Double.toString(travelTime))
 						+ " hours");
 				cursor.close();
 			}
