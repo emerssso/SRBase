@@ -11,6 +11,8 @@
         android:name=".database.SRContentProvider"
         android:exported="false" >
     </permission>
+    
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
         android:allowBackup="true"
