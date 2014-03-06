@@ -75,11 +75,11 @@ public class DailyContentProvider extends ContentProvider {
 			String id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
 				rowsDeleted = wDB.delete(DailyTable.TABLE_DAILY,
-						SRTable.COLUMN_ID + "=" + id, 
+						DailyTable.COLUMN_ID + "=" + id, 
 						null);
 			} else {
 				rowsDeleted = wDB.delete(DailyTable.TABLE_DAILY,
-						SRTable.COLUMN_ID + "=" + id 
+						DailyTable.COLUMN_ID + "=" + id 
 						+ " and " + selection,
 						selArgs);
 			}

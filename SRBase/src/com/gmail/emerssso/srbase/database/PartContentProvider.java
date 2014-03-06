@@ -74,11 +74,11 @@ public class PartContentProvider extends ContentProvider {
 			String id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
 				rowsDeleted = wDB.delete(PartTable.TABLE_PART,
-						SRTable.COLUMN_ID + "=" + id, 
+						PartTable.COLUMN_ID + "=" + id, 
 						null);
 			} else {
 				rowsDeleted = wDB.delete(PartTable.TABLE_PART,
-						SRTable.COLUMN_ID + "=" + id 
+						PartTable.COLUMN_ID + "=" + id 
 						+ " and " + selection,
 						selArgs);
 			}
