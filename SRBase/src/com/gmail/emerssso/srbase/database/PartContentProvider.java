@@ -148,7 +148,7 @@ public class PartContentProvider extends ContentProvider {
 		  break;
 		case PART_ID:
 		  // adding the ID to the original query
-		  queryBuilder.appendWhere(SRTable.COLUMN_ID + "="
+		  queryBuilder.appendWhere(PartTable.COLUMN_ID + "="
 		      + uri.getLastPathSegment());
 		  break;
 		default:
@@ -185,12 +185,12 @@ public class PartContentProvider extends ContentProvider {
 			if (TextUtils.isEmpty(selection)) {
 				rowsUpdated = sqlDB.update(PartTable.TABLE_PART, 
 						values,
-						SRTable.COLUMN_ID + "=" + id, 
+						PartTable.COLUMN_ID + "=" + id, 
 						null);
 			} else {
 				rowsUpdated = sqlDB.update(PartTable.TABLE_PART, 
 						values,
-						SRTable.COLUMN_ID + "=" + id 
+						PartTable.COLUMN_ID + "=" + id 
 						+ " and " 
 						+ selection,
 						selArgs);

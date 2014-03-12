@@ -149,7 +149,7 @@ public class DailyContentProvider extends ContentProvider {
 		  break;
 		case DAILY_ID:
 		  // adding the ID to the original query
-		  queryBuilder.appendWhere(SRTable.COLUMN_ID + "="
+		  queryBuilder.appendWhere(DailyTable.COLUMN_ID + "="
 		      + uri.getLastPathSegment());
 		  break;
 		default:
@@ -186,12 +186,12 @@ public class DailyContentProvider extends ContentProvider {
 			if (TextUtils.isEmpty(selection)) {
 				rowsUpdated = sqlDB.update(DailyTable.TABLE_DAILY, 
 						values,
-						SRTable.COLUMN_ID + "=" + id, 
+						DailyTable.COLUMN_ID + "=" + id, 
 						null);
 			} else {
 				rowsUpdated = sqlDB.update(DailyTable.TABLE_DAILY, 
 						values,
-						SRTable.COLUMN_ID + "=" + id 
+						DailyTable.COLUMN_ID + "=" + id 
 						+ " and " 
 						+ selection,
 						selArgs);
