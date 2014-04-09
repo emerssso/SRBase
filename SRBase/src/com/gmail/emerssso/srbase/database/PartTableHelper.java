@@ -14,10 +14,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class PartTableHelper extends SQLiteOpenHelper {
 
 	/** The Constant DATABASE_NAME. */
-	private static final String DATABASE_NAME = "parttable.db";
+	private static final String DATABASE_NAME = "SRtable.db";
 	
 	/** The Constant DATABASE_VERSION. */
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	
 	/**
 	 * Instantiates a new part table helper.

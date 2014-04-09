@@ -55,7 +55,8 @@ public class PartTable {
 	}
 	
 	/**
-	 * On upgrade.
+	 * Used to upgrade from version 1 of the databases to 2, with only
+	 * one database.
 	 *
 	 * @param database the database
 	 * @param oldVersion the old version
@@ -63,11 +64,17 @@ public class PartTable {
 	 */
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		Log.w(SRTable.class.getName(), "Upgrading database from version "
-				+ oldVersion + " to " + newVersion
-				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_PART);
-		onCreate(database);
+		if(oldVersion == 1 && newVersion == 2) {
+			Log.w(SRTable.class.getName(), "Upgrading database from version "
+					+ oldVersion + " to " + newVersion
+					+ ", which will migrate data to new location");
+			onCreate(database);
+			database.execSQL(
+					"INSERT INTO SRtable.part SELECT * FROM parttable.part");
+			database.execSQL("DROP TABLE parttable.part");
+		}
+		else
+			Log.w(SRTable.class.getName(), "No upgrade required.");
 	}
 
 }
