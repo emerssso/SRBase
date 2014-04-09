@@ -49,11 +49,9 @@ public class SRTable {
 	
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		Log.w(SRTable.class.getName(), "Upgrading database from version "
+		Log.w(SRTable.class.getName(), "Upgrading SR database table from version "
 				+ oldVersion + " to " + newVersion
-				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_SR);
-		onCreate(database);
+				+ ", which will do nothing");
 	}
 
 }
