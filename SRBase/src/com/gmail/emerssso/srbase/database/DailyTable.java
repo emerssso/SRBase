@@ -71,11 +71,17 @@ public class DailyTable {
 	 */
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		Log.w(SRTable.class.getName(), "Upgrading database from version "
-				+ oldVersion + " to " + newVersion
-				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_DAILY);
-		onCreate(database);
+		if(oldVersion == 1 && newVersion == 2) {
+			Log.w(SRTable.class.getName(), "Upgrading database from version "
+					+ oldVersion + " to " + newVersion
+					+ ", which will migrate data to new location");
+			onCreate(database);
+			database.execSQL(
+					"INSERT INTO SRtable.part SELECT * FROM dailytable.part");
+			database.execSQL("DROP TABLE parttable.part");
+		}
+		else
+			Log.w(SRTable.class.getName(), "No upgrade required.");
 	}
 
 }
