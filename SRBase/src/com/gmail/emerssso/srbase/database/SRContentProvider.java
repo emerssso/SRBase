@@ -233,8 +233,19 @@ public class SRContentProvider extends ContentProvider {
 		int uriType = sURIMatcher.match(uri);
 		switch (uriType) {
 		case SRS:
+			// Set the table
+			queryBuilder.setTables(SRTable.TABLE_SR);
+			checkSRColumns(projection);
+			break;
 		case DAILIES:
+			// Set the table
+			queryBuilder.setTables(DailyTable.TABLE_DAILY);
+			checkDailyColumns(projection);
+			break;
 		case PARTS:
+			// Set the table
+			queryBuilder.setTables(PartTable.TABLE_PART);
+			checkPartColumns(projection);
 			break;
 		case SR_ID:
 			// Set the table
