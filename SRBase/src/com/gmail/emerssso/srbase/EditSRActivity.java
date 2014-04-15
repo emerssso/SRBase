@@ -2,12 +2,10 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
-import com.gmail.emerssso.srbase.database.PartContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
-import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -82,11 +80,11 @@ public class EditSRActivity extends DeletableActivity {
 		
 		savedUri = (savedInstanceState == null) ? null : 
 			(Uri) savedInstanceState
-	        .getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
+	        .getParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE);
 		
 	    if (extras != null) {
 	    	savedUri = extras
-	    			.getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
+	    			.getParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE);
 	    	fillData(savedUri);
     	}
 		
@@ -181,7 +179,7 @@ public class EditSRActivity extends DeletableActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
-		outState.putParcelable(SRContentProvider.CONTENT_ITEM_TYPE, savedUri);
+		outState.putParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE, savedUri);
 	}
 	
 	/**
@@ -209,7 +207,7 @@ public class EditSRActivity extends DeletableActivity {
 	    if (savedUri == null) {
 	    	// New SR
 	    	savedUri = getContentResolver()
-	    			.insert(SRContentProvider.CONTENT_URI, values);
+	    			.insert(SRContentProvider.SR_CONTENT_URI, values);
   
 	    	Cursor cursor = getContentResolver().query(savedUri, 
 	    			new String[] {SRTable.COLUMN_ID}, 
@@ -239,11 +237,11 @@ public class EditSRActivity extends DeletableActivity {
 	protected void delete(Uri uri) {
 		if(uri != null) {
 			//first: find and delete all associated parts
-			getContentResolver().delete(PartContentProvider.CONTENT_URI, 
+			getContentResolver().delete(SRContentProvider.PART_CONTENT_URI, 
 					PartTable.COLUMN_SR_ID + " = ?", new String[] {myId});
 			
 			//second: delete all associated dailies
-			getContentResolver().delete(DailyContentProvider.CONTENT_URI,
+			getContentResolver().delete(SRContentProvider.DAILY_CONTENT_URI,
 					DailyTable.COLUMN_SR_ID + " = ?", new String[] {myId});
 			
 			//last: delete the SR itself

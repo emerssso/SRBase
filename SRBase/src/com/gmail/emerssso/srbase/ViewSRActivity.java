@@ -2,9 +2,7 @@ package com.gmail.emerssso.srbase;
 
 import java.util.Calendar;
 
-import com.gmail.emerssso.srbase.database.DailyContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
-import com.gmail.emerssso.srbase.database.PartContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
@@ -112,12 +110,12 @@ public class ViewSRActivity extends DeletableActivity {
 		
 		srUri = (bundle == null) ? null : 
 			(Uri) bundle
-	        .getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
+	        .getParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE);
 		super.savedUri = srUri;
 		
 	    if (extras != null) {
 	    	srUri = extras
-	    			.getParcelable(SRContentProvider.CONTENT_ITEM_TYPE);
+	    			.getParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE);
 	    	super.savedUri = srUri;
 	    	fillData(srUri);
     	}
@@ -178,7 +176,7 @@ public class ViewSRActivity extends DeletableActivity {
 		int day = c.get(Calendar.DAY_OF_MONTH);
 		
 		Cursor cursor = getContentResolver()
-				.query(DailyContentProvider.CONTENT_URI,
+				.query(SRContentProvider.DAILY_CONTENT_URI,
 				new String[] {DailyTable.COLUMN_ID},
 				DailyTable.COLUMN_YEAR + " = ? and " + 
 				DailyTable.COLUMN_MONTH + " = ? and " + 
@@ -196,9 +194,9 @@ public class ViewSRActivity extends DeletableActivity {
 					.getColumnIndexOrThrow(DailyTable.COLUMN_ID));
 			
 			Intent i = new Intent(this, EditDailyActivity.class);
-			Uri partUri = Uri.parse(DailyContentProvider.CONTENT_URI + 
+			Uri partUri = Uri.parse(SRContentProvider.DAILY_CONTENT_URI + 
 					"/" + id);
-			i.putExtra(DailyContentProvider.CONTENT_ITEM_TYPE, partUri);
+			i.putExtra(SRContentProvider.DAILY_CONTENT_ITEM_TYPE, partUri);
 			startActivity(i);
 		}
 		else { //otherwise start a blank one
@@ -309,7 +307,7 @@ public class ViewSRActivity extends DeletableActivity {
 					DailyTable.COLUMN_START_MIN, DailyTable.COLUMN_END_MIN,
 					DailyTable.COLUMN_TRAVEL_TIME};
 			cursor = getContentResolver().query(
-					DailyContentProvider.CONTENT_URI, dailyProjection,
+					SRContentProvider.DAILY_CONTENT_URI, dailyProjection,
 					DailyTable.COLUMN_SR_ID + " = ? ", 
 					new String[] {srId}, null);
 			
@@ -500,7 +498,7 @@ public class ViewSRActivity extends DeletableActivity {
 		switch(item.getItemId()) {
 		case R.id.edit_sr:
 			Intent i = new Intent(this, EditSRActivity.class);
-			i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, srUri);
+			i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, srUri);
 		    startActivity(i);
 			return true;
 		default:
@@ -516,11 +514,11 @@ public class ViewSRActivity extends DeletableActivity {
 	protected void delete(Uri uri) {
 		
 		//first: find and delete all associated parts
-		getContentResolver().delete(PartContentProvider.CONTENT_URI, 
+		getContentResolver().delete(SRContentProvider.PART_CONTENT_URI, 
 				PartTable.COLUMN_SR_ID + " = ?", new String[] {srId});
 		
 		//second: delete all associated dailies
-		getContentResolver().delete(DailyContentProvider.CONTENT_URI,
+		getContentResolver().delete(SRContentProvider.DAILY_CONTENT_URI,
 				DailyTable.COLUMN_SR_ID + " = ?", new String[] {srId});
 		
 		//last: delete the SR itself

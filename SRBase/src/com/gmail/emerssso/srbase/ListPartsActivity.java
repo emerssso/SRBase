@@ -2,7 +2,7 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import com.gmail.emerssso.srbase.database.PartContentProvider;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
 
 import android.app.ListActivity;
@@ -64,9 +64,9 @@ public class ListPartsActivity extends ListActivity
 					int position, long id) {
 				Intent i = new Intent(parent.getContext(), 
 						EditPartActivity.class);
-				Uri partUri = Uri.parse(PartContentProvider.CONTENT_URI + 
+				Uri partUri = Uri.parse(SRContentProvider.PART_CONTENT_URI + 
 						"/" + id);
-				i.putExtra(PartContentProvider.CONTENT_ITEM_TYPE, partUri);
+				i.putExtra(SRContentProvider.PART_CONTENT_ITEM_TYPE, partUri);
 				startActivity(i);
 			}
 		});
@@ -130,7 +130,7 @@ public class ListPartsActivity extends ListActivity
 				PartTable.COLUMN_SOURCE, PartTable.COLUMN_USED,
 				PartTable.COLUMN_DESCRIPTION };
 	    CursorLoader cursorLoader = new CursorLoader(this,
-	        PartContentProvider.CONTENT_URI, projection, 
+	        SRContentProvider.PART_CONTENT_URI, projection, 
 	        		PartTable.COLUMN_SR_ID + " = ?", 
 					new String[] {srId}, null);
 	    return cursorLoader;

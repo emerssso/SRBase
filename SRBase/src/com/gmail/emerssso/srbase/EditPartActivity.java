@@ -2,7 +2,7 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import com.gmail.emerssso.srbase.database.PartContentProvider;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
 
 import android.content.ContentValues;
@@ -67,12 +67,12 @@ public class EditPartActivity extends DeletableActivity {
 		
 		savedUri = (bundle == null) ? null : 
 			(Uri) bundle.getParcelable(
-					PartContentProvider.CONTENT_ITEM_TYPE);
+					SRContentProvider.PART_CONTENT_ITEM_TYPE);
 		super.savedUri = savedUri;
 		
 	    if (extras != null) {
 	    	savedUri = extras
-	    			.getParcelable(PartContentProvider.CONTENT_ITEM_TYPE);
+	    			.getParcelable(SRContentProvider.PART_CONTENT_ITEM_TYPE);
 	    	super.savedUri = savedUri;
 	    	if(savedUri != null)
 	    		fillData(savedUri);
@@ -151,7 +151,7 @@ public class EditPartActivity extends DeletableActivity {
 		super.onSaveInstanceState(outState);
 		saveState();
 		outState.putParcelable(
-				PartContentProvider.CONTENT_ITEM_TYPE, savedUri);
+				SRContentProvider.PART_CONTENT_ITEM_TYPE, savedUri);
 	}
 	
 	/**
@@ -185,7 +185,7 @@ public class EditPartActivity extends DeletableActivity {
 	    if (savedUri == null) {
 	      // New Part
 	      savedUri = getContentResolver()
-	    		  .insert(PartContentProvider.CONTENT_URI, values);
+	    		  .insert(SRContentProvider.PART_CONTENT_URI, values);
 	      super.savedUri = savedUri;
 	    } else {
 	      // Update Part

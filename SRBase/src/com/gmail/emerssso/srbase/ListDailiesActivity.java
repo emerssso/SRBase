@@ -2,7 +2,7 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import com.gmail.emerssso.srbase.database.DailyContentProvider;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
 
 import android.app.ListActivity;
@@ -63,9 +63,9 @@ public class ListDailiesActivity extends ListActivity
 					int position, long id) {
 				Intent i = new Intent(parent.getContext(), 
 						EditDailyActivity.class);
-				Uri dayUri = Uri.parse(DailyContentProvider.CONTENT_URI + 
+				Uri dayUri = Uri.parse(SRContentProvider.DAILY_CONTENT_URI + 
 						"/" + id);
-				i.putExtra(DailyContentProvider.CONTENT_ITEM_TYPE, dayUri);
+				i.putExtra(SRContentProvider.DAILY_CONTENT_ITEM_TYPE, dayUri);
 				startActivity(i);
 			}
 		});
@@ -112,7 +112,7 @@ public class ListDailiesActivity extends ListActivity
 	    
 	    //create cursor so that we only list relevant comments
 	    Cursor cursor = getContentResolver().query(
-				DailyContentProvider.CONTENT_URI, from,
+				SRContentProvider.DAILY_CONTENT_URI, from,
 				DailyTable.COLUMN_SR_ID + " = ? ", 
 				new String[] {srId}, null);
 	    
@@ -132,7 +132,7 @@ public class ListDailiesActivity extends ListActivity
 				DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
 				DailyTable.COLUMN_COMMENT};
 	    CursorLoader cursorLoader = new CursorLoader(this,
-	        DailyContentProvider.CONTENT_URI, projection, 
+	        SRContentProvider.DAILY_CONTENT_URI, projection, 
 	        		DailyTable.COLUMN_SR_ID + " = ? ", 
 					new String[] {srId}, null);
 	    return cursorLoader;

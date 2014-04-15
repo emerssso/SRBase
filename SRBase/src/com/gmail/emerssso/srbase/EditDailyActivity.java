@@ -4,7 +4,7 @@ package com.gmail.emerssso.srbase;
 
 import java.util.Calendar;
 
-import com.gmail.emerssso.srbase.database.DailyContentProvider;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
 import com.gmail.emerssso.srbase.database.PartTable;
 
@@ -101,14 +101,14 @@ public class EditDailyActivity extends DeletableActivity {
 		
 		savedUri = (savedInstanceState == null) ? null : 
 			(Uri) savedInstanceState.getParcelable(
-					DailyContentProvider.CONTENT_ITEM_TYPE);
+					SRContentProvider.DAILY_CONTENT_ITEM_TYPE);
     	//any time savedUri is set, we also want to set
     	//super.savedUri, so that we delete the right thing.
 		super.savedUri = savedUri;
 		
 	    if (extras != null) {
 	    	savedUri = extras
-	    			.getParcelable(DailyContentProvider.CONTENT_ITEM_TYPE);
+	    			.getParcelable(SRContentProvider.DAILY_CONTENT_ITEM_TYPE);
 	    	super.savedUri = savedUri;
 	    	
 	    	if(savedUri != null)
@@ -246,7 +246,8 @@ public class EditDailyActivity extends DeletableActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
-		outState.putParcelable(DailyContentProvider.CONTENT_ITEM_TYPE, savedUri);
+		outState.putParcelable(SRContentProvider.DAILY_CONTENT_ITEM_TYPE, 
+				savedUri);
 	}
 	
 	/**
@@ -281,7 +282,7 @@ public class EditDailyActivity extends DeletableActivity {
 	    if (savedUri == null) {
 	      // New Daily
 	      savedUri = getContentResolver()
-	    		  .insert(DailyContentProvider.CONTENT_URI, values);
+	    		  .insert(SRContentProvider.DAILY_CONTENT_URI, values);
 	      super.savedUri = savedUri;
 	    } else {
 	      // Update Daily

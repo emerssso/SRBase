@@ -51,9 +51,9 @@ public class SRListActivity extends ListActivity
 					int position, long id) {
 				Intent i = new Intent(parent.getContext(),
 						EditSRActivity.class);
-				Uri todoUri = Uri.parse(SRContentProvider.CONTENT_URI +
+				Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI +
 						"/" + id);
-			  	i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, todoUri);
+			  	i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, todoUri);
 
 			  	startActivity(i);
 				return true;
@@ -66,9 +66,9 @@ public class SRListActivity extends ListActivity
 					int position, long id) {
 				Intent i = new Intent(parent.getContext(), 
 						ViewSRActivity.class);
-				Uri srUri = Uri.parse(SRContentProvider.CONTENT_URI + 
+				Uri srUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + 
 						"/" + id);
-				i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, srUri);
+				i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, srUri);
 				startActivity(i);
 			}
 		});
@@ -129,8 +129,8 @@ public class SRListActivity extends ListActivity
 			View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Intent i = new Intent(this, ViewSRActivity.class);
-		Uri todoUri = Uri.parse(SRContentProvider.CONTENT_URI + "/" + id);
-	  	i.putExtra(SRContentProvider.CONTENT_ITEM_TYPE, todoUri);
+		Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + id);
+	  	i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, todoUri);
 
 	  	startActivity(i);
 	}
@@ -143,7 +143,7 @@ public class SRListActivity extends ListActivity
 		String[] projection = { SRTable.COLUMN_ID, SRTable.COLUMN_SR_NUMBER, 
 				SRTable.COLUMN_CUSTOMER_NAME};
 	    CursorLoader cursorLoader = new CursorLoader(this,
-	        SRContentProvider.CONTENT_URI, projection, null, null, null);
+	        SRContentProvider.SR_CONTENT_URI, projection, null, null, null);
 	    return cursorLoader;
 	}
 

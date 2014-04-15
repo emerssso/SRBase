@@ -11,10 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  * The Class SRTableHelper.
  * @author Conner Kasten
  */
-public class SRTableHelper extends SQLiteOpenHelper {
+public class SRDatabaseHelper extends SQLiteOpenHelper {
 	
 	/** The Constant DATABASE_NAME. */
-	private static final String DATABASE_NAME = "SRtable.db";
+	private static final String DATABASE_NAME = "SRdatabase.db";
 	
 	/** The Constant DATABASE_VERSION. */
 	private static final int DATABASE_VERSION = 2;
@@ -24,7 +24,7 @@ public class SRTableHelper extends SQLiteOpenHelper {
 	 *
 	 * @param context the context
 	 */
-	public SRTableHelper(Context context){
+	public SRDatabaseHelper(Context context){
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
@@ -34,6 +34,8 @@ public class SRTableHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		SRTable.onCreate(database);
+		DailyTable.onCreate(database);
+		PartTable.onCreate(database);
 	}
 
 	/* (non-Javadoc)
@@ -43,6 +45,8 @@ public class SRTableHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase database, 
 			int oldVersion, int newVersion) {
 		SRTable.onUpgrade(database, oldVersion, newVersion);
+		DailyTable.onUpgrade(database, oldVersion, newVersion);
+		PartTable.onUpgrade(database, oldVersion, newVersion);
 	}
 
 }
