@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gmail.emerssso.srbase"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    android:versionCode="4"
+    android:versionName="2.0" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -61,14 +61,6 @@
         <provider 
             android:name=".database.SRContentProvider"
             android:authorities="com.gmail.emerssso.srbase.srcontentprovider" >
-        </provider>
-        <provider 
-            android:name=".database.DailyContentProvider"
-            android:authorities="com.gmail.emerssso.srbase.dailycontentprovider" >
-        </provider>
-        <provider 
-            android:name=".database.PartContentProvider"
-            android:authorities="com.gmail.emerssso.srbase.partcontentprovider" >
         </provider>
     </application>
 
