@@ -77,7 +77,7 @@ public class DailyTable {
 					+ ", which will migrate data to new location");
 			onCreate(database);
 			database.execSQL(
-					"INSERT INTO SRtable.part SELECT * FROM dailytable.part");
+					"INSERT INTO SRdatabase.part SELECT * FROM dailytable.part");
 			database.execSQL("DROP TABLE parttable.part");
 		}
 		else

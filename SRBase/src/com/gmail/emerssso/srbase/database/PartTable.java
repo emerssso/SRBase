@@ -70,7 +70,7 @@ public class PartTable {
 					+ ", which will migrate data to new location");
 			onCreate(database);
 			database.execSQL(
-					"INSERT INTO SRtable.part SELECT * FROM parttable.part");
+					"INSERT INTO SRdatabase.part SELECT * FROM parttable.part");
 			database.execSQL("DROP TABLE parttable.part");
 		}
 		else

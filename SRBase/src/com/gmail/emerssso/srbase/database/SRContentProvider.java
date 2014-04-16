@@ -16,7 +16,12 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 /**
- * The Class SRContentProvider.
+ * The Class SRContentProvider.  This class acts as the ContentProvider
+ * for the app's internal database.  The manifest currently ensures that this
+ * database is not exported to external accesses, however, this would be trivial
+ * to implement if there were ever a motivation.  I don't recommend it
+ * at the moment.
+ * 
  * @author Conner Kasten
  */
 public class SRContentProvider extends ContentProvider {
@@ -46,13 +51,13 @@ public class SRContentProvider extends ContentProvider {
 	private static final String AUTHORITY = 
 			"com.gmail.emerssso.srbase.srcontentprovider";
 	
-	/** The Constant BASE_PATH. */
+	/** The Constant SR_BASE_PATH. */
 	private static final String SR_BASE_PATH = "SRs";
 	
-	/** The Constant BASE_PATH. */
+	/** The Constant DAILY_BASE_PATH. */
 	private static final String DAILY_BASE_PATH = "dailies";
 	
-	/** The Constant BASE_PATH. */
+	/** The Constant PART_BASE_PATH. */
 	private static final String PART_BASE_PATH = "parts";
 	
 	/** The Constant sURIMatcher. */

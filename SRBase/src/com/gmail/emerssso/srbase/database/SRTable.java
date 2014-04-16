@@ -50,8 +50,10 @@ public class SRTable {
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
 		Log.w(SRTable.class.getName(), "Upgrading SR database table from version "
-				+ oldVersion + " to " + newVersion
-				+ ", which will do nothing");
+				+ oldVersion + " to " + newVersion);
+		database.execSQL(
+				"INSERT INTO SRdatabase.SR SELECT * FROM SRtable.SR");
+		database.execSQL("DROP TABLE SRtable.SR");
 	}
 
 }
