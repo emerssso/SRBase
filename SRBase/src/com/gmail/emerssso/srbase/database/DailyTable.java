@@ -76,7 +76,10 @@ public class DailyTable {
 					+ oldVersion + " to " + newVersion
 					+ ", which will migrate data to new location");
 			onCreate(database);
+			database.setTransactionSuccessful();
+			database.endTransaction();
 			database.execSQL("ATTACH \"/data/data/com.gmail.emerssso.srbase/databases/dailytable.db\" AS dailytable");
+			database.beginTransaction();
 			database.execSQL(
 					"INSERT INTO SRdatabase.daily SELECT * FROM dailytable.daily");
 			database.execSQL("DROP TABLE dailytable.daily");
