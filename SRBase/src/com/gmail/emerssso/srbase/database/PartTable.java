@@ -69,10 +69,6 @@ public class PartTable {
 					+ oldVersion + " to " + newVersion
 					+ ", which will migrate data to new location");
 			onCreate(database);
-			database.setTransactionSuccessful();
-			database.endTransaction();
-			database.execSQL("ATTACH \"/data/data/com.gmail.emerssso.srbase/databases/parttable.db\" AS parttable");
-			database.beginTransaction();
 			database.execSQL(
 					"INSERT INTO main.part SELECT * FROM parttable.part");
 			database.execSQL("DROP TABLE parttable.part");

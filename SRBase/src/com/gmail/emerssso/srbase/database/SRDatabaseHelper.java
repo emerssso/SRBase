@@ -44,6 +44,15 @@ public class SRDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase database, 
 			int oldVersion, int newVersion) {
+		if(oldVersion < 2) {
+			database.setTransactionSuccessful();
+			database.endTransaction();
+			database.execSQL(
+					"ATTACH \"/data/data/com.gmail.emerssso.srbase/databases/parttable.db\" AS parttable");
+			database.execSQL(
+					"ATTACH \"/data/data/com.gmail.emerssso.srbase/databases/dailytable.db\" AS dailytable");
+			database.beginTransaction();
+		}
 		SRTable.onUpgrade(database, oldVersion, newVersion);
 		DailyTable.onUpgrade(database, oldVersion, newVersion);
 		PartTable.onUpgrade(database, oldVersion, newVersion);
