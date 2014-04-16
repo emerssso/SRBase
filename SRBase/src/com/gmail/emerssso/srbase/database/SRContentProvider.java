@@ -26,41 +26,42 @@ import android.text.TextUtils;
  */
 public class SRContentProvider extends ContentProvider {
 	
-	/** The database. */
+	/** The OpenSQLiteHelper used by this ContentProvider to manage the database.*/
 	private SRDatabaseHelper database;
 	
-	/** The Constant SRS. */
+	/** The URI number for SRs. */
 	private static final int SRS = 11;
 	
-	/** The Constant SR_ID. */
+	/** The URI number to specify a specific SR by _id. */
 	private static final int SR_ID = 21;
 	
-	/** The Constant DAILIES. */
+	/** The URI number for dailies. */
 	private static final int DAILIES = 12;
 	
-	/** The Constant DAILY_ID. */
+	/** The URI number to specify a daily by _id. */
 	private static final int DAILY_ID = 22;
 	
-	/** The Constant PARTS. */
+	/** The URI number for parts. */
 	private static final int PARTS = 13;
 	
-	/** The Constant PART_ID. */
+	/** The URI number to specify a part by _id. */
 	private static final int PART_ID = 23;
 	
-	/** The Constant AUTHORITY. */
+	/** The permission string representation for accessing this ContentProvider. */
 	private static final String AUTHORITY = 
 			"com.gmail.emerssso.srbase.srcontentprovider";
 	
-	/** The Constant SR_BASE_PATH. */
+	/** The base path for accessing SRs. */
 	private static final String SR_BASE_PATH = "SRs";
 	
-	/** The Constant DAILY_BASE_PATH. */
+	/** The base path for accessing dailies. */
 	private static final String DAILY_BASE_PATH = "dailies";
 	
-	/** The Constant PART_BASE_PATH. */
+	/** The base path for accessing parts. */
 	private static final String PART_BASE_PATH = "parts";
 	
-	/** The Constant sURIMatcher. */
+	/** The URIMatcher used to determine if a URI specifies a row or rows in
+	 * the database handled by this provider. */
 	private static final UriMatcher sURIMatcher = 
 			new UriMatcher(UriMatcher.NO_MATCH);
 	static {
@@ -74,39 +75,39 @@ public class SRContentProvider extends ContentProvider {
 		sURIMatcher.addURI(AUTHORITY, DAILY_BASE_PATH + "/#", DAILY_ID);
 	}
 	
-	/** The Constant CONTENT_TYPE. */
+	/** The string indicating that content contains SRs. */
 	public static final String SR_CONTENT_TYPE = 
 			ContentResolver.CURSOR_DIR_BASE_TYPE + "/SRs";
 	
-	/** The Constant CONTENT_ITEM_TYPE. */
+	/** The string indicating that content is an SR. */
 	public static final String SR_CONTENT_ITEM_TYPE = 
 			ContentResolver.CURSOR_ITEM_BASE_TYPE + "/SR";
 	
-	/** The Constant CONTENT_URI. */
+	/** The URI for accessing an SR. */
 	public static final Uri SR_CONTENT_URI = Uri.parse("content://" + AUTHORITY
 			+ "/" + SR_BASE_PATH);
 	
-	/** The Constant CONTENT_TYPE. */
+	/**  The string indicating that content contains dailies */
 	public static final String DAILY_CONTENT_TYPE = 
 		ContentResolver.CURSOR_DIR_BASE_TYPE + "/dailies";
 	
-	/** The Constant CONTENT_ITEM_TYPE. */
+	/** The string indicating that content is a daily */
 	public static final String DAILY_CONTENT_ITEM_TYPE = 
 			ContentResolver.CURSOR_ITEM_BASE_TYPE + "/daily";
 	
-	/** The Constant CONTENT_URI. */
+	/** The URI for accessing a Daily. */
 	public static final Uri DAILY_CONTENT_URI = Uri.parse("content://" + AUTHORITY
 			+ "/" + DAILY_BASE_PATH);
 	
-	/** The Constant CONTENT_TYPE. */
+	/** The string indicating that content contains parts. */
 	public static final String PART_CONTENT_TYPE = 
 		ContentResolver.CURSOR_DIR_BASE_TYPE + "/parts";
 	
-	/** The Constant CONTENT_ITEM_TYPE. */
+	/** The string indicating that content is a part. */
 	public static final String PART_CONTENT_ITEM_TYPE = 
 			ContentResolver.CURSOR_ITEM_BASE_TYPE + "/part";
 	
-	/** The Constant CONTENT_URI. */
+	/** The URI for accessing a part. */
 	public static final Uri PART_CONTENT_URI = Uri.parse("content://" + AUTHORITY
 			+ "/" + PART_BASE_PATH);
 
@@ -377,9 +378,10 @@ public class SRContentProvider extends ContentProvider {
 	}
 	
 	/**
-	 * Check columns.
+	 * Checks to ensure that a projection specifies only valid columns of 
+	 * the SR table.
 	 *
-	 * @param projection the projection
+	 * @param projection The projection to test for validity.
 	 */
 	private void checkSRColumns(String[] projection) {
 		String[] available = { SRTable.COLUMN_CUSTOMER_NAME,
@@ -398,6 +400,12 @@ public class SRContentProvider extends ContentProvider {
 			}
 		}
 	}
+	
+	/**
+	 * Checks to ensure that a projection contains only valid columns of the 
+	 * daily table.
+	 * @param projection The projection to check.
+	 */
 	private void checkDailyColumns(String[] projection) {
 		String[] available = { DailyTable.COLUMN_COMMENT,
 				DailyTable.COLUMN_DAY, DailyTable.COLUMN_END_HOUR,
@@ -419,6 +427,11 @@ public class SRContentProvider extends ContentProvider {
 		}
 	}
 	
+	/**
+	 * Checks to make sure that a projection only contains valid columns of
+	 * part table.
+	 * @param projection The projection to check for validity.
+	 */
 	private void checkPartColumns(String[] projection) {
 		String[] available = { PartTable.COLUMN_DESCRIPTION,
 				PartTable.COLUMN_ID, PartTable.COLUMN_QUANTITY,

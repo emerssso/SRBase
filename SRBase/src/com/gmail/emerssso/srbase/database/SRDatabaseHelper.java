@@ -8,21 +8,22 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class SRTableHelper.
+ * An SQLiteOpenHelper for the SR Database.  Manages the databases tables
+ * as specified by the table model classes.
  * @author Conner Kasten
  */
 public class SRDatabaseHelper extends SQLiteOpenHelper {
 	
-	/** The Constant DATABASE_NAME. */
+	/** The file name for the database. */
 	private static final String DATABASE_NAME = "SRtable.db";
 	
-	/** The Constant DATABASE_VERSION. */
+	/** The version number of the database. */
 	private static final int DATABASE_VERSION = 2;
 	
 	/**
-	 * Instantiates a new sR table helper.
+	 * Instantiates a new OpenSQLiteHelper for the SR database.
 	 *
-	 * @param context the context
+	 * @param context The calling context.
 	 */
 	public SRDatabaseHelper(Context context){
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -44,6 +45,8 @@ public class SRDatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase database, 
 			int oldVersion, int newVersion) {
+		//First, if we're dealing with an old, multi-database schema,
+		//attach the old databases so that we can copy data over to the new one.
 		if(oldVersion < 2) {
 			database.setTransactionSuccessful();
 			database.endTransaction();

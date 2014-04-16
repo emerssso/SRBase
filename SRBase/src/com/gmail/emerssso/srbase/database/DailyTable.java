@@ -6,39 +6,48 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * The model of the database of Daily Logs.
+ * The model of the table of Daily Logs.  Includes constants for column names
+ * and the necessary SQL for creating and upgrading the table.
  */
 public class DailyTable {
 	
-	/** The Constant TABLE_DAILY. */
+	/** The name of the table, in constant form. */
 	public static final String TABLE_DAILY = "daily";
 	
-	/** The Constant COLUMN_ID. */
+	/** The name of the primary key column, as per Android best practice. */
 	public static final String COLUMN_ID = "_id";
 	
-	/** The Constant COLUMN_SR_ID. */
+	/** The _id of the associated SR. */
 	public static final String COLUMN_SR_ID = "SR_id";
 	
-	/** The Constant COLUMN_DATE. */
+	/** The name of the day column */
 	public static final String COLUMN_DAY="day";
+	
+	/** the name of the month column */
 	public static final String COLUMN_MONTH="month";
+	
+	/** The name of the year column */
 	public static final String COLUMN_YEAR="year";
 	
-	/** The Constant COLUMN_START_TIME. */
+	/** The name of the start hour column. */
 	public static final String COLUMN_START_HOUR = "start_hour";
+	
+	/** The name of the start minute column */
 	public static final String COLUMN_START_MIN = "start_min";
 	
-	/** The Constant COLUMN_END_TIME. */
+	/** The name of the end hour column. */
 	public static final String COLUMN_END_HOUR = "end_hour";
+	
+	/** The name of the end minute column*/
 	public static final String COLUMN_END_MIN = "end_min";
 	
-	/** The Constant COLUMN_TRAVEL_TIME. */
+	/** The name of the travel time column. */
 	public static final String COLUMN_TRAVEL_TIME = "travel_time";
 	
-	/** The Constant COLUMN_COMMENT. */
+	/** The name of the comment column. */
 	public static final String COLUMN_COMMENT = "comment";
 	
-	/** The Constant DATABASE_CREATE. */
+	/** This string contains the SQL for creating this table. */
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_DAILY + "(" + COLUMN_ID
 			+ " integer primary key autoincrement, "
@@ -54,7 +63,8 @@ public class DailyTable {
 			+ COLUMN_COMMENT + " text not null);";
 	
 	/**
-	 * On create.
+	 * This method executes DATABASE_CREATE to create the table
+	 * in the SQLite database.
 	 *
 	 * @param database the database
 	 */
@@ -63,11 +73,17 @@ public class DailyTable {
 	}
 	
 	/**
-	 * On upgrade.
+	 * Upgrades the database from version 1 to 2.  
+	 * Note that version 1 used a three database schema for 
+	 * storing dailies, parts, and SRs, while later versions
+	 * use a one database schema with three tables. Attach old database
+	 * before calling, or this will fail.  The old database is located at
+	 * '/data/data/com.gmail.emerssso.srbase/databases/dailytable.db'.
+	 * The method assumes that the table has been attached as 'dailytable'.
 	 *
-	 * @param database the database
-	 * @param oldVersion the old version
-	 * @param newVersion the new version
+	 * @param database The target database to upgrade (main in the SQL)
+	 * @param oldVersion the old version number. Only 1 is currently valid.
+	 * @param newVersion the new version number. Only 2 is currently valid.
 	 */
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {

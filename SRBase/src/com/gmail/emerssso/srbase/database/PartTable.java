@@ -6,35 +6,38 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * The Class PartTable.
+ * This class models the table in the database representing parts.  Includes 
+ * column name constants and SQL for creating and updating the table.
  * @author Conner Kasten
  */
 public class PartTable {
 	
-	/** The Constant TABLE_PART. */
+	/** The table name constant. */
 	public static final String TABLE_PART = "part";
 	
-	/** The Constant COLUMN_ID. */
+	/** The _id primary key column required by Android APIs. */
 	public static final String COLUMN_ID = "_id";
 	
-	/** The Constant COLUMN_SR_ID. */
+	/** The _id of the associated row in the SR table. */
 	public static final String COLUMN_SR_ID = "sr_id";
 	
-	/** The Constant COLUMN_QUANTITY. */
+	/** The column name for number of parts. */
 	public static final String COLUMN_QUANTITY = "quantity";
 	
-	/** The Constant COLUMN_USED. */
+	/** The column name for the used column. Since SQLite doesn't support
+	 * booleans, we use a String. */
 	public static final String COLUMN_USED = "used";
 	
-	/** The Constant COLUMN_SOURCE. */
+	/** The source column name. */
 	public static final String COLUMN_SOURCE = "source";
 	
-	/** The Constant COLUMN_DESCRIPTION. */
+	/** The description column name. */
 	public static final String COLUMN_DESCRIPTION = "description";
 	
+	/** The part number column name. */
 	public static final String COLUMN_PART_NUMBER = "part_number";
 	
-	/** The Constant DATABASE_CREATE. */
+	/** The SQL command for creating the table. */
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_PART + "(" + COLUMN_ID
 			+ " integer primary key autoincrement, "
@@ -46,21 +49,26 @@ public class PartTable {
 			+ COLUMN_DESCRIPTION + " text not null);";
 	
 	/**
-	 * On create.
+	 * This method creates the table in the passed database.
 	 *
-	 * @param database the database
+	 * @param database the database in which to create the table.
 	 */
 	public static void onCreate(SQLiteDatabase database) {
 	    database.execSQL(DATABASE_CREATE);
 	}
 	
 	/**
-	 * Used to upgrade from version 1 of the databases to 2, with only
-	 * one database.
+	 * Upgrades the database from version 1 to 2.  
+	 * Note that version 1 used a three database schema for 
+	 * storing dailies, parts, and SRs, while later versions
+	 * use a one database schema with three tables. Attach old database
+	 * before calling, or this will fail.  The old database is located at
+	 * '/data/data/com.gmail.emerssso.srbase/databases/parttable.db'.
+	 * The method assumes that the table has been attached as 'parttable'.
 	 *
-	 * @param database the database
-	 * @param oldVersion the old version
-	 * @param newVersion the new version
+	 * @param database The target database to upgrade (main in the SQL)
+	 * @param oldVersion the old version number. Only 1 is currently valid.
+	 * @param newVersion the new version number. Only 2 is currently valid.
 	 */
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
