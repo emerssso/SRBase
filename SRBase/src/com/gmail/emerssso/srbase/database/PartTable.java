@@ -74,7 +74,7 @@ public class PartTable {
 			database.execSQL("ATTACH \"/data/data/com.gmail.emerssso.srbase/databases/parttable.db\" AS parttable");
 			database.beginTransaction();
 			database.execSQL(
-					"INSERT INTO SRdatabase.part SELECT * FROM parttable.part");
+					"INSERT INTO main.part SELECT * FROM parttable.part");
 			database.execSQL("DROP TABLE parttable.part");
 		}
 		else

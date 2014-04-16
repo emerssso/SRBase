@@ -81,7 +81,7 @@ public class DailyTable {
 			database.execSQL("ATTACH \"/data/data/com.gmail.emerssso.srbase/databases/dailytable.db\" AS dailytable");
 			database.beginTransaction();
 			database.execSQL(
-					"INSERT INTO SRdatabase.daily SELECT * FROM dailytable.daily");
+					"INSERT INTO main.daily SELECT * FROM dailytable.daily");
 			database.execSQL("DROP TABLE dailytable.daily");
 		}
 		else
