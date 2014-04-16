@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SRDatabaseHelper extends SQLiteOpenHelper {
 	
 	/** The Constant DATABASE_NAME. */
-	private static final String DATABASE_NAME = "SRdatabase.db";
+	private static final String DATABASE_NAME = "SRtable.db";
 	
 	/** The Constant DATABASE_VERSION. */
 	private static final int DATABASE_VERSION = 2;

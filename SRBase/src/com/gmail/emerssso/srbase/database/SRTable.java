@@ -49,15 +49,8 @@ public class SRTable {
 	
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		if(oldVersion == 1 && newVersion == 2) {
-			Log.w(SRTable.class.getName(), "Upgrading SR database table from version "
-					+ oldVersion + " to " + newVersion);
-			SRTable.onCreate(database);
-			database.execSQL("ATTACH \"/data/data/com.gmail.emerssso.srbase/databases/SRtable.db\" AS SRtable");
-			database.execSQL(
-					"INSERT INTO SRdatabase.SR SELECT * FROM SRtable.SR");
-			database.execSQL("DROP TABLE SRtable.SR");
-		}
+		Log.w(SRTable.class.getName(), "No need to upgrade SR table from version "
+				+ oldVersion + " to " + newVersion);
 	}
 
 }
