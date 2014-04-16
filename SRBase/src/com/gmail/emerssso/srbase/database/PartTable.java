@@ -65,10 +65,11 @@ public class PartTable {
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
 		if(oldVersion == 1 && newVersion == 2) {
-			Log.w(SRTable.class.getName(), "Upgrading database from version "
+			Log.w(PartTable.class.getName(), "Upgrading database from version "
 					+ oldVersion + " to " + newVersion
 					+ ", which will migrate data to new location");
 			onCreate(database);
+			database.execSQL("ATTACH \"/data/data/com.gmail.emerssso.srbase/databases/parttable.db\" AS parttable");
 			database.execSQL(
 					"INSERT INTO SRdatabase.part SELECT * FROM parttable.part");
 			database.execSQL("DROP TABLE parttable.part");
