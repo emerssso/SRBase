@@ -23,7 +23,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
- * The ListCommentsActivity class implements an activity which
+ * The ListDailiesActivity class implements an activity which
  * lists all of the Daily Logs' comments associated with a particular
  * SR (passed as an extra to the activity).  These can be clicked to open
  * and edit that Daily in the EditDailyActivity.

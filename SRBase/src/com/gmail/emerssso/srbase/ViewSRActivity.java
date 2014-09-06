@@ -169,7 +169,7 @@ public class ViewSRActivity extends DeletableActivity {
 	 * one daily per date.
 	 */
 	public void startDaily() {
-		//first, we have to find it if it exits
+		//first, we have to find it if it exists
 		final Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH) + 1;
