@@ -23,6 +23,12 @@ import android.view.MenuItem;
  */
 public abstract class DeletableActivity extends Activity {
 	
+	private static final String DELETE_FRAGMENT_TAG = "DeleteFragment";
+	
+	/** The URI to the target entry.  Must be updated by extenders whenever
+	 * This value might be changed for deletion to work correctly.
+	 * This is the only hackish part of this class, and I'd love to do it better.
+	 */
 	protected Uri savedUri;
 	
 	/* (non-Javadoc)
@@ -43,7 +49,7 @@ public abstract class DeletableActivity extends Activity {
 		switch(item.getItemId()) {
 		case R.id.delete_item:
 			DeleteFragment dfrag = new DeleteFragment();
-			dfrag.show(getFragmentManager(), "Delete Fragment");
+			dfrag.show(getFragmentManager(), DELETE_FRAGMENT_TAG);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -65,8 +71,7 @@ public abstract class DeletableActivity extends Activity {
 			final Activity activity = getActivity();
 			return new AlertDialog.Builder(activity)
 					.setTitle("Delete Entry?")
-					.setMessage("Are you sure you want to " +
-							"delete this entry?")
+					.setMessage("Are you sure you want to delete this entry?")
 					.setPositiveButton("Yes", 
 							new DialogInterface.OnClickListener() {
 						
@@ -80,10 +85,10 @@ public abstract class DeletableActivity extends Activity {
 								activity.finish();
 							}
 							else {
-								Log.w("SRBase:DeleteFragment", 
+								Log.w("SRBase:DeletableActivity:DeleteFragment", 
 										"DeleteFragment called by non" +
 										"DeletableActivity!");
-								dialog.cancel();
+								DeleteFragment.this.dismiss();
 							}
 						}
 					})
@@ -93,7 +98,7 @@ public abstract class DeletableActivity extends Activity {
 						@Override
 						public void onClick(DialogInterface dialog, 
 								int which) {
-							dialog.cancel();
+							DeleteFragment.this.dismiss();
 						}
 					}).create();
 		}
@@ -101,16 +106,15 @@ public abstract class DeletableActivity extends Activity {
 	}
 	
 	/**
-	 * Convenience method to request Daily deletion.
+	 * Convenience method to request entry deletion.
 	 */
 	public void delete() {
 		this.delete(savedUri);
 	}
 	
 	/**
-	 * This method deletes the passed Daily, and all parts and dailies
-	 * associated with it.
-	 * @param uri URI to the Daily to delete
+	 * This method deletes the passed entry.
+	 * @param uri URI to the entry to delete
 	 */
 	protected void delete(Uri uri) {
 		if(uri != null)
