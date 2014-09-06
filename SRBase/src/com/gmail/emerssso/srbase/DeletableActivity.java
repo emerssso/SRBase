@@ -23,7 +23,7 @@ import android.view.MenuItem;
  */
 public abstract class DeletableActivity extends Activity {
 	
-	private static final String DELETE_FRAGMENT_TAG = "DeleteFragment";
+	protected static final String DELETE_FRAGMENT_TAG = "DeleteFragment";
 	
 	/** The URI to the target entry.  Must be updated by extenders whenever
 	 * This value might be changed for deletion to work correctly.
