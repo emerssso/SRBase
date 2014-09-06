@@ -32,7 +32,8 @@ import android.widget.Toast;
  * @author Conner Kasten
  */
 public class EditDailyActivity extends DeletableActivity {
-	
+	private static final String TIME_PICKER_FRAGMENT_TAG = "TimePickerDialog";
+
 	/** The date for the log. */
 	private DatePicker date;
 	
@@ -317,12 +318,8 @@ public class EditDailyActivity extends DeletableActivity {
 	 * @param v the caller view (I think?)
 	 */
 	public void showStartTimePickerDialog(View v) {
-		TimePickerFragment newFragment = new TimePickerFragment();
-		newFragment.parent = this;
-		newFragment.start = true;
-		newFragment.hour = startHour;
-		newFragment.minute = startMin;
-		newFragment.show(getFragmentManager(), "startTimePicker");
+		TimePickerFragment newFragment = TimePickerFragment.newInstance(true, startHour, startMin);
+		newFragment.show(getFragmentManager(), TIME_PICKER_FRAGMENT_TAG);
 	}
 	
 	/**
@@ -331,46 +328,51 @@ public class EditDailyActivity extends DeletableActivity {
 	 * @param v the caller View (I think?)
 	 */
 	public void showEndTimePickerDialog(View v) {
-		TimePickerFragment newFragment = new TimePickerFragment();
-		newFragment.parent = this;
-		newFragment.start = false;
-		newFragment.hour = endHour;
-		newFragment.minute = endMin;
-		newFragment.show(getFragmentManager(), "endTimePicker");
+		TimePickerFragment newFragment = TimePickerFragment.newInstance(false, endHour, endMin);
+		newFragment.show(getFragmentManager(), TIME_PICKER_FRAGMENT_TAG);
 	}
 	
 	/**
 	 * TimePickerFragment is used to create a new dialog fragment
 	 * in which the user may select a start or end time.
 	 */
-	public static class TimePickerFragment extends DialogFragment 
+	 static class TimePickerFragment extends DialogFragment 
 			implements TimePickerDialog.OnTimeSetListener {
+		 
+		 public static final String START_KEY = "TimePickerFragment.Start";
+		 public static final String HOUR_KEY = "TimePickerFragment.Hour";
+		 public static final String MINUTE_KEY = "TimePickerFragment.Minute";
 		
-		/** The parent. */
-		public EditDailyActivity parent;
-		
-		/** The start. */
-		public boolean start;
-		
-		/** The hour. */
-		public int hour = -1;
-		
-		/** The minute. */
-		public int minute = -1;
-		
-		/* (non-Javadoc)
-		 * @see android.app.Fragment#setArguments(android.os.Bundle)
-		 */
-		public void setArguments(Bundle bundle) {
-			this.parent = bundle.getParcelable("parent");
-			this.start = bundle.getBoolean("start");
+		public static TimePickerFragment newInstance(boolean start, int hour, int minute) {
+			TimePickerFragment tpf = new TimePickerFragment();
+			Bundle args = new Bundle();
+			args.putBoolean(START_KEY, start);
+			args.putInt(HOUR_KEY, hour);
+			args.putInt(MINUTE_KEY, minute);
+			tpf.setArguments(args);
+			return tpf;
 		}
 		
+		/** The start. */
+		private boolean start;
+		
+		/** The hour. */
+		private int hour = -1;
+		
+		/** The minute. */
+		private int minute = -1;
+				
 		/* (non-Javadoc)
 		 * @see android.app.DialogFragment#onCreateDialog(android.os.Bundle)
 		 */
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			Bundle args = getArguments();
+			
+			start = args.getBoolean(START_KEY);
+			hour = args.getInt(HOUR_KEY);
+			minute = args.getInt(MINUTE_KEY);
+			
 			if(hour == -1 || minute == -1) {
 				final Calendar c = Calendar.getInstance();
 				hour = c.get(Calendar.HOUR_OF_DAY);
@@ -385,7 +387,7 @@ public class EditDailyActivity extends DeletableActivity {
 		 * @see android.app.TimePickerDialog.OnTimeSetListener#onTimeSet(android.widget.TimePicker, int, int)
 		 */
 		public void onTimeSet(TimePicker view, int hour, int minute) {
-			parent.setTime(hour, minute, start);
+			((EditDailyActivity) getActivity()).setTime(hour, minute, start);
 		}
 	}
 }
