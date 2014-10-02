@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	
+	    <TextView
+	        android:id="@+id/date_header"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+        	android:layout_alignParentTop="true"
+	        android:text="@string/date"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	    <EditText
+	        android:id="@+id/travel_time"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/start_time_button"
+	        android:layout_alignParentLeft="true"
+	        android:ems="10"
+	        android:hint="@string/travel_time"
+	        android:inputType="numberDecimal" />
+
+	    <Button
+	        android:id="@+id/daily_confirm"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentBottom="true"
+	        android:layout_below="@+id/comment"
+	        android:text="@string/confirm" />
+
+	    <EditText
+	        android:id="@+id/comment"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/travel_time"
+	        android:layout_alignParentLeft="true"
+	        android:ems="10"
+	        android:hint="@string/comment"
+	        android:inputType="textMultiLine" >
+	    </EditText>
+
+	    <DatePicker
+	        android:id="@+id/date_picker"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/date_header"
+	        android:layout_centerHorizontal="true"
+	        android:calendarViewShown="false"
+	        android:spinnersShown="true"
+	        android:startYear="2013" />
+
+	    <Button
+	        android:id="@+id/add_part_from_daily"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:text="@string/add_part" />
+
+	    <TextView
+	        android:id="@+id/display_start_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/date_picker"
+	        android:text="@string/start_time"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <Button
+	        android:id="@+id/start_time_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/display_start_time"
+	        android:onClick="showStartTimePickerDialog"
+	        android:text="@string/start_time" />
+
+	    <Button
+	        android:id="@+id/end_time_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/start_time_button"
+	        android:layout_alignBottom="@+id/start_time_button"
+	        android:layout_alignParentRight="true"
+	        android:onClick="showEndTimePickerDialog"
+	        android:text="@string/end_time" />
+
+	    <TextView
+	        android:id="@+id/display_end_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/date_picker"
+	        android:text="@string/end_time"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	</RelativeLayout>
+</ScrollView>
+<!-- From: file:/E:/Github/SRBase/SRBase/app/src/main/res/layout/edit_daily_activity.xml -->

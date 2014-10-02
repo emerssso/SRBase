@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/E:/Github/SRBase/SRBase/app/src/main/res/values/strings.xml -->
+    <eat-comment />
+
+    <color name="blue">#00ddff</color>
+    <color name="link_blue">#0000FF</color>
+    <color name="orange">#ffa500</color>
+
+    <string name="SRhint">SR Number</string>
+    <string name="Year">year</string>
+    <string name="action_new_sr">New SR</string>
+    <string name="add_daily">Add Daily Log</string>
+    <string name="add_part">Add Part</string>
+    <string name="app_name">SR Base</string>
+    <string name="blank"></string>
+    <string name="comment">Comment</string>
+    <string name="comments">Comments</string>
+    <string name="confirm">Confirm</string>
+    <string name="customer_header">"Customer: "</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="daily_logs">Daily Logs</string>
+    <string name="date">Date: </string>
+    <string name="day">Day</string>
+    <string name="delete_sr">Delete SR</string>
+    <string name="description">Description</string>
+    <string name="description_header">Description:</string>
+    <string name="dete_entry">Delete This Entry</string>
+    <string name="edit_sr">Edit SR</string>
+    <string name="end_date">End Date</string>
+    <string name="end_time">End Time</string>
+    <string name="end_time_header">End Time: </string>
+    <string name="enter">Enter</string>
+    <string name="forward_slash">/</string>
+    <string name="model_number">Model Number</string>
+    <string name="model_number_header">"Model Number: "</string>
+    <string name="month">Month</string>
+    <string name="no_description">No Description</string>
+    <string name="part_number">Part Number</string>
+    <string name="parts">Parts</string>
+    <string name="parts_header">"Parts List: "</string>
+    <string name="quantity">Quantity</string>
+    <string name="serial_number">Serial Number</string>
+    <string name="serial_number_header">"Serial Number: "</string>
+    <string name="source">Source</string>
+    <string name="sr_number_header">"Sr Number: "</string>
+    <string name="start_date">Start Date</string>
+    <string name="start_time">Start Time</string>
+    <string name="start_time_header">"Start Time: "</string>
+    <string name="today">Today</string>
+    <string name="total_travel_time">Total Travel Time: </string>
+    <string name="total_work_time">Total Work Time: </string>
+    <string name="travel_time">Travel Time</string>
+    <string name="unkown">Unknown</string>
+    <string name="unused">Unused</string>
+    <string name="used">Used</string>
+    <string name="zero_hours">0.0 hours</string>
+    <!-- From: file:/E:/Github/SRBase/SRBase/app/src/main/res/values/styles.xml -->
+    <eat-comment />
+
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+</resources>
