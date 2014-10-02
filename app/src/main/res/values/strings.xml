@@ -30,8 +30,6 @@
 
     <string name="used">Used</string>
 
-    <string name="enter">Enter</string>
-
     <string name="add_daily">Add Daily Log</string>
 
     <string name="add_part">Add Part</string>
@@ -39,8 +37,6 @@
     <string name="confirm">Confirm</string>
 
     <string name="action_new_sr">New SR</string>
-
-    <string name="blank"></string>
 
     <string name="start_date">Start Date</string>
 
@@ -52,23 +48,15 @@
 
     <string name="sr_number_header">"Sr Number: "</string>
 
-    <string name="parts_header">"Parts List: "</string>
-
     <string name="description_header">Description:</string>
-
-    <string name="comments">Comments</string>
     
     <string name="parts">Parts</string>
     
     <string name="model_number_header">"Model Number: "</string>
     
     <string name="serial_number_header">"Serial Number: "</string>
-    
+
     <string name="customer_header">"Customer: "</string>
-    
-    <string name="start_time_header">"Start Time: "</string>
-    
-    <string name="end_time_header">End Time: </string>
     
     <string name="edit_sr">Edit SR</string>
     
@@ -83,14 +71,17 @@
     <string name="unused">Unused</string>
     
     <string name="no_description">No Description</string>
-    <color name="orange">#ffa500</color>
+
     <string name="unkown">Unknown</string>
-    <color name="blue">#00ddff</color>
+
     <string name="daily_logs">Daily Logs</string>
+
     <string name="today">Today</string>
-    <string name="delete_sr">Delete SR</string>
+
     <string name="zero_hours">0.0 hours</string>
+
     <string name="dete_entry">Delete This Entry</string>
+
     <color name="link_blue">#0000FF</color>
 
 </resources>
