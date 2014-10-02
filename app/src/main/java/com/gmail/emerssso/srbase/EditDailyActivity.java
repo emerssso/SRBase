@@ -94,8 +94,6 @@ public class EditDailyActivity extends DeletableActivity {
 		
 		Bundle extras = getIntent().getExtras();
 		
-		srId = extras.getString(DailyTable.COLUMN_SR_ID);
-		
 		savedUri = (savedInstanceState == null) ? null : 
 			(Uri) savedInstanceState.getParcelable(
 					SRContentProvider.DAILY_CONTENT_ITEM_TYPE);
@@ -104,6 +102,8 @@ public class EditDailyActivity extends DeletableActivity {
 		super.savedUri = savedUri;
 		
 	    if (extras != null) {
+            srId = extras.getString(DailyTable.COLUMN_SR_ID);
+
 	    	savedUri = extras
 	    			.getParcelable(SRContentProvider.DAILY_CONTENT_ITEM_TYPE);
 	    	super.savedUri = savedUri;

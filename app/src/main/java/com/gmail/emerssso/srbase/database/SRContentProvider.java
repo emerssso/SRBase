@@ -445,8 +445,8 @@ public class SRContentProvider extends ContentProvider {
 			// check if all columns which are requested are available
 			if (!availableColumns.containsAll(requestedColumns)) {
 				String except = "";
-				for(int i = 0; i < projection.length; i++)
-					except = except + projection[i] + ", ";
+                for (String aProjection : projection)
+                    except = except + aProjection + ", ";
 				throw new IllegalArgumentException(
 						"Unknown columns in projection: " + except);
 			}

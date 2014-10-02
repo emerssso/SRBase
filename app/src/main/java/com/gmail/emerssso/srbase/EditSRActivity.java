@@ -210,9 +210,9 @@ public class EditSRActivity extends DeletableActivity {
 	    		int myIdNum = cursor.getInt(cursor
 			    		.getColumnIndexOrThrow(SRTable.COLUMN_ID));
 	    		myId = String.valueOf(myIdNum);
+
+                cursor.close();
     		}
-	    	
-	    	cursor.close();
 	    } 
 	    else {
 	      // Update SR

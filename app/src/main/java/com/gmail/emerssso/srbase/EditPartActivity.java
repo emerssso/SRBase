@@ -61,14 +61,14 @@ public class EditPartActivity extends DeletableActivity {
 		
 		Bundle extras = getIntent().getExtras();
 		
-		srId = extras.getString(PartTable.COLUMN_SR_ID);
-		
 		savedUri = (bundle == null) ? null : 
 			(Uri) bundle.getParcelable(
 					SRContentProvider.PART_CONTENT_ITEM_TYPE);
 		super.savedUri = savedUri;
 		
 	    if (extras != null) {
+            srId = extras.getString(PartTable.COLUMN_SR_ID);
+
 	    	savedUri = extras
 	    			.getParcelable(SRContentProvider.PART_CONTENT_ITEM_TYPE);
 	    	super.savedUri = savedUri;
