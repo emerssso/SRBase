@@ -66,17 +66,8 @@ public class ViewSRActivity extends DeletableActivity {
 	
 	/** The serial number of the device to be serviced. */
 	private TextView serialNumber;
-	
-	/** The parts list button. */
-	private Button partsListButton;
-	
-	/** The comments list button. */
-	private Button commentsListButton;
-	
-	/** Button to edit today's entry in the Dailies. */
-	private Button today;
-	
-	/** The sr uri. */
+
+    /** The sr uri. */
 	private Uri srUri;
 	
 	/** The sr id. */
@@ -102,9 +93,12 @@ public class ViewSRActivity extends DeletableActivity {
 		description = (TextView) findViewById(R.id.view_description);
 		modelNumber = (TextView) findViewById(R.id.model_number_view);
 		serialNumber = (TextView) findViewById(R.id.serial_number_view);
-		partsListButton = (Button) findViewById(R.id.view_parts_list);
-		commentsListButton = (Button) findViewById(R.id.view_comments_list);
-		today = (Button) findViewById(R.id.edit_today);
+		/* The parts list button. */
+        Button partsListButton = (Button) findViewById(R.id.view_parts_list);
+		/* The comments list button. */
+        Button commentsListButton = (Button) findViewById(R.id.view_comments_list);
+		/* Button to edit today's entry in the Dailies. */
+        Button today = (Button) findViewById(R.id.edit_today);
 		
 		Bundle extras = getIntent().getExtras();
 		
@@ -121,35 +115,35 @@ public class ViewSRActivity extends DeletableActivity {
     	}
 	    
 	    commentsListButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getBaseContext(),
-						ListDailiesActivity.class);
-			  	i.putExtra(DailyTable.COLUMN_SR_ID, srId);
-			  	startActivity(i);
-			}
-		});
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(),
+                        ListDailiesActivity.class);
+                i.putExtra(DailyTable.COLUMN_SR_ID, srId);
+                startActivity(i);
+            }
+        });
 	    
 	    partsListButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent(getBaseContext(),
-						ListPartsActivity.class);
-			  	i.putExtra(PartTable.COLUMN_SR_ID, srId);
-			  	startActivity(i);
-			}
-		});
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(),
+                        ListPartsActivity.class);
+                i.putExtra(PartTable.COLUMN_SR_ID, srId);
+                startActivity(i);
+            }
+        });
 	    
 	    //This button should take us to an edit for today's daily
 	    today.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				startDaily();
-			}
-		});
+
+            @Override
+            public void onClick(View v) {
+                startDaily();
+            }
+        });
 	}
 	
 

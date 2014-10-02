@@ -34,18 +34,16 @@ public class ListPartsActivity extends ListActivity
 	
 	/** The ID of the target SR. */
 	private String srId;
-	
-	/** The ListView of parts. */
-	private ListView lv;
-	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
+
+    /* (non-Javadoc)
+     * @see android.app.Activity#onCreate(android.os.Bundle)
+     */
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.list_parts_activity);
-		lv = this.getListView();
+		/* The ListView of parts. */
+        ListView lv = this.getListView();
 		lv.setDividerHeight(2);
 		lv.setClickable(true);
 		
@@ -58,18 +56,18 @@ public class ListPartsActivity extends ListActivity
 		
 		fillData();
 		
-		lv.setOnItemClickListener(new OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
-				Intent i = new Intent(parent.getContext(), 
-						EditPartActivity.class);
-				Uri partUri = Uri.parse(SRContentProvider.PART_CONTENT_URI + 
-						"/" + id);
-				i.putExtra(SRContentProvider.PART_CONTENT_ITEM_TYPE, partUri);
-				startActivity(i);
-			}
-		});
+		lv.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Intent i = new Intent(parent.getContext(),
+                        EditPartActivity.class);
+                Uri partUri = Uri.parse(SRContentProvider.PART_CONTENT_URI +
+                        "/" + id);
+                i.putExtra(SRContentProvider.PART_CONTENT_ITEM_TYPE, partUri);
+                startActivity(i);
+            }
+        });
 	}
 	
 	/* (non-Javadoc)

@@ -48,14 +48,8 @@ public class EditDailyActivity extends DeletableActivity {
 	
 	/** Displays the end time. */
 	private TextView endTime;
-	
-	/** The confirm button to save the log. */
-	private Button confirm;
-	
-	/** Add a part associated with the same SR as the daily. */
-	private Button addPart;
-	
-	/** The SR ID associated with the day. */
+
+    /** The SR ID associated with the day. */
 	private String srId;
 	
 	/** The saved Uri when loading an old Daily. */
@@ -93,8 +87,10 @@ public class EditDailyActivity extends DeletableActivity {
 		comment = (EditText) findViewById(R.id.comment);
 		startTime = (TextView) findViewById(R.id.display_start_time);
 		endTime = (TextView) findViewById(R.id.display_end_time);
-		confirm = (Button) findViewById(R.id.daily_confirm);
-		addPart = (Button) findViewById(R.id.add_part_from_daily);
+		/* The confirm button to save the log. */
+        Button confirm = (Button) findViewById(R.id.daily_confirm);
+		/* Add a part associated with the same SR as the daily. */
+        Button addPart = (Button) findViewById(R.id.add_part_from_daily);
 		
 		Bundle extras = getIntent().getExtras();
 		
@@ -128,37 +124,37 @@ public class EditDailyActivity extends DeletableActivity {
     	}
 	    
 	    confirm.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//set hours/minutes for current if not set
-				final Calendar c = Calendar.getInstance();
-				if(startHour == -1) startHour = c.get(Calendar.HOUR_OF_DAY);
-				if(startMin == -1) startMin = c.get(Calendar.MINUTE);
-				if(endMin == -1) endMin = c.get(Calendar.MINUTE);
-				if(endHour == -1) endHour = c.get(Calendar.HOUR_OF_DAY);
-				
-				//make sure start is before end.
-				if(startHour > endHour || 
-						(startHour == endHour && startMin > endMin)) {
-					Toast.makeText(EditDailyActivity.this, 
-							"Start Time is after End Time!",
-					        Toast.LENGTH_LONG).show();
-					return;
-				}
-				saveState();
-				setResult(RESULT_OK);
-				finish();
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                //set hours/minutes for current if not set
+                final Calendar c = Calendar.getInstance();
+                if (startHour == -1) startHour = c.get(Calendar.HOUR_OF_DAY);
+                if (startMin == -1) startMin = c.get(Calendar.MINUTE);
+                if (endMin == -1) endMin = c.get(Calendar.MINUTE);
+                if (endHour == -1) endHour = c.get(Calendar.HOUR_OF_DAY);
+
+                //make sure start is before end.
+                if (startHour > endHour ||
+                        (startHour == endHour && startMin > endMin)) {
+                    Toast.makeText(EditDailyActivity.this,
+                            "Start Time is after End Time!",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                saveState();
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
 	    
 	    addPart.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				saveState();
-				addPart();
-			}
-		});
+
+            @Override
+            public void onClick(View v) {
+                saveState();
+                addPart();
+            }
+        });
 	}
 	
 	/**

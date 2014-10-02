@@ -39,11 +39,8 @@ public class EditPartActivity extends DeletableActivity {
 	
 	/** The Uri to load saved data from. */
 	private Uri savedUri;
-	
-	/** The confirm button to save data. */
-	private Button confirm;
-	
-	/** The ID of the associated SR. */
+
+    /** The ID of the associated SR. */
 	private String srId;
 	
 	/* (non-Javadoc)
@@ -59,7 +56,8 @@ public class EditPartActivity extends DeletableActivity {
 		partSource = (EditText) findViewById(R.id.part_source);
 		partDescription = (EditText) findViewById(R.id.part_description);
 		partUsed = (CheckBox) findViewById(R.id.part_used);
-		confirm = (Button) findViewById(R.id.part_confirm);
+		/* The confirm button to save data. */
+        Button confirm = (Button) findViewById(R.id.part_confirm);
 		
 		Bundle extras = getIntent().getExtras();
 		
@@ -79,21 +77,20 @@ public class EditPartActivity extends DeletableActivity {
     	}
 	    
 	    confirm.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-				if (partNumber.getText().toString().length() == 0) {
-					Toast.makeText(EditPartActivity.this, "Part Number missing",
-					        Toast.LENGTH_LONG).show();
-					return;
-				}
-				else {
-					saveState();
-					setResult(RESULT_OK);
-					finish();
-				}
-			}
-		});
+            @Override
+            public void onClick(View v) {
+
+                if (partNumber.getText().toString().length() == 0) {
+                    Toast.makeText(EditPartActivity.this, "Part Number missing",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                } else {
+                    saveState();
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        });
 	}
 	
 	/**

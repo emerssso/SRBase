@@ -41,19 +41,8 @@ public class EditSRActivity extends DeletableActivity {
 	
 	/** The description of the call. */
 	private EditText mDescription;
-	
-	/** The Daily Button opens a dialog to add a new daily
-	 * associated with this SR. */
-	private Button mDaily;
-	
-	/** The Part Button opens a new dialog to add a new part
-	 * associated with this SR.. */
-	private Button mPart;
-	
-	/** The Confirm Button saves the SR to the database. */
-	private Button mEnter;
-	
-	/** The saved URI to load SR information from. */
+
+    /** The saved URI to load SR information from. */
 	private Uri savedUri;
 	
 	/** The _id number in the database of the SR. */
@@ -72,9 +61,14 @@ public class EditSRActivity extends DeletableActivity {
 		mModelNumber = (EditText) findViewById(R.id.modelNumber);
 		mSerialNumber = (EditText) findViewById(R.id.serialNumber);
 		mDescription = (EditText) findViewById(R.id.description);
-		mDaily = (Button) findViewById(R.id.add_daily);
-		mPart = (Button) findViewById(R.id.add_part);
-		mEnter = (Button) findViewById(R.id.confirm);
+		/* The Daily Button opens a dialog to add a new daily
+	  associated with this SR. */
+        Button mDaily = (Button) findViewById(R.id.add_daily);
+		/* The Part Button opens a new dialog to add a new part
+	  associated with this SR.. */
+        Button mPart = (Button) findViewById(R.id.add_part);
+		/* The Confirm Button saves the SR to the database. */
+        Button mEnter = (Button) findViewById(R.id.confirm);
 		
 		Bundle extras = getIntent().getExtras();
 		
@@ -89,38 +83,37 @@ public class EditSRActivity extends DeletableActivity {
     	}
 		
 		mEnter.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mSRNumber.getText().toString().length() == 0) {
-					Toast.makeText(EditSRActivity.this, "SR Number missing",
-					        Toast.LENGTH_LONG).show();
-					return;
-				}
-				else {
-					saveState();
-					setResult(RESULT_OK);
-					finish();
-				}
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                if (mSRNumber.getText().toString().length() == 0) {
+                    Toast.makeText(EditSRActivity.this, "SR Number missing",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                } else {
+                    saveState();
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        });
 		
 		mPart.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				saveState();
-				addPart();
-			}
-		});
+
+            @Override
+            public void onClick(View v) {
+                saveState();
+                addPart();
+            }
+        });
 		
 		mDaily.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				saveState();
-				addDaily();
-			}
-		});
+
+            @Override
+            public void onClick(View v) {
+                saveState();
+                addDaily();
+            }
+        });
 	}
 	
 	/**

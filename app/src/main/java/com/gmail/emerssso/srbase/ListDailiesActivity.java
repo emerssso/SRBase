@@ -37,18 +37,16 @@ public class ListDailiesActivity extends ListActivity
 	
 	/** The ID of the target SR. */
 	private String srId;
-	
-	/** The ListView listing the comments. */
-	private ListView lv;
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
+    /* (non-Javadoc)
+     * @see android.app.Activity#onCreate(android.os.Bundle)
+     */
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.list_comments_activity);
-		lv = this.getListView();
+		/* The ListView listing the comments. */
+        ListView lv = this.getListView();
 		lv.setDividerHeight(2);
 		
 		Bundle extras = getIntent().getExtras();
@@ -57,18 +55,18 @@ public class ListDailiesActivity extends ListActivity
 		
 		fillData();
 		
-		lv.setOnItemClickListener(new OnItemClickListener(){
-			@Override
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
-				Intent i = new Intent(parent.getContext(), 
-						EditDailyActivity.class);
-				Uri dayUri = Uri.parse(SRContentProvider.DAILY_CONTENT_URI + 
-						"/" + id);
-				i.putExtra(SRContentProvider.DAILY_CONTENT_ITEM_TYPE, dayUri);
-				startActivity(i);
-			}
-		});
+		lv.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Intent i = new Intent(parent.getContext(),
+                        EditDailyActivity.class);
+                Uri dayUri = Uri.parse(SRContentProvider.DAILY_CONTENT_URI +
+                        "/" + id);
+                i.putExtra(SRContentProvider.DAILY_CONTENT_ITEM_TYPE, dayUri);
+                startActivity(i);
+            }
+        });
 	}
 	
 	/* (non-Javadoc)
