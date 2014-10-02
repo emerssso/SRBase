@@ -64,7 +64,8 @@ public class SRTable {
 	 * @param oldVersion the old version number.
 	 * @param newVersion the new version number.
 	 */
-	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
+	@SuppressWarnings("UnusedParameters")
+    public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
 		Log.w(SRTable.class.getName(), "No need to upgrade SR table from version "
 				+ oldVersion + " to " + newVersion);

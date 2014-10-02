@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
@@ -240,7 +241,7 @@ public class EditDailyActivity extends DeletableActivity {
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
 	 */
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
 		outState.putParcelable(SRContentProvider.DAILY_CONTENT_ITEM_TYPE, 
@@ -313,7 +314,8 @@ public class EditDailyActivity extends DeletableActivity {
 	 *
 	 * @param v the caller view (I think?)
 	 */
-	public void showStartTimePickerDialog(View v) {
+	@SuppressWarnings("UnusedParameters")
+    public void showStartTimePickerDialog(View v) {
 		TimePickerFragment newFragment = TimePickerFragment.newInstance(true, startHour, startMin);
 		newFragment.show(getFragmentManager(), TIME_PICKER_FRAGMENT_TAG);
 	}
@@ -323,7 +325,8 @@ public class EditDailyActivity extends DeletableActivity {
 	 *
 	 * @param v the caller View (I think?)
 	 */
-	public void showEndTimePickerDialog(View v) {
+	@SuppressWarnings("UnusedParameters")
+    public void showEndTimePickerDialog(View v) {
 		TimePickerFragment newFragment = TimePickerFragment.newInstance(false, endHour, endMin);
 		newFragment.show(getFragmentManager(), TIME_PICKER_FRAGMENT_TAG);
 	}
@@ -332,7 +335,7 @@ public class EditDailyActivity extends DeletableActivity {
 	 * TimePickerFragment is used to create a new dialog fragment
 	 * in which the user may select a start or end time.
 	 */
-	 static class TimePickerFragment extends DialogFragment 
+	 public static class TimePickerFragment extends DialogFragment
 			implements TimePickerDialog.OnTimeSetListener {
 		 
 		 public static final String START_KEY = "TimePickerFragment.Start";

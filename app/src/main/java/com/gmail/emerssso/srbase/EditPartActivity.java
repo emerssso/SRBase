@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -81,7 +82,7 @@ public class EditPartActivity extends DeletableActivity {
             public void onClick(View v) {
 
                 if (partNumber.getText().toString().length() == 0) {
-                    Toast.makeText(EditPartActivity.this, "Part Number missing",
+                    Toast.makeText(EditPartActivity.this, getString(R.string.part_number_missing),
                             Toast.LENGTH_LONG).show();
                 } else {
                     saveState();
@@ -143,7 +144,7 @@ public class EditPartActivity extends DeletableActivity {
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
 	 */
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
 		outState.putParcelable(

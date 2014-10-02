@@ -4,7 +4,13 @@
     <disable_hints />
   </component>
   <component name="EntryPointsManager">
-    <entry_points version="2.0" />
+    <entry_points version="2.0">
+      <entry_point TYPE="method" FQNAME="com.gmail.emerssso.srbase.EditDailyActivity void showStartTimePickerDialog(android.view.View v)" />
+      <entry_point TYPE="method" FQNAME="com.gmail.emerssso.srbase.EditDailyActivity void showEndTimePickerDialog(android.view.View v)" />
+      <entry_point TYPE="field" FQNAME="com.gmail.emerssso.srbase.database.SRContentProvider SR_CONTENT_TYPE" />
+      <entry_point TYPE="field" FQNAME="com.gmail.emerssso.srbase.database.SRContentProvider DAILY_CONTENT_TYPE" />
+      <entry_point TYPE="field" FQNAME="com.gmail.emerssso.srbase.database.SRContentProvider PART_CONTENT_TYPE" />
+    </entry_points>
   </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />

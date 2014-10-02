@@ -81,6 +81,7 @@
     <string name="zero_hours">0.0 hours</string>
 
     <string name="dete_entry">Delete This Entry</string>
+    <string name="part_number_missing">Part Number missing</string>
 
     <color name="link_blue">#0000FF</color>
 

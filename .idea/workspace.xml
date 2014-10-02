@@ -23,11 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ba07027-9d60-41eb-942d-dee5dd4fdebe" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditDailyActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditDailyActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditPartActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditPartActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditSRActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditSRActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRContentProvider.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRContentProvider.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRTable.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SRBase.iws" />
@@ -51,16 +54,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
-              <caret line="29" column="11" selection-start-line="29" selection-start-column="11" selection-end-line="29" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="gradle-wrapper.properties" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
           <provider selected="true" editor-type-id="text-editor">
@@ -74,19 +67,34 @@
       <file leaf-file-name="EditDailyActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditDailyActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3398" max-vertical-offset="6205">
-              <caret line="254" column="39" selection-start-line="254" selection-start-column="39" selection-end-line="254" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3449" max-vertical-offset="6239">
+              <caret line="243" column="55" selection-start-line="243" selection-start-column="55" selection-end-line="243" selection-end-column="55" />
+              <folding>
+                <element signature="e#9974#10011#0" expanded="true" />
+                <element signature="e#10319#10356#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EditPartActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditPartActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2038" max-vertical-offset="3077">
+              <caret line="146" column="55" selection-start-line="146" selection-start-column="55" selection-end-line="146" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EditPartActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditPartActivity.java">
+      <file leaf-file-name="SRTable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRTable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21575342" vertical-offset="780" max-vertical-offset="3077">
-              <caret line="69" column="60" selection-start-line="69" selection-start-column="60" selection-end-line="69" selection-end-column="60" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="776" max-vertical-offset="1292">
+              <caret line="67" column="48" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="48" />
+              <folding>
+                <element signature="e#2305#2342#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -94,8 +102,8 @@
       <file leaf-file-name="EditSRActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditSRActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2905" max-vertical-offset="3791">
-              <caret line="216" column="14" selection-start-line="216" selection-start-column="14" selection-end-line="216" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2293" max-vertical-offset="3791">
+              <caret line="171" column="55" selection-start-line="171" selection-start-column="55" selection-end-line="171" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -104,8 +112,8 @@
       <file leaf-file-name="ViewSRActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/ViewSRActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6203" max-vertical-offset="8296">
-              <caret line="422" column="40" selection-start-line="422" selection-start-column="40" selection-end-line="422" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8296">
+              <caret line="39" column="29" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -141,11 +149,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SRContentProvider.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SRContentProvider.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRContentProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="7100" max-vertical-offset="7633">
-              <caret line="448" column="20" selection-start-line="448" selection-start-column="20" selection-end-line="448" selection-end-column="20" />
+            <state vertical-scroll-proportion="2.0570776" vertical-offset="0" max-vertical-offset="7633">
+              <caret line="118" column="45" selection-start-line="118" selection-start-column="45" selection-end-line="118" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -1236,10 +1244,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/ListDailiesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/ListPartsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/SRListActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRContentProvider.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRTable.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditDailyActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditPartActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditSRActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRContentProvider.java" />
       </list>
     </option>
   </component>
@@ -1973,42 +1982,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRContentProvider.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7100" max-vertical-offset="7633">
-          <caret line="448" column="20" selection-start-line="448" selection-start-column="20" selection-end-line="448" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/ViewSRActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6203" max-vertical-offset="8296">
-          <caret line="422" column="40" selection-start-line="422" selection-start-column="40" selection-end-line="422" selection-end-column="40" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="776" max-vertical-offset="1292">
+          <caret line="67" column="48" selection-start-line="67" selection-start-column="48" selection-end-line="67" selection-end-column="48" />
+          <folding>
+            <element signature="e#2305#2342#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditDailyActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3398" max-vertical-offset="6205">
-          <caret line="254" column="39" selection-start-line="254" selection-start-column="39" selection-end-line="254" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3449" max-vertical-offset="6239">
+          <caret line="243" column="55" selection-start-line="243" selection-start-column="55" selection-end-line="243" selection-end-column="55" />
+          <folding>
+            <element signature="e#9974#10011#0" expanded="true" />
+            <element signature="e#10319#10356#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditPartActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2038" max-vertical-offset="3077">
+          <caret line="146" column="55" selection-start-line="146" selection-start-column="55" selection-end-line="146" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditSRActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2905" max-vertical-offset="3791">
-          <caret line="216" column="14" selection-start-line="216" selection-start-column="14" selection-end-line="216" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2293" max-vertical-offset="3791">
+          <caret line="171" column="55" selection-start-line="171" selection-start-column="55" selection-end-line="171" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/EditPartActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/ViewSRActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21575342" vertical-offset="780" max-vertical-offset="3077">
-          <caret line="69" column="60" selection-start-line="69" selection-start-column="60" selection-end-line="69" selection-end-column="60" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8296">
+          <caret line="39" column="29" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gmail/emerssso/srbase/database/SRContentProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.0570776" vertical-offset="0" max-vertical-offset="7633">
+          <caret line="118" column="45" selection-start-line="118" selection-start-column="45" selection-end-line="118" selection-end-column="45" />
           <folding />
         </state>
       </provider>
