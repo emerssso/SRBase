@@ -142,9 +142,8 @@ public class SRListActivity extends ListActivity
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		String[] projection = { SRTable.COLUMN_ID, SRTable.COLUMN_SR_NUMBER, 
 				SRTable.COLUMN_CUSTOMER_NAME};
-	    CursorLoader cursorLoader = new CursorLoader(this,
+	    return new CursorLoader(this,
 	        SRContentProvider.SR_CONTENT_URI, projection, null, null, null);
-	    return cursorLoader;
 	}
 
 	/* (non-Javadoc)

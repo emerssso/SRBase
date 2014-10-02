@@ -127,11 +127,10 @@ public class ListPartsActivity extends ListActivity
 				PartTable.COLUMN_PART_NUMBER, PartTable.COLUMN_QUANTITY,
 				PartTable.COLUMN_SOURCE, PartTable.COLUMN_USED,
 				PartTable.COLUMN_DESCRIPTION };
-	    CursorLoader cursorLoader = new CursorLoader(this,
+	    return new CursorLoader(this,
 	        SRContentProvider.PART_CONTENT_URI, projection, 
 	        		PartTable.COLUMN_SR_ID + " = ?", 
 					new String[] {srId}, null);
-	    return cursorLoader;
 	}
 
 	/* (non-Javadoc)

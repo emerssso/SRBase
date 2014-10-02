@@ -129,11 +129,10 @@ public class ListDailiesActivity extends ListActivity
 		String[] projection = { DailyTable.COLUMN_ID, DailyTable.COLUMN_DAY,
 				DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
 				DailyTable.COLUMN_COMMENT};
-	    CursorLoader cursorLoader = new CursorLoader(this,
+	    return new CursorLoader(this,
 	        SRContentProvider.DAILY_CONTENT_URI, projection, 
 	        		DailyTable.COLUMN_SR_ID + " = ? ", 
 					new String[] {srId}, null);
-	    return cursorLoader;
 	}
 
 	/* (non-Javadoc)
