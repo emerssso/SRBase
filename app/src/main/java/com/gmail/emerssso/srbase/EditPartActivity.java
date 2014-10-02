@@ -83,7 +83,6 @@ public class EditPartActivity extends DeletableActivity {
                 if (partNumber.getText().toString().length() == 0) {
                     Toast.makeText(EditPartActivity.this, "Part Number missing",
                             Toast.LENGTH_LONG).show();
-                    return;
                 } else {
                     saveState();
                     setResult(RESULT_OK);

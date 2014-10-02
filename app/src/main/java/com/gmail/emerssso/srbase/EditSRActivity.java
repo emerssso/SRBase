@@ -88,7 +88,6 @@ public class EditSRActivity extends DeletableActivity {
                 if (mSRNumber.getText().toString().length() == 0) {
                     Toast.makeText(EditSRActivity.this, "SR Number missing",
                             Toast.LENGTH_LONG).show();
-                    return;
                 } else {
                     saveState();
                     setResult(RESULT_OK);
