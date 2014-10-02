@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item 
-        android:id="@+id/edit_sr" 
-        android:icon="@drawable/ic_action_edit" 
-        android:title="@string/edit_sr" android:showAsAction="ifRoom">
-    </item>
-</menu>
-<!-- From: file:/E:/Github/SRBase/SRBase/app/src/main/res/menu/view_sr_menu.xml -->
