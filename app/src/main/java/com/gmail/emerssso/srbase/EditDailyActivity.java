@@ -54,7 +54,7 @@ public class EditDailyActivity extends EditSubItemActivity {
 	private String srId;
 	
 	/** The saved Uri when loading an old Daily. */
-	private Uri savedUri;
+    private Uri savedUri;
 	
 	/** The start hour. */
 	private int startHour;
@@ -186,8 +186,8 @@ public class EditDailyActivity extends EditSubItemActivity {
 	private String displayTime(int hour, int min) {
 		String ampm = "";
 		if(!DateFormat.is24HourFormat(this)) {
-			if(hour > 12) { 
-				hour = hour % 12;
+			if(hour > 12) {
+                hour %= 12;
 				ampm = "pm";
 			}
 			else ampm = "am";

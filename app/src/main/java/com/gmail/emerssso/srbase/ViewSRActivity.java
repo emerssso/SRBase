@@ -425,13 +425,13 @@ public class ViewSRActivity extends DeletableActivity {
 				String startampm = "";
 				String endampm = "";
 				if(!DateFormat.is24HourFormat(this)) {
-					if(firstStartHour > 12) { 
-						firstStartHour = firstStartHour % 12;
+					if(firstStartHour > 12) {
+                        firstStartHour %= 12;
 						startampm = "pm";
 					}
 					else startampm = "am";
 					if(lastEndHour > 12) {
-						lastEndHour = lastEndHour % 12;
+                        lastEndHour %= 12;
 						endampm = "pm";
 					}
 					else endampm = "am";

@@ -45,7 +45,7 @@ public class EditSRActivity extends DeletableActivity {
 	private EditText mDescription;
 
     /** The saved URI to load SR information from. */
-	private Uri savedUri;
+    private Uri savedUri;
 	
 	/** The _id number in the database of the SR. */
 	private String myId;
