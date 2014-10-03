@@ -24,6 +24,7 @@ import android.text.TextUtils;
  * 
  * @author Conner Kasten
  */
+@SuppressWarnings("UnusedAssignment")
 public class SRContentProvider extends ContentProvider {
 	
 	/** The OpenSQLiteHelper used by this ContentProvider to manage the database.*/
