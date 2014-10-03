@@ -48,8 +48,8 @@ public abstract class DeletableActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 		case R.id.delete_item:
-			DeleteFragment dfrag = new DeleteFragment();
-			dfrag.show(getFragmentManager(), DELETE_FRAGMENT_TAG);
+			DeleteFragment deleteFragment = new DeleteFragment();
+			deleteFragment.show(getFragmentManager(), DELETE_FRAGMENT_TAG);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

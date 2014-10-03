@@ -3,9 +3,6 @@
     android:versionCode="5"
     android:versionName="2.1" >
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="19" />
     <permission
         android:authorities="com.gmail.emerssso.srbase.srcontentprovider"
         android:name=".database.SRContentProvider"
@@ -31,36 +28,62 @@
         <activity
             android:name=".EditSRActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:parentActivityName=".SRListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SRListActivity" />
         </activity>
         <activity
             android:name=".ViewSRActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:launchMode="singleTop"
+            android:parentActivityName=".SRListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SRListActivity" />
         </activity>
         <activity
             android:name=".EditDailyActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:parentActivityName=".ViewSRActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ViewSRtActivity" />
         </activity>
         <activity
             android:name=".ListDailiesActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:parentActivityName=".ViewSRActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ViewSRtActivity" />
         </activity>
         <activity
             android:name=".ListPartsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:parentActivityName=".ViewSRActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ViewSRtActivity" />
         </activity>
         <activity
             android:name=".EditPartActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustResize" >
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:parentActivityName=".ViewSRActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ViewSRtActivity" />
         </activity>
         <provider 
             android:name=".database.SRContentProvider"
-            android:authorities="com.gmail.emerssso.srbase.srcontentprovider" >
+            android:authorities="com.gmail.emerssso.srbase.srcontentprovider"
+            android:exported="false">
         </provider>
     </application>
 

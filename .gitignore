@@ -28,3 +28,4 @@ proguard/
 *.log
 
 gradle/wrapper/gradle-wrapper.properties
+.idea/workspace.xml

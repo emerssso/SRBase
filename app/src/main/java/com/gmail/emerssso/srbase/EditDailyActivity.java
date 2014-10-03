@@ -32,7 +32,7 @@ import android.widget.Toast;
  * date, start and end times, travel time, and a comment section.
  * @author Conner Kasten
  */
-public class EditDailyActivity extends DeletableActivity {
+public class EditDailyActivity extends EditSubItemActivity {
 	private static final String TIME_PICKER_FRAGMENT_TAG = "TimePickerDialog";
 
 	/** The date for the log. */
@@ -157,8 +157,16 @@ public class EditDailyActivity extends DeletableActivity {
             }
         });
 	}
-	
-	/**
+
+    @Override
+    protected Intent createIntentForParent() {
+        Intent i = new Intent(this, ViewSRActivity.class);
+        Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + srId);
+        i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, todoUri);
+        return i;
+    }
+
+    /**
 	 * Convenience method to add a new part with the same SR ID as
 	 * The current Daily.
 	 */

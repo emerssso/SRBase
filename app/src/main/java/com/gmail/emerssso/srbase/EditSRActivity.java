@@ -7,6 +7,7 @@ import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -56,6 +57,10 @@ public class EditSRActivity extends DeletableActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_sr_activity);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		mSRNumber = (EditText) findViewById(R.id.SRNumber);
 		mCustomer = (EditText) findViewById(R.id.customerName);

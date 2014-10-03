@@ -7,6 +7,7 @@ import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -81,6 +82,10 @@ public class ViewSRActivity extends DeletableActivity {
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.view_sr_activity);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		sr = (TextView) findViewById(R.id.sr_number_view);
 		customer = (TextView) findViewById(R.id.customer_view);
@@ -102,16 +107,12 @@ public class ViewSRActivity extends DeletableActivity {
 		
 		Bundle extras = getIntent().getExtras();
 		
-		srUri = (bundle == null) ? null : 
-			(Uri) bundle
-	        .getParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE);
-		super.savedUri = srUri;
-		
 	    if (extras != null) {
 	    	srUri = extras
 	    			.getParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE);
 	    	super.savedUri = srUri;
-	    	fillData(srUri);
+            if(srUri != null)
+	    	    fillData(srUri);
     	}
 	    
 	    commentsListButton.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +153,17 @@ public class ViewSRActivity extends DeletableActivity {
 	 */
 	protected void onResume() {
 		super.onResume();
-		fillData(srUri);
+
+        if(srUri == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras != null)
+                srUri = extras.getParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE);
+        }
+
+        if(srUri != null)
+		    fillData(srUri);
+        else
+            Log.w("ViewSRActivity", "unable to get srUri from intent");
 	}
 	
 	/**
@@ -192,6 +203,8 @@ public class ViewSRActivity extends DeletableActivity {
 					"/" + id);
 			i.putExtra(SRContentProvider.DAILY_CONTENT_ITEM_TYPE, partUri);
 			startActivity(i);
+
+            cursor.close();
 		}
 		else { //otherwise start a blank one
 			Log.w("SRBase:ViewSR", "No Daily Found");
@@ -273,6 +286,8 @@ public class ViewSRActivity extends DeletableActivity {
 		    							.getColumnIndexOrThrow(
     									ContactsContract.Contacts._ID));
 		    					contactUri = Contacts.getLookupUri(id, key);
+
+                                cursor.close();
 		    					
 		    					//create and start intent for contact
 		    					Intent i = new Intent(Intent.ACTION_VIEW);
@@ -287,8 +302,6 @@ public class ViewSRActivity extends DeletableActivity {
 		    					        Toast.LENGTH_LONG).show();
 		    				}
 		    			}
-		    			
-		    			cursor.close();
 		    		}
 		    	}
 		    	
@@ -401,6 +414,7 @@ public class ViewSRActivity extends DeletableActivity {
 					}
 					cursor.moveToNext();
 				}
+                cursor.close();
 				
 				//set screen text
 				startDate.setText(startMonth + "/" + startDay 
@@ -443,7 +457,6 @@ public class ViewSRActivity extends DeletableActivity {
 						+ " hours");
 				totalTravelTime.setText(truncate(Double.toString(travelTime))
 						+ " hours");
-				cursor.close();
 			}
 			else { //if no dailies found, update screen with warning
 				startDate.setText("No Dates Logged");

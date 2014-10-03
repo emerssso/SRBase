@@ -6,6 +6,7 @@ import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import android.widget.Toast;
  * a form for users to enter new parts to be associated with a particular
  * SR, and certain information associated with that part.
  */
-public class EditPartActivity extends DeletableActivity {
+public class EditPartActivity extends EditSubItemActivity {
 	
 	/** The part number. */
 	private EditText partNumber;
@@ -188,5 +189,13 @@ public class EditPartActivity extends DeletableActivity {
 	      // Update Part
 	      getContentResolver().update(savedUri, values, null, null);
 	    }
+    }
+
+    @Override
+    protected Intent createIntentForParent() {
+        Intent i = new Intent(this, ViewSRActivity.class);
+        Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + srId);
+        i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, todoUri);
+        return i;
     }
 }

@@ -5,6 +5,7 @@ package com.gmail.emerssso.srbase;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.PartTable;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -13,6 +14,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,7 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * This class lists a summary of all part entries associated with
  * a particular SR. These may be clicked to edit the associated part entry.
  */
-public class ListPartsActivity extends ListActivity 
+public class ListPartsActivity extends ListSubItemsActivity
 		implements LoaderManager.LoaderCallbacks<Cursor> {
 	
 	/** The adapter for the cursor used to load data. */
@@ -42,7 +44,11 @@ public class ListPartsActivity extends ListActivity
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.list_parts_activity);
-		/* The ListView of parts. */
+
+        ActionBar actionBar = getActionBar();
+        if(actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
         ListView lv = this.getListView();
 		lv.setDividerHeight(2);
 		lv.setClickable(true);
@@ -91,6 +97,9 @@ public class ListPartsActivity extends ListActivity
 			i.putExtra(PartTable.COLUMN_SR_ID, srId);
 		    startActivity(i);
 			return true;
+        case android.R.id.home:
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -149,4 +158,11 @@ public class ListPartsActivity extends ListActivity
 		adapter.swapCursor(null);
 	}
 
+    @Override
+    protected Intent createIntentForParent() {
+        Intent i = new Intent(this, ViewSRActivity.class);
+        Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + srId);
+        i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, todoUri);
+        return i;
+    }
 }

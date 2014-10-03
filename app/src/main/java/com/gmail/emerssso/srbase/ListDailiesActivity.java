@@ -5,6 +5,7 @@ package com.gmail.emerssso.srbase;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.DailyTable;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -13,6 +14,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +31,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * and edit that Daily in the EditDailyActivity.
  * @author Conner Kasten
  */
-public class ListDailiesActivity extends ListActivity 
+public class ListDailiesActivity extends ListSubItemsActivity
 		implements LoaderManager.LoaderCallbacks<Cursor> {
 	
 	/** The adapter for the cursor to access the data. */
@@ -45,7 +47,11 @@ public class ListDailiesActivity extends ListActivity
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.list_comments_activity);
-		/* The ListView listing the comments. */
+
+        ActionBar actionBar = getActionBar();
+        if(actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
         ListView lv = this.getListView();
 		lv.setDividerHeight(2);
 		
@@ -90,6 +96,9 @@ public class ListDailiesActivity extends ListActivity
 			i.putExtra(DailyTable.COLUMN_SR_ID, srId);
 		    startActivity(i);
 			return true;
+        case android.R.id.home:
+            NavUtils.navigateUpFromSameTask(this);
+            return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -150,4 +159,12 @@ public class ListDailiesActivity extends ListActivity
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);
 	}
+
+    @Override
+    protected Intent createIntentForParent() {
+        Intent i = new Intent(this, ViewSRActivity.class);
+        Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + srId);
+        i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, todoUri);
+        return i;
+    }
 }
