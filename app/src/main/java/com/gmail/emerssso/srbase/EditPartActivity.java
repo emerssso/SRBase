@@ -2,9 +2,6 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import com.gmail.emerssso.srbase.database.SRContentProvider;
-import com.gmail.emerssso.srbase.database.PartTable;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +13,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.gmail.emerssso.srbase.database.PartTable;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
 
 /**
  * The EditPartActivity class implements an activity which provides

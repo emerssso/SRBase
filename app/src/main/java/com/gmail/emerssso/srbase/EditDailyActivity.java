@@ -2,12 +2,6 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import java.util.Calendar;
-
-import com.gmail.emerssso.srbase.database.SRContentProvider;
-import com.gmail.emerssso.srbase.database.DailyTable;
-import com.gmail.emerssso.srbase.database.PartTable;
-
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
@@ -25,6 +19,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartTable;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
+
+import java.util.Calendar;
 
 /**
  * This class implements an activity to allow users to create 

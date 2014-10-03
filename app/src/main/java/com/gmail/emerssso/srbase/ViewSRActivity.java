@@ -1,12 +1,5 @@
 package com.gmail.emerssso.srbase;
 
-import java.util.Calendar;
-
-import com.gmail.emerssso.srbase.database.DailyTable;
-import com.gmail.emerssso.srbase.database.PartTable;
-import com.gmail.emerssso.srbase.database.SRContentProvider;
-import com.gmail.emerssso.srbase.database.SRTable;
-
 import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,6 +16,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartTable;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
+import com.gmail.emerssso.srbase.database.SRTable;
+
+import java.util.Calendar;
 
 // TODO: Auto-generated Javadoc
 /**

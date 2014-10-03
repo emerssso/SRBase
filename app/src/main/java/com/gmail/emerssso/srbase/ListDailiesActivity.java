@@ -2,9 +2,6 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import com.gmail.emerssso.srbase.database.SRContentProvider;
-import com.gmail.emerssso.srbase.database.DailyTable;
-
 import android.app.ActionBar;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -19,9 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.SRContentProvider;
 
 /**
  * The ListDailiesActivity class implements an activity which
