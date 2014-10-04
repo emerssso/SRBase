@@ -59,8 +59,10 @@ public class EditSRActivity extends DeletableActivity {
 		setContentView(R.layout.edit_sr_activity);
 
         ActionBar actionBar = getActionBar();
-        if (actionBar != null)
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.edit_sr);
+        }
 		
 		mSRNumber = (EditText) findViewById(R.id.SRNumber);
 		mCustomer = (EditText) findViewById(R.id.customerName);
@@ -127,6 +129,7 @@ public class EditSRActivity extends DeletableActivity {
 	private void addPart() {
 		Intent i = new Intent(this, EditPartActivity.class);
 		i.putExtra(PartTable.COLUMN_SR_ID, myId);
+        i.putExtra(SRTable.COLUMN_SR_NUMBER, mSRNumber.getText().toString());
 		startActivity(i);
 	}
 	
@@ -136,6 +139,7 @@ public class EditSRActivity extends DeletableActivity {
 	private void addDaily() {
 		Intent i = new Intent(this, EditDailyActivity.class);
 		i.putExtra(DailyTable.COLUMN_SR_ID, myId);
+        i.putExtra(SRTable.COLUMN_SR_NUMBER, mSRNumber.getText().toString());
 		startActivity(i);
 	}
 	

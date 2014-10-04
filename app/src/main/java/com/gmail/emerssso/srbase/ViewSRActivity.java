@@ -122,6 +122,7 @@ public class ViewSRActivity extends DeletableActivity {
                 Intent i = new Intent(getBaseContext(),
                         ListDailiesActivity.class);
                 i.putExtra(DailyTable.COLUMN_SR_ID, srId);
+                i.putExtra(SRTable.COLUMN_SR_NUMBER, sr.getText().toString());
                 startActivity(i);
             }
         });
@@ -133,6 +134,7 @@ public class ViewSRActivity extends DeletableActivity {
                 Intent i = new Intent(getBaseContext(),
                         ListPartsActivity.class);
                 i.putExtra(PartTable.COLUMN_SR_ID, srId);
+                i.putExtra(SRTable.COLUMN_SR_NUMBER, sr.getText().toString());
                 startActivity(i);
             }
         });
@@ -210,6 +212,7 @@ public class ViewSRActivity extends DeletableActivity {
 			Log.w("SRBase:ViewSR", "No Daily Found");
 			Intent i = new Intent(this, EditDailyActivity.class);
 			i.putExtra(DailyTable.COLUMN_SR_ID, srId);
+            i.putExtra(SRTable.COLUMN_SR_NUMBER, sr.getText().toString());
 			startActivity(i);
 		}
 	}
