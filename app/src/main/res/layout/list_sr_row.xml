@@ -16,4 +16,13 @@
 	    android:layout_height="wrap_content" 
 	    android:textAppearance="?android:attr/textAppearanceMedium" >
 	</TextView>
+
+    <TextView
+        android:id="@+id/description_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:maxLength="15"
+        android:ellipsize="end">
+    </TextView>
 </LinearLayout>
