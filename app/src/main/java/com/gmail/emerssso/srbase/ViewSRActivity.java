@@ -81,21 +81,21 @@ public class ViewSRActivity extends DeletableActivity {
 	 */
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.view_sr_activity);
+		setContentView(R.layout.new_view_sr_activity);
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		sr = (TextView) findViewById(R.id.sr_number_view);
-		customer = (TextView) findViewById(R.id.customer_view);
+		customer = (TextView) findViewById(R.id.customer_name_view);
 		startDate = (TextView) findViewById(R.id.start_date_header);
 		startTime = (TextView) findViewById(R.id.start_time_header);
 		endDate = (TextView) findViewById(R.id.end_date_header);
 		endTime = (TextView) findViewById(R.id.end_time_header);
 		totalWorkTime = (TextView) findViewById(R.id.total_work_time);
 		totalTravelTime = (TextView) findViewById(R.id.total_travel_time);
-		description = (TextView) findViewById(R.id.view_description);
+		description = (TextView) findViewById(R.id.description_view);
 		modelNumber = (TextView) findViewById(R.id.model_number_view);
 		serialNumber = (TextView) findViewById(R.id.serial_number_view);
 		/* The parts list button. */
@@ -227,7 +227,7 @@ public class ViewSRActivity extends DeletableActivity {
 		String[] projection = { SRTable.COLUMN_CUSTOMER_NAME,
 				SRTable.COLUMN_DESCRIPTION, SRTable.COLUMN_ID,
 				SRTable.COLUMN_MODEL_NUMBER, SRTable.COLUMN_SERIAL_NUMBER,
-				SRTable.COLUMN_SR_NUMBER };
+				SRTable.COLUMN_SR_NUMBER, SRTable.COLUMN_BUSINESS_NAME };
 		
 		Cursor cursor = getContentResolver().query(uri, projection, null, 
 				null, null);

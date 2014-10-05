@@ -388,7 +388,7 @@ public class SRContentProvider extends ContentProvider {
 		String[] available = { SRTable.COLUMN_CUSTOMER_NAME,
 				SRTable.COLUMN_DESCRIPTION, SRTable.COLUMN_ID,
 				SRTable.COLUMN_MODEL_NUMBER, SRTable.COLUMN_SERIAL_NUMBER,
-				SRTable.COLUMN_SR_NUMBER };
+				SRTable.COLUMN_SR_NUMBER, SRTable.COLUMN_BUSINESS_NAME };
 		if (projection != null) {
 			HashSet<String> requestedColumns = new 
 					HashSet<String>(Arrays.asList(projection));

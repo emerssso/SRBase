@@ -44,6 +44,8 @@ public class EditSRActivity extends DeletableActivity {
 	/** The description of the call. */
 	private EditText mDescription;
 
+    private EditText mBusinessName;
+
     /** The saved URI to load SR information from. */
     private Uri savedUri;
 	
@@ -69,6 +71,7 @@ public class EditSRActivity extends DeletableActivity {
 		mModelNumber = (EditText) findViewById(R.id.modelNumber);
 		mSerialNumber = (EditText) findViewById(R.id.serialNumber);
 		mDescription = (EditText) findViewById(R.id.description);
+        mBusinessName = (EditText) findViewById(R.id.businessName);
 		/* The Daily Button opens a dialog to add a new daily
 	  associated with this SR. */
         Button mDaily = (Button) findViewById(R.id.add_daily);
@@ -152,7 +155,7 @@ public class EditSRActivity extends DeletableActivity {
 		String[] projection = { SRTable.COLUMN_CUSTOMER_NAME,
 				SRTable.COLUMN_DESCRIPTION, SRTable.COLUMN_MODEL_NUMBER,
 				SRTable.COLUMN_SERIAL_NUMBER, SRTable.COLUMN_SR_NUMBER,
-				SRTable.COLUMN_ID};
+				SRTable.COLUMN_ID, SRTable.COLUMN_BUSINESS_NAME};
 		Cursor cursor = getContentResolver()
 				.query(uri, projection, null, null,null);
 		if (cursor != null) {
@@ -162,6 +165,8 @@ public class EditSRActivity extends DeletableActivity {
 		    		.getColumnIndexOrThrow(SRTable.COLUMN_SR_NUMBER)));
 		    mCustomer.setText(cursor.getString(cursor
 		    		.getColumnIndexOrThrow(SRTable.COLUMN_CUSTOMER_NAME)));
+            mBusinessName.setText(cursor.getString(cursor
+                    .getColumnIndexOrThrow(SRTable.COLUMN_BUSINESS_NAME)));
 		    mModelNumber.setText(cursor.getString(cursor
 		    		.getColumnIndexOrThrow(SRTable.COLUMN_MODEL_NUMBER)));
 		    mSerialNumber.setText(cursor.getString(cursor
@@ -198,6 +203,7 @@ public class EditSRActivity extends DeletableActivity {
 		String modelNumber = mModelNumber.getText().toString();
 		String serialNumber = mSerialNumber.getText().toString();
 		String description = mDescription.getText().toString();
+        String businessName = "";
 
 		ContentValues values = new ContentValues();
 		values.put(SRTable.COLUMN_SR_NUMBER, srNumber);
@@ -205,6 +211,7 @@ public class EditSRActivity extends DeletableActivity {
 		values.put(SRTable.COLUMN_MODEL_NUMBER, modelNumber);
 		values.put(SRTable.COLUMN_SERIAL_NUMBER, serialNumber);
 		values.put(SRTable.COLUMN_DESCRIPTION, description);
+        values.put(SRTable.COLUMN_BUSINESS_NAME, businessName);
 
 	    if (savedUri == null) {
 	    	// New SR

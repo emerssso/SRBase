@@ -72,7 +72,7 @@
     
     <string name="no_description">No Description</string>
 
-    <string name="unkown">Unknown</string>
+    <string name="unknown">Unknown</string>
 
     <string name="daily_logs">Daily Logs</string>
 
@@ -82,7 +82,7 @@
 
     <string name="dete_entry">Delete This Entry</string>
     <string name="part_number_missing">Part Number missing</string>
-
-    <color name="link_blue">#0000FF</color>
+    <string name="business_name">Business Name</string>
+    <string name="business_name_header">Business Name:</string>
 
 </resources>

@@ -131,6 +131,24 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
+        android:id="@+id/business_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/customer_view"
+        android:text="@string/business_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/business_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/customer_view"
+        android:layout_toRightOf="@+id/total_travel_header"
+        android:text="@string/unknown"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
         android:id="@+id/sr_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,7 +171,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sr_number_view"
         android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/unkown"
+        android:text="@string/unknown"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/link_blue"
         android:textStyle="italic" />
@@ -164,7 +182,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/customer_view"
         android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/unkown"
+        android:text="@string/unknown"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -182,7 +200,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/total_travel_header"
         android:layout_below="@+id/model_number_view"
-        android:text="@string/unkown"
+        android:text="@string/unknown"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -191,7 +209,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/unkown"
+        android:text="@string/unknown"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

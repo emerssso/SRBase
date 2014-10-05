@@ -87,8 +87,8 @@ public class DailyTable {
 	 */
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		if(oldVersion == 1 && newVersion == 2) {
-			Log.w(DailyTable.class.getName(), "Upgrading database from version "
+		if(oldVersion == 1 && newVersion >= 2) {
+			Log.d(DailyTable.class.getSimpleName(), "Upgrading database from version "
 					+ oldVersion + " to " + newVersion
 					+ ", which will migrate data to new location");
 			onCreate(database);
@@ -96,8 +96,6 @@ public class DailyTable {
 					"INSERT INTO main.daily SELECT * FROM dailytable.daily");
 			database.execSQL("DROP TABLE dailytable.daily");
 		}
-		else
-			Log.w(SRTable.class.getName(), "No upgrade required.");
 	}
 
 }

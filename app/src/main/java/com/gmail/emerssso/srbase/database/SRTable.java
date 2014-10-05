@@ -34,6 +34,8 @@ public class SRTable {
 	
 	/** The column name for the description column. */
 	public static final String COLUMN_DESCRIPTION = "description";
+
+    public static final String COLUMN_BUSINESS_NAME = "business_name";
 	
 	/** The SQL to create the SR table. */
 	private static final String DATABASE_CREATE = "create table "
@@ -43,7 +45,8 @@ public class SRTable {
 			+ COLUMN_CUSTOMER_NAME + " text not null, "
 			+ COLUMN_MODEL_NUMBER + " text not null, "
 			+ COLUMN_SERIAL_NUMBER + " text not null, "
-			+ COLUMN_DESCRIPTION + " text not null);";
+			+ COLUMN_DESCRIPTION + " text not null, "
+            + COLUMN_BUSINESS_NAME + " text not null);";
 	
 	/**
 	 * Executes the SQL necessary to create the table in the database referenced by
@@ -64,11 +67,14 @@ public class SRTable {
 	 * @param oldVersion the old version number.
 	 * @param newVersion the new version number.
 	 */
-	@SuppressWarnings("UnusedParameters")
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		Log.w(SRTable.class.getName(), "No need to upgrade SR table from version "
-				+ oldVersion + " to " + newVersion);
+        if(oldVersion == 1 && newVersion >= 3) {
+            Log.w(SRTable.class.getSimpleName(), "Upgrading database from version "
+                    + oldVersion + " to " + newVersion
+                    + ", which will add a business name column.");
+            database.execSQL("ALTER TABLE " + TABLE_SR +
+            " ADD " + COLUMN_BUSINESS_NAME + " text not null default '';");
+        }
 	}
-
 }

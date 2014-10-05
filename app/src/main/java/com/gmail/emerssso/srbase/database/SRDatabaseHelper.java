@@ -18,7 +18,7 @@ public class SRDatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "SRtable.db";
 	
 	/** The version number of the database. */
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	
 	/**
 	 * Instantiates a new OpenSQLiteHelper for the SR database.

@@ -55,7 +55,7 @@
         android:layout_above="@+id/part_used_view"
         android:layout_marginLeft="@dimen/part_value_tab"
         android:layout_toRightOf="@+id/part_quantity_header"
-        android:text="@string/unkown"
+        android:text="@string/unknown"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -65,7 +65,7 @@
         android:layout_below="@+id/part_number_view"
         android:layout_marginLeft="@dimen/part_value_tab"
         android:layout_toRightOf="@+id/part_quantity_header"
-        android:text="@string/unkown"
+        android:text="@string/unknown"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

@@ -72,8 +72,8 @@ public class PartTable {
 	 */
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		if(oldVersion == 1 && newVersion == 2) {
-			Log.w(PartTable.class.getName(), "Upgrading database from version "
+		if(oldVersion == 1 && newVersion >= 2) {
+			Log.w(PartTable.class.getSimpleName(), "Upgrading database from version "
 					+ oldVersion + " to " + newVersion
 					+ ", which will migrate data to new location");
 			onCreate(database);
@@ -81,8 +81,6 @@ public class PartTable {
 					"INSERT INTO main.part SELECT * FROM parttable.part");
 			database.execSQL("DROP TABLE parttable.part");
 		}
-		else
-			Log.w(SRTable.class.getName(), "No upgrade required.");
 	}
 
 }
