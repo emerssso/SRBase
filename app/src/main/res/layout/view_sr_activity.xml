@@ -101,6 +101,10 @@
                         android:text="@string/unknown"
                         android:id="@+id/customer_name_view" />
 
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></TableLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -199,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text=""
+                    android:text="@string/no_description"
                     android:id="@+id/description_view" />
             </LinearLayout>
 

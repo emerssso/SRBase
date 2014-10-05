@@ -40,6 +40,8 @@ public class ViewSRActivity extends DeletableActivity {
 	
 	/** the customer name. */
 	private TextView customer;
+
+    private TextView business;
 	
 	/** The start date. */
 	private TextView startDate;
@@ -89,6 +91,7 @@ public class ViewSRActivity extends DeletableActivity {
 		
 		sr = (TextView) findViewById(R.id.sr_number_view);
 		customer = (TextView) findViewById(R.id.customer_name_view);
+        business = (TextView) findViewById(R.id.business_name_view);
 		startDate = (TextView) findViewById(R.id.start_date_header);
 		startTime = (TextView) findViewById(R.id.start_time_header);
 		endDate = (TextView) findViewById(R.id.end_date_header);
@@ -241,6 +244,8 @@ public class ViewSRActivity extends DeletableActivity {
 			sr.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(SRTable.COLUMN_SR_NUMBER)));
 			customer.setText(name);
+            business.setText(cursor.getString(cursor
+                    .getColumnIndexOrThrow(SRTable.COLUMN_BUSINESS_NAME)));
 			modelNumber.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(SRTable.COLUMN_MODEL_NUMBER)));
 			serialNumber.setText(cursor.getString(cursor

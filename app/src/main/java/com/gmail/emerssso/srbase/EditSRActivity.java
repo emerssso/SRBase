@@ -203,7 +203,7 @@ public class EditSRActivity extends DeletableActivity {
 		String modelNumber = mModelNumber.getText().toString();
 		String serialNumber = mSerialNumber.getText().toString();
 		String description = mDescription.getText().toString();
-        String businessName = "";
+        String businessName = mBusinessName.getText().toString();
 
 		ContentValues values = new ContentValues();
 		values.put(SRTable.COLUMN_SR_NUMBER, srNumber);
