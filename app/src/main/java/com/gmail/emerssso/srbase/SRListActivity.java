@@ -143,7 +143,7 @@ public class SRListActivity extends ListActivity
 		String[] projection = { SRTable.COLUMN_ID, SRTable.COLUMN_SR_NUMBER, 
 				SRTable.COLUMN_CUSTOMER_NAME};
 	    return new CursorLoader(this,
-	        SRContentProvider.SR_CONTENT_URI, projection, null, null, null);
+	        SRContentProvider.SR_CONTENT_URI, projection, null, null, SRTable.COLUMN_ID + " desc");
 	}
 
 	/* (non-Javadoc)
