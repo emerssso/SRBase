@@ -69,7 +69,7 @@ public class SRTable {
 	 */
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-        if(oldVersion > 3 && newVersion >= 3) {
+        if(oldVersion < 3 && newVersion >= 3) {
             Log.w(SRTable.class.getSimpleName(), "Upgrading database from version "
                     + oldVersion + " to " + newVersion
                     + ", which will add a business name column.");
