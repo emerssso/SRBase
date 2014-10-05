@@ -23,7 +23,7 @@ public abstract class ListSubItemsActivity extends ListActivity {
 
             Bundle extras = getIntent().getExtras();
             String sr = extras.getString(SRTable.COLUMN_SR_NUMBER);
-            if(sr != null)
+            if (sr != null)
                 actionBar.setTitle(sr);
         }
     }
