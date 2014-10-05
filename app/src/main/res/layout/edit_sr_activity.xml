@@ -1,107 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/SRNumber"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/SRhint"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:nextFocusDown="@+id/customerName"
-        android:imeOptions="actionNext"
-        tools:ignore="TextFields" >
+        android:layout_height="match_parent"
+        android:layout_above="@+id/button_row">
 
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/customerName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/customer_name"
-        android:inputType="textPersonName" 
-        android:maxLines="1"
-        android:singleLine="true"
-        android:nextFocusDown="@+id/modelNumber"
-        android:imeOptions="actionNext"/>
-
-    <EditText
-        android:id="@+id/businessName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/customer_name"
-        android:inputType="textPersonName"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:nextFocusDown="@+id/modelNumber"
-        android:imeOptions="actionNext"/>
-
-    <EditText
-        android:id="@+id/modelNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/model_number"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:imeOptions="actionNext"
-        android:nextFocusDown="@+id/serialNumber"
-        tools:ignore="TextFields" />
-
-    <EditText
-        android:id="@+id/serialNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/serial_number"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:imeOptions="actionNext"
-        android:nextFocusDown="@+id/description"
-        tools:ignore="TextFields" />
-
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/description"
-        android:inputType="textMultiLine" />
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="1" >
-
-        <Button
-            android:id="@+id/add_daily"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="left|top"
-            android:layout_row="0"
-            android:text="@string/add_daily" />
+            android:orientation="vertical" xmlns:tools="http://schemas.android.com/tools">
 
-        <Button
-            android:id="@+id/confirm"
-            android:layout_column="0"
-            android:layout_gravity="right|top"
-            android:layout_row="0"
-            android:text="@string/confirm" />
+            <EditText
+                android:id="@+id/SRNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/SRhint"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:nextFocusDown="@+id/customerName"
+                android:imeOptions="actionNext"
+                tools:ignore="TextFields" >
 
-        <Button
-            android:id="@+id/add_part"
-            android:layout_column="0"
-            android:layout_gravity="left|top"
-            android:layout_row="1"
-            android:text="@string/add_part" />
-    </GridLayout>
+                <requestFocus />
+            </EditText>
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/customerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/customer_name"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:nextFocusDown="@+id/modelNumber"
+                android:imeOptions="actionNext"/>
+
+            <EditText
+                android:id="@+id/businessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/business_name"
+                android:inputType="textPersonName"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:nextFocusDown="@+id/modelNumber"
+                android:imeOptions="actionNext"/>
+
+            <EditText
+                android:id="@+id/modelNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/model_number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/serialNumber"
+                tools:ignore="TextFields" />
+
+            <EditText
+                android:id="@+id/serialNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/serial_number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/description"
+                tools:ignore="TextFields" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description"
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/button_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/sr_base_orange"
+            android:layout_alignParentBottom="true"
+            style="?android:attr/buttonBarStyle">
+
+            <Button
+                android:id="@+id/add_daily"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/add_daily" />
+
+            <Button
+                android:id="@+id/add_part"
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/add_part"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/confirm"
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/confirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+</RelativeLayout>
