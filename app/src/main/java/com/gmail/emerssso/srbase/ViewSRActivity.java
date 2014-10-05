@@ -81,7 +81,7 @@ public class ViewSRActivity extends DeletableActivity {
 	 */
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
-		setContentView(R.layout.new_view_sr_activity);
+		setContentView(R.layout.view_sr_activity);
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null)

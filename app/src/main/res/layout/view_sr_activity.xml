@@ -1,215 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/start_date_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/serial_number_view"
-        android:text="@string/start_date"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView"
+    android:layout_gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/start_time_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/start_date_header"
-        android:text="@string/start_time"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/end_date_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/serial_number_view"
-        android:text="@string/end_date"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/end_time_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/end_date_header"
-        android:text="@string/end_time"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="16dp">
 
-    <TextView
-        android:id="@+id/total_work_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBottom="@+id/total_work_time"
-        android:text="@string/total_work_time"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/sr_number_header"
+                        android:id="@+id/sr_number_header" />
 
-    <TextView
-        android:id="@+id/total_travel_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/total_travel_time"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="@dimen/total_time_margin"
-        android:text="@string/total_travel_time"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/customer_header"
+                        android:id="@+id/customer_name_header" />
 
-    <TextView
-        android:id="@+id/total_travel_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/total_work_time"
-        android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/zero_hours"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/business_name_header"
+                        android:id="@+id/business_name_header" />
 
-    <TextView
-        android:id="@+id/model_number_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBottom="@+id/model_number_view"
-        android:text="@string/model_number_header"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/model_number_header"
+                        android:id="@+id/model_number_header" />
 
-    <TextView
-        android:id="@+id/serial_number_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/model_number_view"
-        android:text="@string/serial_number_header"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/serial_number_header"
+                        android:id="@+id/serial_number_header" />
 
-    <TextView
-        android:id="@+id/description_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/total_travel_time"
-        android:text="@string/description_header"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/total_work_time"
+                        android:id="@+id/total_work_header" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/total_travel_time"
+                        android:id="@+id/total_travel_header" />
+                </LinearLayout>
 
-    <Button
-        android:id="@+id/view_parts_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/view_comments_list"
-        android:layout_alignBottom="@+id/view_comments_list"
-        android:layout_alignParentRight="true"
-        android:text="@string/parts" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="16dp">
 
-    <Button
-        android:id="@+id/view_comments_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="@string/daily_logs" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/unknown"
+                        android:id="@+id/sr_number_view" />
 
-    <TextView
-        android:id="@+id/view_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/description_header"
-        android:text="@string/no_description"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/unknown"
+                        android:id="@+id/customer_name_view" />
 
-    <TextView
-        android:id="@+id/customer_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBottom="@+id/customer_view"
-        android:text="@string/customer_header"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/unknown"
+                        android:id="@+id/business_name_view" />
 
-    <TextView
-        android:id="@+id/business_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBottom="@+id/customer_view"
-        android:text="@string/business_name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/unknown"
+                        android:id="@+id/model_number_view" />
 
-    <TextView
-        android:id="@+id/business_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/customer_view"
-        android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/unknown"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/unknown"
+                        android:id="@+id/serial_number_view" />
 
-    <TextView
-        android:id="@+id/sr_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/sr_number_view"
-        android:layout_alignParentLeft="true"
-        android:text="@string/sr_number_header"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/zero_hours"
+                        android:id="@+id/total_work_time" />
 
-    <Button
-        android:id="@+id/edit_today"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/view_comments_list"
-        android:text="@string/today" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/zero_hours"
+                        android:id="@+id/total_travel_time" />
+                </LinearLayout>
 
-    <TextView
-        android:id="@+id/customer_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sr_number_view"
-        android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/unknown"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/link_blue"
-        android:textStyle="italic" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/model_number_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/customer_view"
-        android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/unknown"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="24dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/start_date"
+                    android:id="@+id/start_date_header" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/start_date_header"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/start_time"
+                    android:id="@+id/start_time_header" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/end_date"
+                    android:id="@+id/end_date_header" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/end_date_header"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/end_time"
+                    android:id="@+id/end_time_header" />
+            </RelativeLayout>
 
-    <TextView
-        android:id="@+id/total_work_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/end_time_header"
-        android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/zero_hours"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="24dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/description_header"
+                    android:id="@+id/description_header" />
 
-    <TextView
-        android:id="@+id/serial_number_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/total_travel_header"
-        android:layout_below="@+id/model_number_view"
-        android:text="@string/unknown"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=""
+                    android:id="@+id/description_view" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/sr_number_view"
-        android:layout_width="wrap_content"
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/total_travel_header"
-        android:text="@string/unknown"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        style="?android:attr/buttonBarStyle"
+        android:background="@color/sr_base_orange"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/daily_logs"
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/view_comments_list" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/today"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_weight="1"
+            android:id="@+id/edit_today" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/parts"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/view_parts_list" />
+
+    </LinearLayout>
 
 </RelativeLayout>
+
