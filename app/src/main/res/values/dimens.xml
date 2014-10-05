@@ -2,4 +2,7 @@
 <resources>
     <dimen name="total_time_margin">10dp</dimen>
     <dimen name="part_value_tab">20dp</dimen>
+    <dimen name="side_margin_table">16dp</dimen>
+    <dimen name="top_margin_table">8dp</dimen>
+    <dimen name="inner_table_margin">8dp</dimen>
 </resources>

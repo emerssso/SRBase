@@ -467,12 +467,12 @@ public class ViewSRActivity extends DeletableActivity {
 						+ " hours");
 			}
 			else { //if no dailies found, update screen with warning
-				startDate.setText("No Dates Logged");
-				startTime.setText("");
-				endDate.setText("");
-				endTime.setText("");
-				totalWorkTime.setText("0 hours");
-				totalTravelTime.setText("0 hours");
+				startDate.setText(R.string.no_dates_found);
+				startTime.setVisibility(View.GONE);
+				endDate.setVisibility(View.GONE);
+				endTime.setVisibility(View.GONE);
+				totalWorkTime.setText(R.string.zero_hours);
+				totalTravelTime.setText(R.string.zero_hours);
 			}
 		}
 	}
