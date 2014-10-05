@@ -5,70 +5,80 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/part_number"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:ems="10"
-        android:hint="@string/part_number"
-        tools:ignore="TextFields" 
-        android:maxLines="1"
-        android:singleLine="true"
-        android:nextFocusDown="@+id/part_quantity"
-        android:imeOptions="actionNext">
+        android:layout_above="@+id/part_confirm">
 
-        <requestFocus />
-    </EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/part_quantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/part_number"
-        android:ems="10"
-        android:hint="@string/quantity"
-        android:inputType="number" 
-        android:maxLines="1"
-        android:singleLine="true"
-        android:nextFocusDown="@+id/part_source"
-        android:imeOptions="actionNext"/>
+            <EditText
+                android:id="@+id/part_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/part_number"
+                tools:ignore="TextFields"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:nextFocusDown="@+id/part_quantity"
+                android:imeOptions="actionNext">
 
-    <CheckBox
-        android:id="@+id/part_used"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/part_quantity"
-        android:layout_alignParentLeft="true"
-        android:text="@string/used" />
+                <requestFocus />
+            </EditText>
 
-    <EditText
-        android:id="@+id/part_source"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/part_used"
-        android:ems="10"
-        android:hint="@string/source"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:nextFocusDown="@+id/part_description"
-        android:imeOptions="actionNext"/>
+            <EditText
+                android:id="@+id/part_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/quantity"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:nextFocusDown="@+id/part_source"
+                android:imeOptions="actionNext"/>
 
-    <EditText
-        android:id="@+id/part_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/part_source"
-        android:ems="10"
-        android:hint="@string/description"
-        android:inputType="textMultiLine" />
+            <CheckBox
+                android:id="@+id/part_used"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/used" />
+
+            <EditText
+                android:id="@+id/part_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/source"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:nextFocusDown="@+id/part_description"
+                android:imeOptions="actionNext"/>
+
+            <EditText
+                android:id="@+id/part_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description"
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+
+        </ScrollView>
 
     <Button
         android:id="@+id/part_confirm"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/part_description"
+        android:layout_alignParentBottom="true"
+        style="?android:attr/buttonBarButtonStyle"
+        android:background="@color/sr_base_orange"
         android:text="@string/confirm" />
 
 </RelativeLayout>
