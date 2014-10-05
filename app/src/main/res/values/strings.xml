@@ -84,5 +84,6 @@
     <string name="part_number_missing">Part Number missing</string>
     <string name="business_name">Business Name</string>
     <string name="business_name_header">Business Name:</string>
+    <string name="no_dates_found">No Dates Logged</string>
 
 </resources>
