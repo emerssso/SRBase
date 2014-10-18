@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:maxLength="15"
+        android:maxLines="1"
         android:ellipsize="end">
     </TextView>
 </LinearLayout>
