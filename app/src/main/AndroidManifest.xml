@@ -51,7 +51,7 @@
             android:parentActivityName=".ViewSRActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ViewSRtActivity" />
+                android:value=".ViewSRActivity" />
         </activity>
         <activity
             android:name=".ListDailiesActivity"
@@ -60,7 +60,7 @@
             android:parentActivityName=".ViewSRActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ViewSRtActivity" />
+                android:value=".ViewSRActivity" />
         </activity>
         <activity
             android:name=".ListPartsActivity"
@@ -69,7 +69,7 @@
             android:parentActivityName=".ViewSRActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ViewSRtActivity" />
+                android:value=".ViewSRActivity" />
         </activity>
         <activity
             android:name=".EditPartActivity"
@@ -78,7 +78,7 @@
             android:parentActivityName=".ViewSRActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ViewSRtActivity" />
+                android:value=".ViewSRActivity" />
         </activity>
         <provider 
             android:name=".database.SRContentProvider"
