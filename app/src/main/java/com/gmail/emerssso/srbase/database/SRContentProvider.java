@@ -84,7 +84,7 @@ public class SRContentProvider extends ContentProvider {
     /**
      * The permission string representation for accessing this ContentProvider.
      */
-    private static final String AUTHORITY =
+    public static final String AUTHORITY =
             "com.gmail.emerssso.srbase.srcontentprovider";
     /**
      * The base path for accessing SRs.

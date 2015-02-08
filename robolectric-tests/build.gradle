@@ -11,12 +11,10 @@ if (System.getenv("ANDROID_HOME") != null) {
 }
 
 repositories {
+    jcenter()
+
     maven { url 'file://' + sdkDir + '/extras/android/m2repository' }
     maven { url 'file://' + sdkDir + '/extras/google/m2repository' }
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {

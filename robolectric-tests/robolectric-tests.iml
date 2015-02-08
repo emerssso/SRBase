@@ -53,6 +53,10 @@
     <orderEntry type="library" exported="" scope="TEST" name="E__Github_SRBase_SRBase_app_build_intermediates_classes_debug" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="E__Github_SRBase_SRBase_app_build_intermediates_dependency_cache_debug" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="android" level="project" />
+    <orderEntry type="library" name="android" level="project" />
+    <orderEntry type="library" name="android" level="project" />
+    <orderEntry type="library" name="junit-4.11" level="project" />
+    <orderEntry type="library" name="robolectric-2.4" level="project" />
   </component>
 </module>
 
