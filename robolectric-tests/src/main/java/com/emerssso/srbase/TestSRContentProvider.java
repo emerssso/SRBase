@@ -32,16 +32,15 @@ public class TestSRContentProvider {
         ShadowContentResolver.registerProvider("content://" +
                 SRContentProvider.AUTHORITY, provider);
 
-        SR srOne1 = new SR();
-        srOne1.setNumber("123");
-        srOne1.setCustomerName("Bob");
-        srOne1.setBusinessName("Zonar");
-        srOne1.setSerialNumber("Kix");
-        srOne1.setModelNumber("airplane");
-        srOne1.setDescription("good");
+        srOne = new SR();
+        srOne.setNumber("123");
+        srOne.setCustomerName("Bob");
+        srOne.setBusinessName("Zonar");
+        srOne.setSerialNumber("Kix");
+        srOne.setModelNumber("airplane");
+        srOne.setDescription("good");
 
-        resolver.insert(SRContentProvider.SR_CONTENT_URI, srOne1.toContentValues());
-        srOne = srOne1;
+        resolver.insert(SRContentProvider.SR_CONTENT_URI, srOne.toContentValues());
     }
 
     @Test
