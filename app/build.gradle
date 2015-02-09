@@ -39,5 +39,5 @@ android {
 
 dependencies {
     //noinspection GradleDynamicVersion
-    compile 'com.android.support:support-v4:20.+'
+    compile 'com.android.support:support-v4:21.0.3'
 }
