@@ -11,17 +11,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowContentResolver;
 
 /**
- * Created by Conner on 2/7/2015.
+ * Tests for the ContentProvider SRBase uses to persist SR data.
  */
-@RunWith(RobolectricTestRunner.class)
+@RunWith(SRBaseRobolectricTestRunner.class)
 public class TestSRContentProvider {
 
     private ShadowContentResolver resolver;
+    private SR srOne;
 
     @Before
     public void setUp() {
@@ -31,42 +31,35 @@ public class TestSRContentProvider {
         provider.onCreate();
         ShadowContentResolver.registerProvider("content://" +
                 SRContentProvider.AUTHORITY, provider);
+
+        SR srOne1 = new SR();
+        srOne1.setNumber("123");
+        srOne1.setCustomerName("Bob");
+        srOne1.setBusinessName("Zonar");
+        srOne1.setSerialNumber("Kix");
+        srOne1.setModelNumber("airplane");
+        srOne1.setDescription("good");
+
+        resolver.insert(SRContentProvider.SR_CONTENT_URI, srOne1.toContentValues());
+        srOne = srOne1;
     }
 
     @Test
     public void testInsertAndQuerySR() {
-        SR srIn = new SR();
-        srIn.setNumber("123");
-        srIn.setCustomerName("Bob");
-        srIn.setBusinessName("Zonar");
-        srIn.setSerialNumber("Kix");
-        srIn.setModelNumber("airplane");
-        srIn.setDescription("good");
+        Cursor cursor = resolver.query(SRContentProvider.SR_CONTENT_URI, SRTable.COLUMNS,
+                SRTable.COLUMN_SR_NUMBER + " = ?", new String[]{srOne.getNumber()}, null);
 
-        resolver.insert(SRContentProvider.SR_CONTENT_URI, srIn.toContentValues());
-        Cursor cursor = resolver.query(SRContentProvider.SR_CONTENT_URI, null, null, null, " limit 1");
+        SR srOut;
+        Assert.assertNotNull(cursor);
+        cursor.moveToFirst();
+        Assert.assertTrue(!cursor.isAfterLast());
+        srOut = SR.fromCursor(cursor);
 
-        SR srOut = null;
-        if(cursor != null) {
-            cursor.moveToFirst();
-            if(!cursor.isAfterLast()) {
-                srOut = SR.fromCursor(cursor);
-            }
-        }
-
-        Assert.assertEquals(srIn, srOut);
+        Assert.assertEquals(srOne, srOut);
     }
 
+    @Test
     public void testUpdateSR () {
-        SR srOne = new SR();
-        srOne.setNumber("123");
-        srOne.setCustomerName("Bob");
-        srOne.setBusinessName("Zonar");
-        srOne.setSerialNumber("Kix");
-        srOne.setModelNumber("airplane");
-        srOne.setDescription("good");
-
-        resolver.insert(SRContentProvider.SR_CONTENT_URI, srOne.toContentValues());
 
         SR srTwo = new SR();
         srTwo.setNumber("456");
@@ -77,9 +70,9 @@ public class TestSRContentProvider {
         srTwo.setDescription("fair");
 
         resolver.update(SRContentProvider.SR_CONTENT_URI, srTwo.toContentValues(),
-                SRTable.COLUMN_SR_NUMBER + " equals ?", new String[]{srOne.getNumber()});
+                SRTable.COLUMN_SR_NUMBER + " = ?", new String[]{srOne.getNumber()});
 
-        Cursor cursor = resolver.query(SRContentProvider.SR_CONTENT_URI, null, null, null, " limit 1");
+        Cursor cursor = resolver.query(SRContentProvider.SR_CONTENT_URI, null, null, null, null);
 
         SR srOut = null;
         if(cursor != null) {
@@ -90,5 +83,15 @@ public class TestSRContentProvider {
         }
 
         Assert.assertEquals(srTwo, srOut);
+    }
+
+    @Test
+    public void testDeleteSR() {
+        resolver.delete(SRContentProvider.SR_CONTENT_URI, SRTable.COLUMN_SR_NUMBER + " = ?",
+                new String[]{srOne.getNumber()});
+
+        Cursor cursor = resolver.query(SRContentProvider.SR_CONTENT_URI, null, null, null, null);
+        cursor.moveToFirst();
+        Assert.assertTrue(cursor.isAfterLast());
     }
 }

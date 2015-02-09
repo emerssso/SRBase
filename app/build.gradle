@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 20
-    buildToolsVersion "20.0.0"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.gmail.emerssso.srbase"
@@ -26,6 +26,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "APP_DIR", "\"" + project.projectDir + "\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
