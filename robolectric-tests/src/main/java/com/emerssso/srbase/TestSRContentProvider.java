@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowContentResolver;
+import org.robolectric.shadows.ShadowLog;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -34,6 +35,8 @@ public class TestSRContentProvider {
 
     @Before
     public void setUp() {
+        ShadowLog.stream = System.out;
+
         ShadowApplication app = Robolectric.getShadowApplication();
         resolver = Robolectric.shadowOf(app.getContentResolver());
         SRContentProvider provider = new SRContentProvider();
@@ -159,7 +162,7 @@ public class TestSRContentProvider {
             }
         }
         assertNotNull(partOut);
-        assertEquals(partTwo.getPartNumber(), partOut.getPartNumber());
+        assertEquals(partTwo, partOut);
     }
 
     @Test
@@ -183,8 +186,8 @@ public class TestSRContentProvider {
         assertTrue("Cursor is empty", !cursor.isAfterLast());
         dailyOut = Daily.fromCursor(cursor);
 
-        assertNotNull(dailyOut);
-        assertEquals(dailyOut, dailyOut);
+        assertNotNull("No output from query", dailyOut);
+        assertEquals("daily output is not as expected", dailyOne, dailyOut);
     }
 
     @Test
@@ -192,6 +195,9 @@ public class TestSRContentProvider {
         Daily dailyTwo = new Daily();
 
         dailyTwo.setDay(2);
+        dailyTwo.setSrId("1");
+        dailyTwo.setTravelTime("time");
+        dailyTwo.setComment("new");
 
         resolver.update(SRContentProvider.DAILY_CONTENT_URI, dailyTwo.toContentValues(),
                 DailyTable.COLUMN_SR_ID + " = ?", new String[]{dailyOne.getSrId()});
@@ -205,8 +211,8 @@ public class TestSRContentProvider {
                 dailyOut = Daily.fromCursor(cursor);
             }
         }
-        assertNotNull(dailyOut);
-        assertEquals(dailyTwo.getDay(), dailyOut.getDay());
+        assertNotNull("null output", dailyOut);
+        assertEquals("daily output not as expected", dailyTwo, dailyOut);
     }
 
     @Test

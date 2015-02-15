@@ -6,7 +6,7 @@ import android.database.Cursor;
 import com.gmail.emerssso.srbase.database.DailyTable;
 
 /**
- * Created by Conner on 2/7/2015.
+ * Model class for the a daily log entry.
  */
 public class Daily {
 
@@ -141,6 +141,7 @@ public class Daily {
         cv.put(DailyTable.COLUMN_START_MIN, startMin);
         cv.put(DailyTable.COLUMN_END_HOUR, endHour);
         cv.put(DailyTable.COLUMN_END_MIN, endMin);
+        cv.put(DailyTable.COLUMN_TRAVEL_TIME, travelTime);
         cv.put(DailyTable.COLUMN_COMMENT, comment);
 
         return cv;
@@ -159,8 +160,8 @@ public class Daily {
                     this.startMin == that.getStartMin() &&
                     this.endHour == that.getEndHour() &&
                     this.endMin == that.getEndMin() &&
-                    this.getTravelTime().equals(that.getTravelTime()) &&
-                    this.getComment().equals(that.getComment());
+                    this.travelTime.equals(that.getTravelTime()) &&
+                    this.comment.equals(that.getComment());
 
         } else return false;
     }

@@ -228,18 +228,19 @@ public class SRContentProvider extends ContentProvider {
         switch (uriType) {
             case SRS:
                 id = sqlDB.insert(SRTable.TABLE_SR, null, values);
-                break;
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Uri.parse(SR_CONTENT_URI.toString() + "/" + id);
             case DAILIES:
                 id = sqlDB.insert(DailyTable.TABLE_DAILY, null, values);
-                break;
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Uri.parse(DAILY_CONTENT_URI.toString() + "/" + id);
             case PARTS:
                 id = sqlDB.insert(PartTable.TABLE_PART, null, values);
-                break;
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Uri.parse(PART_CONTENT_URI.toString() + "/" + id);
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        getContext().getContentResolver().notifyChange(uri, null);
-        return Uri.parse(SR_CONTENT_URI.toString() + "/" + id);
     }
 
     /* (non-Javadoc)
