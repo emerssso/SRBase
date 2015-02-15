@@ -1,6 +1,7 @@
 package com.gmail.emerssso.srbase.models;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.gmail.emerssso.srbase.database.PartTable;
 
@@ -9,12 +10,28 @@ import com.gmail.emerssso.srbase.database.PartTable;
  */
 public class Part {
     private int id;
-    private String srId;
-    private String partNumber;
-    private String quantity;
-    private String used;
-    private String source;
-    private String description;
+    private String srId = "";
+    private String partNumber = "";
+    private String quantity = "";
+    private String used = "";
+    private String source = "";
+    private String description = "";
+
+    public static Part fromCursor(Cursor cursor) {
+        if (cursor != null && !cursor.isAfterLast()) {
+            Part part = new Part();
+            part.setId(cursor.getInt(cursor.getColumnIndexOrThrow(PartTable.COLUMN_ID)));
+            part.setSrId(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_SR_ID)));
+            part.setPartNumber(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_PART_NUMBER)));
+            part.setQuantity(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_QUANTITY)));
+            part.setSource(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_SOURCE)));
+            part.setUsed(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_USED)));
+            part.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_DESCRIPTION)));
+
+            return part;
+        } else
+            return null;
+    }
 
     public int getId() {
         return id;
@@ -86,16 +103,17 @@ public class Part {
         return cv;
     }
 
-    public static Part fromContentValues(ContentValues cv) {
-        Part part = new Part();
-
-        part.setId(cv.getAsInteger(PartTable.COLUMN_ID));
-        part.setPartNumber(cv.getAsString(PartTable.COLUMN_PART_NUMBER));
-        part.setQuantity(cv.getAsString(PartTable.COLUMN_QUANTITY));
-        part.setUsed(cv.getAsString(PartTable.COLUMN_USED));
-        part.setSource(cv.getAsString(PartTable.COLUMN_SOURCE));
-        part.setDescription(cv.getAsString(PartTable.COLUMN_DESCRIPTION));
-
-        return part;
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Part) {
+            Part that = (Part) o;
+            return this.srId.equals(that.getSrId()) &&
+                    this.partNumber.equals(that.getPartNumber()) &&
+                    this.quantity.equals(that.getQuantity()) &&
+                    this.source.equals(that.getSource()) &&
+                    this.used.equals(that.used) &&
+                    this.description.equals(that.getDescription());
+        } else
+            return false;
     }
 }

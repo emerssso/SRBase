@@ -1,6 +1,7 @@
 package com.gmail.emerssso.srbase.models;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.gmail.emerssso.srbase.database.SRTable;
 
@@ -16,6 +17,22 @@ public class SR {
     private String modelNumber;
     private String serialNumber;
     private String description;
+
+    public static SR fromCursor(Cursor cursor) {
+        SR sr = new SR();
+
+        if (cursor != null && !cursor.isAfterLast()) {
+            sr.setId(cursor.getInt(cursor.getColumnIndexOrThrow(SRTable.COLUMN_ID)));
+            sr.setNumber(cursor.getString(cursor.getColumnIndexOrThrow(SRTable.COLUMN_SR_NUMBER)));
+            sr.setCustomerName(cursor.getString(cursor.getColumnIndexOrThrow(SRTable.COLUMN_CUSTOMER_NAME)));
+            sr.setBusinessName(cursor.getString(cursor.getColumnIndexOrThrow(SRTable.COLUMN_BUSINESS_NAME)));
+            sr.setModelNumber(cursor.getString(cursor.getColumnIndexOrThrow(SRTable.COLUMN_MODEL_NUMBER)));
+            sr.setSerialNumber(cursor.getString(cursor.getColumnIndexOrThrow(SRTable.COLUMN_SERIAL_NUMBER)));
+            sr.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(SRTable.COLUMN_DESCRIPTION)));
+        }
+
+        return sr;
+    }
 
     public int getId() {
         return id;
@@ -87,17 +104,18 @@ public class SR {
         return cv;
     }
 
-    public static SR fromContentValues(ContentValues cv) {
-        SR sr = new SR();
-
-        sr.setId(cv.getAsInteger(SRTable.COLUMN_ID));
-        sr.setNumber(cv.getAsString(SRTable.COLUMN_SR_NUMBER));
-        sr.setCustomerName(cv.getAsString(SRTable.COLUMN_CUSTOMER_NAME));
-        sr.setBusinessName(cv.getAsString(SRTable.COLUMN_BUSINESS_NAME));
-        sr.setModelNumber(cv.getAsString(SRTable.COLUMN_MODEL_NUMBER));
-        sr.setSerialNumber(cv.getAsString(SRTable.COLUMN_SERIAL_NUMBER));
-        sr.setDescription(cv.getAsString(SRTable.COLUMN_DESCRIPTION));
-
-        return sr;
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SR) {
+            SR that = (SR) o;
+            return this.getId() == that.getId() &&
+                    this.getNumber().equals(that.getNumber()) &&
+                    this.getCustomerName().equals(that.getCustomerName()) &&
+                    this.getBusinessName().equals(that.getBusinessName()) &&
+                    this.getModelNumber().equals(that.getModelNumber()) &&
+                    this.getSerialNumber().equals(that.getSerialNumber()) &&
+                    this.getDescription().equals(that.getDescription());
+        }
+        return false;
     }
 }

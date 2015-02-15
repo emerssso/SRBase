@@ -54,6 +54,9 @@ public class PartTable {
      */
     public static final String COLUMN_PART_NUMBER = "part_number";
 
+    public static final String[] COLUMNS = new String[]{COLUMN_ID, COLUMN_SR_ID,
+            COLUMN_QUANTITY, COLUMN_USED, COLUMN_SOURCE, COLUMN_DESCRIPTION, COLUMN_PART_NUMBER};
+
     /**
      * The SQL command for creating the table.
      */

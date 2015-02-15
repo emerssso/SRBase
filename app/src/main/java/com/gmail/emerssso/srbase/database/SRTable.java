@@ -52,6 +52,10 @@ public class SRTable {
 
     public static final String COLUMN_BUSINESS_NAME = "business_name";
 
+    public static final String[] COLUMNS = new String[]{COLUMN_ID, COLUMN_SR_NUMBER,
+            COLUMN_CUSTOMER_NAME, COLUMN_BUSINESS_NAME, COLUMN_MODEL_NUMBER,
+            COLUMN_SERIAL_NUMBER, COLUMN_DESCRIPTION};
+
     /**
      * The SQL to create the SR table.
      */

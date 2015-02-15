@@ -58,6 +58,11 @@ public class SRContentProvider extends ContentProvider {
     public static final String PART_CONTENT_ITEM_TYPE =
             ContentResolver.CURSOR_ITEM_BASE_TYPE + "/part";
     /**
+     * The permission string representation for accessing this ContentProvider.
+     */
+    public static final String AUTHORITY =
+            "com.gmail.emerssso.srbase.srcontentprovider";
+    /**
      * The URI number for SRs.
      */
     private static final int SRS = 11;
@@ -81,11 +86,6 @@ public class SRContentProvider extends ContentProvider {
      * The URI number to specify a part by _id.
      */
     private static final int PART_ID = 23;
-    /**
-     * The permission string representation for accessing this ContentProvider.
-     */
-    private static final String AUTHORITY =
-            "com.gmail.emerssso.srbase.srcontentprovider";
     /**
      * The base path for accessing SRs.
      */
@@ -119,6 +119,7 @@ public class SRContentProvider extends ContentProvider {
      */
     private static final UriMatcher sURIMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
+
     static {
         sURIMatcher.addURI(AUTHORITY, SR_BASE_PATH, SRS);
         sURIMatcher.addURI(AUTHORITY, SR_BASE_PATH + "/#", SR_ID);
@@ -129,6 +130,7 @@ public class SRContentProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, DAILY_BASE_PATH, DAILIES);
         sURIMatcher.addURI(AUTHORITY, DAILY_BASE_PATH + "/#", DAILY_ID);
     }
+
     /**
      * The OpenSQLiteHelper used by this ContentProvider to manage the database.
      */
