@@ -71,6 +71,12 @@ public class DailyTable {
      */
     public static final String COLUMN_COMMENT = "comment";
 
+    public static final String[] COLUMNS = new String[]{COLUMN_ID, COLUMN_SR_ID,
+            COLUMN_DAY, COLUMN_MONTH, COLUMN_YEAR,
+            COLUMN_START_HOUR, COLUMN_START_MIN,
+            COLUMN_END_HOUR, COLUMN_END_MIN,
+            COLUMN_TRAVEL_TIME, COLUMN_COMMENT};
+
     /**
      * This string contains the SQL for creating this table.
      */

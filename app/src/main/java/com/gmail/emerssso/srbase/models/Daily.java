@@ -1,6 +1,7 @@
 package com.gmail.emerssso.srbase.models;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.gmail.emerssso.srbase.database.DailyTable;
 
@@ -20,6 +21,25 @@ public class Daily {
     private int endMin;
     private String travelTime;
     private String comment;
+
+    public static Daily fromCursor(Cursor cursor) {
+        if (cursor != null && !cursor.isAfterLast()) {
+            Daily daily = new Daily();
+            daily.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_ID)));
+            daily.setSrId(cursor.getString(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_SR_ID)));
+            daily.setDay(cursor.getInt(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_DAY)));
+            daily.setMonth(cursor.getInt(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_MONTH)));
+            daily.setYear(cursor.getInt(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_YEAR)));
+            daily.setStartHour(cursor.getInt(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_START_HOUR)));
+            daily.setStartMin(cursor.getInt(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_START_MIN)));
+            daily.setEndHour(cursor.getInt(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_END_HOUR)));
+            daily.setEndMin(cursor.getInt(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_END_MIN)));
+            daily.setTravelTime(cursor.getString(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_TRAVEL_TIME)));
+            daily.setComment(cursor.getString(cursor.getColumnIndexOrThrow(DailyTable.COLUMN_COMMENT)));
+
+            return daily;
+        } else return null;
+    }
 
     public int getId() {
         return id;
@@ -126,20 +146,22 @@ public class Daily {
         return cv;
     }
 
-    public static Daily fromContentValues(ContentValues cv) {
-        Daily daily = new Daily();
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Daily) {
+            Daily that = (Daily) o;
 
-        daily.setId(cv.getAsInteger(DailyTable.COLUMN_ID));
-        daily.setSrId(cv.getAsString(DailyTable.COLUMN_SR_ID));
-        daily.setDay(cv.getAsInteger(DailyTable.COLUMN_DAY));
-        daily.setMonth(cv.getAsInteger(DailyTable.COLUMN_MONTH));
-        daily.setYear(cv.getAsInteger(DailyTable.COLUMN_YEAR));
-        daily.setStartHour(cv.getAsInteger(DailyTable.COLUMN_START_HOUR));
-        daily.setStartMin(cv.getAsInteger(DailyTable.COLUMN_START_MIN));
-        daily.setEndHour(cv.getAsInteger(DailyTable.COLUMN_END_HOUR));
-        daily.setEndMin(cv.getAsInteger(DailyTable.COLUMN_END_MIN));
-        daily.setComment(cv.getAsString(DailyTable.COLUMN_COMMENT));
+            return this.srId.equals(that.getSrId()) &&
+                    this.day == that.getDay() &&
+                    this.month == that.getMonth() &&
+                    this.year == that.getYear() &&
+                    this.startHour == that.getStartHour() &&
+                    this.startMin == that.getStartMin() &&
+                    this.endHour == that.getEndHour() &&
+                    this.endMin == that.getEndMin() &&
+                    this.getTravelTime().equals(that.getTravelTime()) &&
+                    this.getComment().equals(that.getComment());
 
-        return daily;
+        } else return false;
     }
 }

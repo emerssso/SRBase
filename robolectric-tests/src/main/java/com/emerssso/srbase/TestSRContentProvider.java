@@ -2,9 +2,11 @@ package com.emerssso.srbase;
 
 import android.database.Cursor;
 
+import com.gmail.emerssso.srbase.database.DailyTable;
 import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
+import com.gmail.emerssso.srbase.models.Daily;
 import com.gmail.emerssso.srbase.models.Part;
 import com.gmail.emerssso.srbase.models.SR;
 
@@ -28,6 +30,7 @@ public class TestSRContentProvider {
     private ShadowContentResolver resolver;
     private SR srOne;
     private Part partOne;
+    private Daily dailyOne;
 
     @Before
     public void setUp() {
@@ -57,6 +60,20 @@ public class TestSRContentProvider {
         partOne.setDescription("fair");
 
         resolver.insert(SRContentProvider.PART_CONTENT_URI, partOne.toContentValues());
+
+        dailyOne = new Daily();
+        dailyOne.setSrId("1");
+        dailyOne.setDay(1);
+        dailyOne.setMonth(1);
+        dailyOne.setYear(1);
+        dailyOne.setStartHour(1);
+        dailyOne.setStartMin(1);
+        dailyOne.setEndHour(2);
+        dailyOne.setEndMin(2);
+        dailyOne.setTravelTime("2");
+        dailyOne.setComment("comment");
+
+        resolver.insert(SRContentProvider.DAILY_CONTENT_URI, dailyOne.toContentValues());
     }
 
     @Test
@@ -122,5 +139,83 @@ public class TestSRContentProvider {
         partOut = Part.fromCursor(cursor);
 
         assertEquals(partOne, partOut);
+    }
+
+    @Test
+    public void testUpdatePart() {
+        Part partTwo = new Part();
+        partTwo.setPartNumber("newNumber");
+
+        resolver.update(SRContentProvider.PART_CONTENT_URI, partTwo.toContentValues(),
+                PartTable.COLUMN_PART_NUMBER + " = ?", new String[]{partOne.getPartNumber()});
+
+        Cursor cursor = resolver.query(SRContentProvider.PART_CONTENT_URI, null, null, null, null);
+
+        Part partOut = null;
+        if (cursor != null) {
+            cursor.moveToFirst();
+            if (!cursor.isAfterLast()) {
+                partOut = Part.fromCursor(cursor);
+            }
+        }
+        assertNotNull(partOut);
+        assertEquals(partTwo.getPartNumber(), partOut.getPartNumber());
+    }
+
+    @Test
+    public void testDeletePart() {
+        resolver.delete(SRContentProvider.PART_CONTENT_URI, PartTable.COLUMN_PART_NUMBER + " = ?",
+                new String[]{partOne.getPartNumber()});
+
+        Cursor cursor = resolver.query(SRContentProvider.PART_CONTENT_URI, null, null, null, null);
+        cursor.moveToFirst();
+        assertTrue(cursor.isAfterLast());
+    }
+
+    @Test
+    public void testInsertAndQueryDaily() {
+        Cursor cursor = resolver.query(SRContentProvider.DAILY_CONTENT_URI, DailyTable.COLUMNS,
+                DailyTable.COLUMN_SR_ID + " = ?", new String[]{dailyOne.getSrId()}, null);
+
+        Daily dailyOut;
+        assertNotNull("Cursor is null", cursor);
+        cursor.moveToFirst();
+        assertTrue("Cursor is empty", !cursor.isAfterLast());
+        dailyOut = Daily.fromCursor(cursor);
+
+        assertNotNull(dailyOut);
+        assertEquals(dailyOut, dailyOut);
+    }
+
+    @Test
+    public void testUpdateDaily() {
+        Daily dailyTwo = new Daily();
+
+        dailyTwo.setDay(2);
+
+        resolver.update(SRContentProvider.DAILY_CONTENT_URI, dailyTwo.toContentValues(),
+                DailyTable.COLUMN_SR_ID + " = ?", new String[]{dailyOne.getSrId()});
+
+        Cursor cursor = resolver.query(SRContentProvider.DAILY_CONTENT_URI, null, null, null, null);
+
+        Daily dailyOut = null;
+        if (cursor != null) {
+            cursor.moveToFirst();
+            if (!cursor.isAfterLast()) {
+                dailyOut = Daily.fromCursor(cursor);
+            }
+        }
+        assertNotNull(dailyOut);
+        assertEquals(dailyTwo.getDay(), dailyOut.getDay());
+    }
+
+    @Test
+    public void testDeleteDaily() {
+        resolver.delete(SRContentProvider.DAILY_CONTENT_URI, DailyTable.COLUMN_SR_ID + " = ?",
+                new String[]{dailyOne.getSrId()});
+
+        Cursor cursor = resolver.query(SRContentProvider.DAILY_CONTENT_URI, null, null, null, null);
+        cursor.moveToFirst();
+        assertTrue(cursor.isAfterLast());
     }
 }
