@@ -91,6 +91,7 @@ public class TestSRContentProvider {
         srOut = SR.fromCursor(cursor);
 
         assertEquals(srOne, srOut);
+        cursor.close();
     }
 
     @Test
@@ -115,6 +116,7 @@ public class TestSRContentProvider {
             if (!cursor.isAfterLast()) {
                 srOut = SR.fromCursor(cursor);
             }
+            cursor.close();
         }
 
         assertEquals(srTwo, srOut);
@@ -128,6 +130,7 @@ public class TestSRContentProvider {
         Cursor cursor = resolver.query(SRContentProvider.SR_CONTENT_URI, null, null, null, null);
         cursor.moveToFirst();
         assertTrue(cursor.isAfterLast());
+        cursor.close();
     }
 
     @Test
@@ -140,6 +143,7 @@ public class TestSRContentProvider {
         cursor.moveToFirst();
         assertTrue("Cursor is empty", !cursor.isAfterLast());
         partOut = Part.fromCursor(cursor);
+        cursor.close();
 
         assertEquals(partOne, partOut);
     }
@@ -160,6 +164,7 @@ public class TestSRContentProvider {
             if (!cursor.isAfterLast()) {
                 partOut = Part.fromCursor(cursor);
             }
+            cursor.close();
         }
         assertNotNull(partOut);
         assertEquals(partTwo, partOut);
@@ -185,6 +190,7 @@ public class TestSRContentProvider {
         cursor.moveToFirst();
         assertTrue("Cursor is empty", !cursor.isAfterLast());
         dailyOut = Daily.fromCursor(cursor);
+        cursor.close();
 
         assertNotNull("No output from query", dailyOut);
         assertEquals("daily output is not as expected", dailyOne, dailyOut);
@@ -210,6 +216,7 @@ public class TestSRContentProvider {
             if (!cursor.isAfterLast()) {
                 dailyOut = Daily.fromCursor(cursor);
             }
+            cursor.close();
         }
         assertNotNull("null output", dailyOut);
         assertEquals("daily output not as expected", dailyTwo, dailyOut);
@@ -223,5 +230,6 @@ public class TestSRContentProvider {
         Cursor cursor = resolver.query(SRContentProvider.DAILY_CONTENT_URI, null, null, null, null);
         cursor.moveToFirst();
         assertTrue(cursor.isAfterLast());
+        cursor.close();
     }
 }
