@@ -5,6 +5,9 @@ import android.database.Cursor;
 
 import com.gmail.emerssso.srbase.database.PartTable;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * Simple model of a part used on an SR.
  */
@@ -107,13 +110,28 @@ public class Part {
     public boolean equals(Object o) {
         if (o instanceof Part) {
             Part that = (Part) o;
-            return this.srId.equals(that.getSrId()) &&
-                    this.partNumber.equals(that.getPartNumber()) &&
-                    this.quantity.equals(that.getQuantity()) &&
-                    this.source.equals(that.getSource()) &&
-                    this.used.equals(that.used) &&
-                    this.description.equals(that.getDescription());
+
+            return new EqualsBuilder()
+                    .append(this.getSrId(), that.getSrId())
+                    .append(this.getPartNumber(), that.getPartNumber())
+                    .append(this.getQuantity(), that.getQuantity())
+                    .append(this.getSource(), that.getSource())
+                    .append(this.getUsed(), that.getUsed())
+                    .append(this.getDescription(), that.getDescription())
+                    .isEquals();
         } else
             return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.getSrId())
+                .append(this.getPartNumber())
+                .append(this.getQuantity())
+                .append(this.getSource())
+                .append(this.getUsed())
+                .append(this.getDescription())
+                .toHashCode();
     }
 }

@@ -8,6 +8,7 @@ android {
         applicationId "com.gmail.emerssso.srbase"
         minSdkVersion 14
         targetSdkVersion 20
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -28,7 +29,6 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            buildConfigField "String", "APP_DIR", "\"" + project.projectDir + "\""
             debuggable = true
             testCoverageEnabled = true
         }
@@ -41,6 +41,30 @@ android {
 }
 
 dependencies {
+    // Robolectric
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-core:1.1'
+    testCompile 'org.hamcrest:hamcrest-library:1.1'
+    testCompile 'org.hamcrest:hamcrest-integration:1.1'
+    // TODO: requires special build of robolectric right now. working on this...
+    testCompile('org.robolectric:robolectric:2.4') {
+        exclude module: 'classworlds'
+        exclude module: 'commons-logging'
+        exclude module: 'httpclient'
+        exclude module: 'maven-artifact'
+        exclude module: 'maven-artifact-manager'
+        exclude module: 'maven-error-diagnostics'
+        exclude module: 'maven-model'
+        exclude module: 'maven-project'
+        exclude module: 'maven-settings'
+        exclude module: 'plexus-container-default'
+        exclude module: 'plexus-interpolation'
+        exclude module: 'plexus-utils'
+        exclude module: 'wagon-file'
+        exclude module: 'wagon-http-lightweight'
+        exclude module: 'wagon-provider-api'
+    }
     //noinspection GradleDynamicVersion
     compile 'com.android.support:support-v4:21.0.3'
+    compile 'org.mod4j.org.apache.commons:lang:2.1.0'
 }

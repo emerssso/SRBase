@@ -5,6 +5,9 @@ import android.database.Cursor;
 
 import com.gmail.emerssso.srbase.database.SRTable;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * A simple model class for an SR.
  */
@@ -108,14 +111,29 @@ public class SR {
     public boolean equals(Object o) {
         if (o instanceof SR) {
             SR that = (SR) o;
-            return this.getId() == that.getId() &&
-                    this.getNumber().equals(that.getNumber()) &&
-                    this.getCustomerName().equals(that.getCustomerName()) &&
-                    this.getBusinessName().equals(that.getBusinessName()) &&
-                    this.getModelNumber().equals(that.getModelNumber()) &&
-                    this.getSerialNumber().equals(that.getSerialNumber()) &&
-                    this.getDescription().equals(that.getDescription());
-        }
-        return false;
+
+            return new EqualsBuilder()
+                    .append(this.getNumber(), that.getNumber())
+                    .append(this.getCustomerName(), that.getCustomerName())
+                    .append(this.getBusinessName(), that.getBusinessName())
+                    .append(this.getModelNumber(), that.getModelNumber())
+                    .append(this.getSerialNumber(), that.getSerialNumber())
+                    .append(this.getDescription(), that.getDescription())
+                    .isEquals();
+
+        } else
+            return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.getNumber())
+                .append(this.getCustomerName())
+                .append(this.getBusinessName())
+                .append(this.getModelNumber())
+                .append(this.getSerialNumber())
+                .append(this.getDescription())
+                .toHashCode();
     }
 }

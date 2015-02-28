@@ -5,6 +5,9 @@ import android.database.Cursor;
 
 import com.gmail.emerssso.srbase.database.DailyTable;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 /**
  * Model class for the a daily log entry.
  */
@@ -132,7 +135,6 @@ public class Daily {
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
 
-        cv.put(DailyTable.COLUMN_ID, id);
         cv.put(DailyTable.COLUMN_SR_ID, srId);
         cv.put(DailyTable.COLUMN_DAY, day);
         cv.put(DailyTable.COLUMN_MONTH, month);
@@ -152,17 +154,36 @@ public class Daily {
         if (o instanceof Daily) {
             Daily that = (Daily) o;
 
-            return this.srId.equals(that.getSrId()) &&
-                    this.day == that.getDay() &&
-                    this.month == that.getMonth() &&
-                    this.year == that.getYear() &&
-                    this.startHour == that.getStartHour() &&
-                    this.startMin == that.getStartMin() &&
-                    this.endHour == that.getEndHour() &&
-                    this.endMin == that.getEndMin() &&
-                    this.travelTime.equals(that.getTravelTime()) &&
-                    this.comment.equals(that.getComment());
+            return new EqualsBuilder()
+                    .append(this.getSrId(), that.getSrId())
+                    .append(this.getDay(), that.getDay())
+                    .append(this.getMonth(), that.getMonth())
+                    .append(this.getYear(), that.getYear())
+                    .append(this.getStartHour(), that.getStartHour())
+                    .append(this.getStartMin(), that.getStartMin())
+                    .append(this.getEndHour(), that.getEndHour())
+                    .append(this.getEndMin(), that.getEndMin())
+                    .append(this.getTravelTime(), that.getTravelTime())
+                    .append(this.getComment(), that.getComment())
+                    .isEquals();
 
-        } else return false;
+        } else
+            return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(this.getSrId())
+                .append(this.getDay())
+                .append(this.getMonth())
+                .append(this.getYear())
+                .append(this.getStartHour())
+                .append(this.getStartMin())
+                .append(this.getEndHour())
+                .append(this.getEndMin())
+                .append(this.getTravelTime())
+                .append(this.getComment())
+                .toHashCode();
     }
 }
