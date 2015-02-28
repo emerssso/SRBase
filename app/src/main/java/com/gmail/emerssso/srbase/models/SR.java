@@ -97,12 +97,12 @@ public class SR {
         ContentValues cv = new ContentValues();
 
         cv.put(SRTable.COLUMN_ID, id);
-        cv.put(SRTable.COLUMN_SR_NUMBER, number);
-        cv.put(SRTable.COLUMN_CUSTOMER_NAME, customerName);
-        cv.put(SRTable.COLUMN_BUSINESS_NAME, businessName);
-        cv.put(SRTable.COLUMN_MODEL_NUMBER, modelNumber);
-        cv.put(SRTable.COLUMN_SERIAL_NUMBER, serialNumber);
-        cv.put(SRTable.COLUMN_DESCRIPTION, description);
+        cv.put(SRTable.COLUMN_SR_NUMBER, number != null ? number : "");
+        cv.put(SRTable.COLUMN_CUSTOMER_NAME, customerName != null ? customerName : "");
+        cv.put(SRTable.COLUMN_BUSINESS_NAME, businessName != null ? businessName : "");
+        cv.put(SRTable.COLUMN_MODEL_NUMBER, modelNumber != null ? modelNumber : "");
+        cv.put(SRTable.COLUMN_SERIAL_NUMBER, serialNumber != null ? serialNumber : "");
+        cv.put(SRTable.COLUMN_DESCRIPTION, description != null ? description : "");
 
         return cv;
     }

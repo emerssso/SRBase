@@ -135,7 +135,7 @@ public class Daily {
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
 
-        cv.put(DailyTable.COLUMN_SR_ID, srId);
+        cv.put(DailyTable.COLUMN_SR_ID, srId != null ? srId : "");
         cv.put(DailyTable.COLUMN_DAY, day);
         cv.put(DailyTable.COLUMN_MONTH, month);
         cv.put(DailyTable.COLUMN_YEAR, year);
@@ -143,8 +143,8 @@ public class Daily {
         cv.put(DailyTable.COLUMN_START_MIN, startMin);
         cv.put(DailyTable.COLUMN_END_HOUR, endHour);
         cv.put(DailyTable.COLUMN_END_MIN, endMin);
-        cv.put(DailyTable.COLUMN_TRAVEL_TIME, travelTime);
-        cv.put(DailyTable.COLUMN_COMMENT, comment);
+        cv.put(DailyTable.COLUMN_TRAVEL_TIME, travelTime != null ? travelTime : "");
+        cv.put(DailyTable.COLUMN_COMMENT, comment != null ? comment : "");
 
         return cv;
     }
