@@ -22,14 +22,14 @@ dependencies {
     //add our app classes to compilation path
     compile androidModule
 
-    compile('junit:junit:4.11') {
+    testCompile('junit:junit:4.11') {
         exclude module: 'hamcrest-core'
         //disabling all transitive dependencies of this dependency
         transitive = false
     }
 
-    compile 'org.mockito:mockito-core:1.9.5'
-    compile('org.robolectric:robolectric:2.4') {
+    testCompile 'org.mockito:mockito-core:1.9.5'
+    testCompile('org.robolectric:robolectric:2.4') {
         exclude module: 'classworlds'
         exclude module: 'commons-logging'
         exclude module: 'httpclient'
@@ -51,7 +51,7 @@ dependencies {
         exclude group: 'com.google.android', module: 'support-v4'
     }
 
-    compile('com.squareup:fest-android:1.0.8') {
+    testCompile('com.squareup:fest-android:1.0.8') {
         exclude module: 'support-v4'
     }
 
@@ -61,5 +61,5 @@ dependencies {
     compile compileTask.outputs.files
 
     //add all of the android gradle plugin bootclasspath items to our test compile classpath
-    compile files(androidModule.plugins.findPlugin("com.android.application").getBootClasspath())
+    //compile files(androidModule.plugins.findPlugin("com.android.application").getBootClasspath())
 }

@@ -1,9 +1,11 @@
 <component name="libraryTable">
-  <library name="_home_conner_Devel_AndroidStudioProjects_SRBase_app_build_intermediates_exploded_aar_com_android_support_support_v4_21_0_3_classes_jar">
+  <library name="classes">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://E:/Program Files (x86)/Android/sdk/extras/android/m2repository/com/android/support/support-v4/21.0.3/support-v4-21.0.3-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
