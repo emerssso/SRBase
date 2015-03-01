@@ -1,6 +1,8 @@
 SRBase
 ======
 
+[![Build Status](https://travis-ci.org/emerssso/SRBase.svg?branch=master)](https://travis-ci.org/emerssso/SRBase)
+
 SR Base is an Android application compatible with Android versions 4.3+.
 It may be compatible with older 4.0+ versions as well, but they have not been tested.
 
