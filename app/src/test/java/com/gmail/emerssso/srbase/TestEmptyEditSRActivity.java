@@ -29,6 +29,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * Test as much of the EditSRActivity here as possible. Some things will need to be done with
+ * a real SR, but this is quicker for a lot of little tests.
+ */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18)
 public class TestEmptyEditSRActivity {
