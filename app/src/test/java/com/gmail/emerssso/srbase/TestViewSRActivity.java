@@ -11,16 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gmail.emerssso.srbase.database.SRContentProvider;
-import com.gmail.emerssso.srbase.database.SRTable;
 import com.gmail.emerssso.srbase.models.Daily;
 import com.gmail.emerssso.srbase.models.SR;
 
-import org.apache.http.entity.ContentProducer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
@@ -28,7 +25,6 @@ import org.robolectric.shadows.ShadowContentResolver;
 import org.robolectric.shadows.ShadowToast;
 import org.robolectric.tester.android.view.TestMenuItem;
 import org.robolectric.util.ActivityController;
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 

@@ -35,7 +35,7 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18)
-public class TestEmptyEditSRActivity {
+public class TestNewEditSRActivity {
 
     private ActivityController<EditSRActivity> controller;
     private EditSRActivity activity;
@@ -174,5 +174,15 @@ public class TestEmptyEditSRActivity {
 
         resolver.delete(SRContentProvider.SR_CONTENT_URI,
                 SRTable.COLUMN_SR_NUMBER + " = ?", new String[]{expectedSR.getNumber()});
+    }
+    
+    @Test
+    public void testHintValues() {
+        assertEquals(activity.getString(R.string.SRhint), srNumber.getHint().toString());
+        assertEquals(activity.getString(R.string.customer_name), customerName.getHint().toString());
+        assertEquals(activity.getString(R.string.business_name), businessName.getHint().toString());
+        assertEquals(activity.getString(R.string.model_number), modelNumber.getHint().toString());
+        assertEquals(activity.getString(R.string.serial_number), serialNumber.getHint().toString());
+        assertEquals(activity.getString(R.string.description), description.getHint().toString());
     }
 }
