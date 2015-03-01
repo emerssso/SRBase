@@ -160,4 +160,12 @@ public class TestNewEditPartActivity {
 
         assertNotNull(activity.getFragmentManager().findFragmentByTag(DeletableActivity.DELETE_FRAGMENT_TAG));
     }
+
+    @Test
+    public void testCreateIntentForParent() {
+        Intent expected = new Intent(activity, ViewSRActivity.class);
+        expected.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, srUri);
+
+        assertEquals(expected, activity.createIntentForParent());
+    }
 }

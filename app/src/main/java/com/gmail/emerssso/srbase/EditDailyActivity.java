@@ -34,7 +34,7 @@ import java.util.Calendar;
  * @author Conner Kasten
  */
 public class EditDailyActivity extends EditSubItemActivity {
-    private static final String TIME_PICKER_FRAGMENT_TAG = "TimePickerDialog";
+    protected static final String TIME_PICKER_FRAGMENT_TAG = "TimePickerDialog";
 
     /**
      * The date for the log.
