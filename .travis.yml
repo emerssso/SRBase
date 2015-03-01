@@ -12,7 +12,10 @@ android:
     - extra-google-google_play_services
 
 before_install:
-  - chmod +x gradlew
+    - chmod +x gradlew
+  
+env:
+    - TERM=dumb
 
 script:
-    - ./gradlew jacocoTestReport
+    - ./gradlew jacocoTestReport coveralls
