@@ -16,9 +16,6 @@ before_install:
   
 env:
     - TERM=dumb
-    
-script:
-    - ./gradle test
 
 after_success:
     - ./gradlew jacocoTestReport coveralls
