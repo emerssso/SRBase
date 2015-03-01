@@ -1,30 +1,43 @@
 package com.gmail.emerssso.srbase;
 
+import android.content.ContentProvider;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
+import com.gmail.emerssso.srbase.models.Daily;
 import com.gmail.emerssso.srbase.models.SR;
 
+import org.apache.http.entity.ContentProducer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowContentResolver;
+import org.robolectric.shadows.ShadowToast;
 import org.robolectric.tester.android.view.TestMenuItem;
 import org.robolectric.util.ActivityController;
+import org.w3c.dom.Text;
+
+import java.util.Calendar;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = "src/main/AndroidManifest.xml", emulateSdk = 18)
@@ -38,9 +51,12 @@ public class TestViewSRActivity {
     private TextView serialNumber;
     private TextView description;
     private SR srOne;
-    private Uri uri;
+    private Uri srUri;
     private ActivityController<ViewSRActivity> controller;
     private ViewSRActivity activity;
+    private TextView workTime;
+    private TextView travelTime;
+    private Uri dayUri;
 
     @Before
     public void setupActivity() {
@@ -58,10 +74,26 @@ public class TestViewSRActivity {
         srOne.setSerialNumber("2000");
         srOne.setDescription("dirty");
 
-        uri = resolver.insert(SRContentProvider.SR_CONTENT_URI, srOne.toContentValues());
+        srUri = resolver.insert(SRContentProvider.SR_CONTENT_URI, srOne.toContentValues());
+
+        Calendar c = Calendar.getInstance();
+
+        Daily dayOne = new Daily();
+        dayOne.setSrId(srUri.getLastPathSegment());
+        dayOne.setDay(c.get(Calendar.DAY_OF_MONTH));
+        dayOne.setMonth(c.get(Calendar.MONTH)+1);
+        dayOne.setYear(c.get(Calendar.YEAR));
+        dayOne.setStartHour(12);
+        dayOne.setStartMin(0);
+        dayOne.setEndHour(13);
+        dayOne.setEndMin(0);
+        dayOne.setTravelTime("1");
+        dayOne.setComment("comment");
+
+        dayUri = resolver.insert(SRContentProvider.DAILY_CONTENT_URI, dayOne.toContentValues());
 
         Intent intent = new Intent(Robolectric.application, EditSRActivity.class);
-        intent.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, uri);
+        intent.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, srUri);
 
         controller = Robolectric.buildActivity(ViewSRActivity.class)
                 .withIntent(intent).create().start().resume().visible();
@@ -76,12 +108,14 @@ public class TestViewSRActivity {
         modelNumber = (TextView) activity.findViewById(R.id.model_number_view);
         serialNumber = (TextView) activity.findViewById(R.id.serial_number_view);
         description = (TextView) activity.findViewById(R.id.description_view);
+        workTime = (TextView) activity.findViewById(R.id.total_work_time);
+        travelTime = (TextView) activity.findViewById(R.id.total_travel_time);
     }
 
     @After
     public void tearDownActivity() {
-        resolver.delete(SRContentProvider.SR_CONTENT_URI, SRTable.COLUMN_SR_NUMBER + " = ? ",
-                new String[]{srOne.getNumber()});
+        resolver.delete(srUri, null, null);
+        resolver.delete(dayUri, null, null);
         controller.destroy();
     }
 
@@ -96,6 +130,22 @@ public class TestViewSRActivity {
         assertEquals(srOne.getModelNumber(), modelNumber.getText().toString());
         assertEquals(srOne.getSerialNumber(), serialNumber.getText().toString());
         assertEquals(srOne.getDescription(), description.getText().toString());
+        
+        assertEquals("1.0 hours", workTime.getText().toString());
+        assertEquals("1.0 hours", travelTime.getText().toString());
+    }
+    
+    @Test
+    public void testTodayButton() {
+        Button today = (Button) activity.findViewById(R.id.edit_today);
+        
+        today.performClick();
+        
+        Intent intent = new Intent(activity, EditDailyActivity.class);
+        intent.putExtra(SRContentProvider.DAILY_CONTENT_ITEM_TYPE, dayUri);
+        
+        assertEquals(intent, Robolectric.shadowOf(activity).getNextStartedActivity());
+        
     }
 
     @Test
@@ -120,18 +170,33 @@ public class TestViewSRActivity {
         activity.onOptionsItemSelected(item);
 
         Intent intent = new Intent(Robolectric.application, EditSRActivity.class);
-        intent.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, uri);
+        intent.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, srUri);
 
         assertEquals(intent, Robolectric.shadowOf(activity).getNextStartedActivity());
     }
 
     @Test
     public void testDelete() {
-        activity.delete(uri);
+        activity.delete(srUri);
 
-        Cursor cursor = resolver.query(uri, null, null, null, null);
+        Cursor cursor = resolver.query(srUri, null, null, null, null);
 
         cursor.moveToFirst();
         assertTrue(cursor.isAfterLast());
+    }
+    
+    @Test
+    public void testClickCustomerName() {
+        ContentProvider contacts = mock(ContentProvider.class);
+        when(contacts.query(any(Uri.class), any(String[].class), any(String.class), 
+                any(String[].class), any(String.class)))
+                .thenReturn(new MatrixCursor(new String[]{
+                        ContactsContract.Contacts.LOOKUP_KEY, 
+                        ContactsContract.Contacts._ID}));
+        ShadowContentResolver.registerProvider(ContactsContract.AUTHORITY, contacts);
+        
+        customerName.performClick();
+        
+        assertEquals("No Matching Contact Found", ShadowToast.getTextOfLatestToast());
     }
 }
