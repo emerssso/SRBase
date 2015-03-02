@@ -66,7 +66,7 @@ public class TestExistingEditPartActivity {
         partOne.setSrId(srUri.getLastPathSegment());
         partOne.setPartNumber("widget");
         partOne.setQuantity("1");
-        partOne.setUsed("Used");
+        partOne.setUsed(true);
         partOne.setSource("garage");
         partOne.setDescription("old");
 
@@ -109,7 +109,7 @@ public class TestExistingEditPartActivity {
         partTwo.setSrId(srUri.getLastPathSegment());
         partTwo.setPartNumber("newNumber");
         partTwo.setQuantity("20");
-        partTwo.setUsed("Unused");
+        partTwo.setUsed(false);
         partTwo.setSource("China");
         partTwo.setDescription("This is \n a very long \n description");
         

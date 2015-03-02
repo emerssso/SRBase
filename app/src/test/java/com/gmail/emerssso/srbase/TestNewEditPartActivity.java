@@ -109,7 +109,7 @@ public class TestNewEditPartActivity {
         partOne.setSrId(srUri.getLastPathSegment());
         partOne.setPartNumber("widget");
         partOne.setQuantity("1");
-        partOne.setUsed("Used");
+        partOne.setUsed(true);
         partOne.setSource("garage");
         partOne.setDescription("old");
         

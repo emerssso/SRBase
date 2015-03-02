@@ -12,12 +12,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * Simple model of a part used on an SR.
  */
 public class Part {
+    public static final String UNKNOWN = "Unknown";
+    public static final String NO_DESCRIPTION = "No Description";
     private int id;
     private String srId = "";
     private String partNumber = "";
-    private String quantity = "";
-    private String used = "";
-    private String source = "";
+    private String quantity = UNKNOWN;
+    private boolean used = false;
+    private String source = UNKNOWN;
     private String description = "";
 
     public static Part fromCursor(Cursor cursor) {
@@ -28,7 +30,7 @@ public class Part {
             part.setPartNumber(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_PART_NUMBER)));
             part.setQuantity(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_QUANTITY)));
             part.setSource(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_SOURCE)));
-            part.setUsed(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_USED)));
+            part.setUsed(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_USED)).equals("Used"));
             part.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(PartTable.COLUMN_DESCRIPTION)));
 
             return part;
@@ -65,14 +67,18 @@ public class Part {
     }
 
     public void setQuantity(String quantity) {
-        this.quantity = quantity;
+        this.quantity = quantity.length() == 0 ? UNKNOWN : quantity;
+    }
+    
+    public boolean quantityAvailable() {
+        return !quantity.equals(UNKNOWN);
     }
 
-    public String getUsed() {
+    public boolean isUsed() {
         return used;
     }
 
-    public void setUsed(String used) {
+    public void setUsed(boolean used) {
         this.used = used;
     }
 
@@ -81,11 +87,19 @@ public class Part {
     }
 
     public void setSource(String source) {
-        this.source = source;
+        this.source = source.length() == 0 ? UNKNOWN : source;
+    }
+    
+    public boolean sourceAvailable() {
+        return !source.equals(UNKNOWN);
     }
 
     public String getDescription() {
-        return description;
+        return description.length() == 0 ? NO_DESCRIPTION : description;
+    }
+    
+    public boolean descriptionAvailable() {
+        return !description.equals(NO_DESCRIPTION);
     }
 
     public void setDescription(String description) {
@@ -99,7 +113,7 @@ public class Part {
         cv.put(PartTable.COLUMN_SR_ID, srId);
         cv.put(PartTable.COLUMN_PART_NUMBER, partNumber);
         cv.put(PartTable.COLUMN_QUANTITY, quantity);
-        cv.put(PartTable.COLUMN_USED, used);
+        cv.put(PartTable.COLUMN_USED, used ? "Used" : "Unused");
         cv.put(PartTable.COLUMN_SOURCE, source);
         cv.put(PartTable.COLUMN_DESCRIPTION, description);
 
@@ -116,7 +130,7 @@ public class Part {
                     .append(this.getPartNumber(), that.getPartNumber())
                     .append(this.getQuantity(), that.getQuantity())
                     .append(this.getSource(), that.getSource())
-                    .append(this.getUsed(), that.getUsed())
+                    .append(this.isUsed(), that.isUsed())
                     .append(this.getDescription(), that.getDescription())
                     .isEquals();
         } else
@@ -130,7 +144,7 @@ public class Part {
                 .append(this.getPartNumber())
                 .append(this.getQuantity())
                 .append(this.getSource())
-                .append(this.getUsed())
+                .append(this.isUsed())
                 .append(this.getDescription())
                 .toHashCode();
     }

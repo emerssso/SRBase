@@ -2,7 +2,6 @@
 //The License is available at http://www.apache.org/licenses/LICENSE-2.0
 package com.gmail.emerssso.srbase;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 
 import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
+import com.gmail.emerssso.srbase.models.Part;
 
 /**
  * The EditPartActivity class implements an activity which provides
@@ -48,16 +48,8 @@ public class EditPartActivity extends EditSubItemActivity {
      * Indicates whether the part was used or not.
      */
     private CheckBox partUsed;
-
-    /**
-     * The Uri to load saved data from.
-     */
-    private Uri savedUri;
-
-    /**
-     * The ID of the associated SR.
-     */
-    private String srId;
+    
+    private Part part = new Part();
 
     /* (non-Javadoc)
      * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -80,17 +72,16 @@ public class EditPartActivity extends EditSubItemActivity {
         savedUri = (bundle == null) ? null :
                 (Uri) bundle.getParcelable(
                         SRContentProvider.PART_CONTENT_ITEM_TYPE);
-        super.savedUri = savedUri;
 
         if (extras != null) {
-            srId = extras.getString(PartTable.COLUMN_SR_ID);
+            part.setSrId(extras.getString(PartTable.COLUMN_SR_ID));
 
             savedUri = extras
                     .getParcelable(SRContentProvider.PART_CONTENT_ITEM_TYPE);
-            super.savedUri = savedUri;
-            if (savedUri != null)
-                fillData(savedUri);
         }
+
+        if (savedUri != null)
+            fillData(savedUri);
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,43 +105,25 @@ public class EditPartActivity extends EditSubItemActivity {
      * @param uri the Source of data to be loaded.
      */
     private void fillData(Uri uri) {
-        String[] projection = {PartTable.COLUMN_DESCRIPTION,
-                PartTable.COLUMN_PART_NUMBER, PartTable.COLUMN_QUANTITY,
-                PartTable.COLUMN_SOURCE, PartTable.COLUMN_USED,
-                PartTable.COLUMN_SR_ID};
         Cursor cursor = getContentResolver()
-                .query(uri, projection, null, null, null);
+                .query(uri, PartTable.COLUMNS, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
 
-            partNumber.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(PartTable.COLUMN_PART_NUMBER)));
+            Part part = Part.fromCursor(cursor);
 
-            String temp = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PartTable.COLUMN_QUANTITY));
+            partNumber.setText(part.getPartNumber());
 
-            if (!temp.equals("Unknown"))
-                partQuantity.setText(temp);
+            if (part.quantityAvailable())
+                partQuantity.setText(part.getQuantity());
 
-            temp = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PartTable.COLUMN_SOURCE));
-            if (!temp.equals("Unknown"))
-                partSource.setText(temp);
+            if (part.sourceAvailable())
+                partSource.setText(part.getSource());
 
-            temp = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PartTable.COLUMN_DESCRIPTION));
+            if (part.descriptionAvailable())
+                partDescription.setText(part.getDescription());
 
-            if (!temp.equals("No Description"))
-                partDescription.setText(temp);
-
-            srId = cursor.getString(cursor
-                    .getColumnIndexOrThrow(PartTable.COLUMN_SR_ID));
-
-            if (cursor.getString(cursor.getColumnIndexOrThrow
-                    (PartTable.COLUMN_USED)).equals("Used"))
-                partUsed.setChecked(true);
-            else
-                partUsed.setChecked(false);
+            partUsed.setChecked(part.isUsed());
 
             cursor.close();
         }
@@ -171,44 +144,27 @@ public class EditPartActivity extends EditSubItemActivity {
      */
     private void saveState() {
 
-        String number = partNumber.getText().toString();
-
         if (partNumber.length() == 0)
             return;
 
-        String quantity = partQuantity.getText().toString();
-        String description = partDescription.getText().toString();
-        String source = partSource.getText().toString();
-        String used = partUsed.isChecked() ? "Used" : "Unused";
-
-        if (quantity.length() == 0) quantity = "Unknown";
-        if (description.length() == 0) description = "No Description";
-        if (source.length() == 0) source = "Unknown";
-
-        ContentValues values = new ContentValues();
-        values.put(PartTable.COLUMN_PART_NUMBER, number);
-        values.put(PartTable.COLUMN_QUANTITY, quantity);
-        values.put(PartTable.COLUMN_DESCRIPTION, description);
-        values.put(PartTable.COLUMN_SOURCE, source);
-        values.put(PartTable.COLUMN_USED, used);
-        values.put(PartTable.COLUMN_SR_ID, srId);
-
+        part.setPartNumber(partNumber.getText().toString());
+        part.setQuantity(partQuantity.getText().toString());
+        part.setSource(partSource.getText().toString());
+        part.setDescription(partDescription.getText().toString());
+        part.setUsed(partUsed.isChecked());
 
         if (savedUri == null) {
-            // New Part
             savedUri = getContentResolver()
-                    .insert(SRContentProvider.PART_CONTENT_URI, values);
-            super.savedUri = savedUri;
+                    .insert(SRContentProvider.PART_CONTENT_URI, part.toContentValues());
         } else {
-            // Update Part
-            getContentResolver().update(savedUri, values, null, null);
+            getContentResolver().update(savedUri, part.toContentValues(), null, null);
         }
     }
 
     @Override
     protected Intent createIntentForParent() {
         Intent i = new Intent(this, ViewSRActivity.class);
-        Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + srId);
+        Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + part.getSrId());
         i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, todoUri);
         return i;
     }

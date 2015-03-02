@@ -65,7 +65,7 @@ public class TestSRContentProvider {
         partOne.setSrId("1");
         partOne.setPartNumber("123");
         partOne.setQuantity("2");
-        partOne.setUsed("no");
+        partOne.setUsed(false);
         partOne.setSource("China");
         partOne.setDescription("fair");
 
