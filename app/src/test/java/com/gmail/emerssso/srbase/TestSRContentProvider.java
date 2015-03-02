@@ -1,6 +1,8 @@
 package com.gmail.emerssso.srbase;
 
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.net.Uri;
 
 import com.gmail.emerssso.srbase.database.DailyTable;
 import com.gmail.emerssso.srbase.database.PartTable;
@@ -23,6 +25,7 @@ import org.robolectric.shadows.ShadowLog;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -254,5 +257,46 @@ public class TestSRContentProvider {
         cursor.moveToFirst();
         assertTrue(cursor.isAfterLast());
         cursor.close();
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailInsertUri() {
+        resolver.insert(Uri.parse("content://" + SRContentProvider.AUTHORITY + "/garbage"), 
+                new ContentValues());
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testFailUpdateUri() {
+        resolver.update(Uri.parse("content://" + SRContentProvider.AUTHORITY + "/garbage"), 
+                null, null, null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class) 
+    public void testFailDeleteUri() {
+        resolver.delete(Uri.parse("content://" + SRContentProvider.AUTHORITY + "/garbage"), 
+                null, null);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testBadSRColumns() {
+        resolver.query(SRContentProvider.SR_CONTENT_URI, new String[]{"garbage"}, 
+                null, null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testBadDailyColumns() {
+        resolver.query(SRContentProvider.DAILY_CONTENT_URI, new String[]{"garbage"}, 
+                null, null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testBadPartColumns() {
+        resolver.query(SRContentProvider.PART_CONTENT_URI, new String[]{"garbage"}, 
+                null, null, null);
+    }
+    
+    @Test
+    public void testGetType() { //this test is garbage. Need to figure out what this method does.
+        assertNull(resolver.getType(SRContentProvider.SR_CONTENT_URI));
     }
 }
