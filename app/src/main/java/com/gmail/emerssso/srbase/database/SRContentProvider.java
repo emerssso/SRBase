@@ -10,7 +10,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.text.TextUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -144,68 +145,51 @@ public class SRContentProvider extends ContentProvider {
         int uriType = sURIMatcher.match(uri);
         int rowsDeleted = 0;
         SQLiteDatabase wDB = database.getWritableDatabase();
-        String id;
 
-        //These switches get ungainly and long with multiple tables...
-        //StackOverflow suggests this is best practice, but it would be
-        //nice to find something more readable
         switch (uriType) {
             case SRS:
-                rowsDeleted = wDB.delete(SRTable.TABLE_SR, selection,
-                        selArgs);
+                rowsDeleted = wDB.delete(SRTable.TABLE_NAME, selection, selArgs);
                 break;
             case SR_ID:
-                id = uri.getLastPathSegment();
-                if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = wDB.delete(SRTable.TABLE_SR,
-                            SRTable.COLUMN_ID + "=" + id,
-                            null);
-                } else {
-                    rowsDeleted = wDB.delete(SRTable.TABLE_SR,
-                            SRTable.COLUMN_ID + "=" + id
-                                    + " and " + selection,
-                            selArgs);
-                }
+                rowsDeleted = deleteIdTypeUri(uri, selection, selArgs, wDB, SRTable.TABLE_NAME);
                 break;
             case DAILIES:
-                rowsDeleted = wDB.delete(DailyTable.TABLE_DAILY, selection,
-                        selArgs);
+                rowsDeleted = wDB.delete(DailyTable.TABLE_NAME, selection, selArgs);
                 break;
             case DAILY_ID:
-                id = uri.getLastPathSegment();
-                if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = wDB.delete(DailyTable.TABLE_DAILY,
-                            DailyTable.COLUMN_ID + "=" + id,
-                            null);
-                } else {
-                    rowsDeleted = wDB.delete(DailyTable.TABLE_DAILY,
-                            DailyTable.COLUMN_ID + "=" + id
-                                    + " and " + selection,
-                            selArgs);
-                }
+                rowsDeleted = deleteIdTypeUri(uri, selection, selArgs, wDB, DailyTable.TABLE_NAME);
                 break;
             case PARTS:
-                rowsDeleted = wDB.delete(PartTable.TABLE_PART, selection,
-                        selArgs);
+                rowsDeleted = wDB.delete(PartTable.TABLE_NAME, selection, selArgs);
                 break;
             case PART_ID:
-                id = uri.getLastPathSegment();
-                if (TextUtils.isEmpty(selection)) {
-                    rowsDeleted = wDB.delete(PartTable.TABLE_PART,
-                            PartTable.COLUMN_ID + "=" + id,
-                            null);
-                } else {
-                    rowsDeleted = wDB.delete(PartTable.TABLE_PART,
-                            PartTable.COLUMN_ID + "=" + id
-                                    + " and " + selection,
-                            selArgs);
-                }
+                rowsDeleted = deleteIdTypeUri(uri, selection, selArgs, wDB, PartTable.TABLE_NAME);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return rowsDeleted;
+    }
+
+    /**
+     * Deletes an item indecated by an ID Uri
+     * @param uri Uri of item to delete
+     * @param selection selection for items to delete
+     * @param selArgs arguments for selection
+     * @param wDB DB to act on
+     * @param tableName Table to delete from
+     * @return number of rows deleted
+     */
+    private static int deleteIdTypeUri(Uri uri, String selection, String[] selArgs, 
+                                SQLiteDatabase wDB, String tableName) {
+        String id = uri.getLastPathSegment();
+        if (StringUtils.isBlank(selection)) {
+            selection = "_id =" + id;
+        } else {
+            selection = "_id =" + id + " and " + selection;
+        }
+        return wDB.delete(tableName, selection, selArgs);
     }
 
     /* (non-Javadoc)
@@ -224,23 +208,23 @@ public class SRContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         int uriType = sURIMatcher.match(uri);
         SQLiteDatabase sqlDB = database.getWritableDatabase();
-        long id = 0;
         switch (uriType) {
             case SRS:
-                id = sqlDB.insert(SRTable.TABLE_SR, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return Uri.parse(SR_CONTENT_URI.toString() + "/" + id);
+                return insertIntoTable(SRTable.TABLE_NAME, SR_CONTENT_URI, uri, values, sqlDB);
             case DAILIES:
-                id = sqlDB.insert(DailyTable.TABLE_DAILY, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return Uri.parse(DAILY_CONTENT_URI.toString() + "/" + id);
+                return insertIntoTable(DailyTable.TABLE_NAME, DAILY_CONTENT_URI, uri, values, sqlDB);
             case PARTS:
-                id = sqlDB.insert(PartTable.TABLE_PART, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return Uri.parse(PART_CONTENT_URI.toString() + "/" + id);
+                return insertIntoTable(PartTable.TABLE_NAME, PART_CONTENT_URI, uri, values, sqlDB);
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
+    }
+
+    private Uri insertIntoTable(String table, Uri contentUri, Uri requestedUri, 
+                                ContentValues values, SQLiteDatabase sqlDB) {
+        long id = sqlDB.insert(table, null, values);
+        getContext().getContentResolver().notifyChange(requestedUri, null);
+        return Uri.parse(contentUri + "/" + id);
     }
 
     /* (non-Javadoc)
@@ -263,50 +247,32 @@ public class SRContentProvider extends ContentProvider {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         int uriType = sURIMatcher.match(uri);
+        String tableName = "";
+        String[] columns;
         switch (uriType) {
             case SRS:
-                // Set the table
-                queryBuilder.setTables(SRTable.TABLE_SR);
-                checkSRColumns(projection);
+            case SR_ID:
+                tableName = SRTable.TABLE_NAME;
+                columns = SRTable.COLUMNS;
                 break;
             case DAILIES:
-                // Set the table
-                queryBuilder.setTables(DailyTable.TABLE_DAILY);
-                checkDailyColumns(projection);
+            case DAILY_ID:
+                tableName = DailyTable.TABLE_NAME;
+                columns = DailyTable.COLUMNS;
                 break;
             case PARTS:
-                // Set the table
-                queryBuilder.setTables(PartTable.TABLE_PART);
-                checkPartColumns(projection);
-                break;
-            case SR_ID:
-                // Set the table
-                queryBuilder.setTables(SRTable.TABLE_SR);
-                // adding the ID to the original query
-                checkSRColumns(projection);
-                queryBuilder.appendWhere(SRTable.COLUMN_ID + "="
-                        + uri.getLastPathSegment());
-                break;
-            case DAILY_ID:
-                checkDailyColumns(projection);
-
-                // Set the table
-                queryBuilder.setTables(DailyTable.TABLE_DAILY);
-                // adding the ID to the original query
-                queryBuilder.appendWhere(DailyTable.COLUMN_ID + "="
-                        + uri.getLastPathSegment());
-                break;
             case PART_ID:
-                checkPartColumns(projection);
-
-                // Set the table
-                queryBuilder.setTables(PartTable.TABLE_PART);
-                // adding the ID to the original query
-                queryBuilder.appendWhere(PartTable.COLUMN_ID + "="
-                        + uri.getLastPathSegment());
+                tableName = PartTable.TABLE_NAME;
+                columns = PartTable.COLUMNS;
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
+        
+        checkColumns(projection, columns);
+        queryBuilder.setTables(tableName);
+        if(isIdType(uriType)) {
+            queryBuilder.appendWhere("_id =" + uri.getLastPathSegment());
         }
 
         SQLiteDatabase db = database.getWritableDatabase();
@@ -316,6 +282,15 @@ public class SRContentProvider extends ContentProvider {
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
         return cursor;
+    }
+
+    /**
+     * helper method that determines whether URI is of ID type (and has ID as a path element).
+     * @param uriType URI type to check
+     * @return true if is of type ID, else false
+     */
+    private static boolean isIdType(int uriType) {
+        return uriType > 20;
     }
 
     /* (non-Javadoc)
@@ -331,70 +306,25 @@ public class SRContentProvider extends ContentProvider {
 
         switch (uriType) {
             case SRS:
-                rowsUpdated = sqlDB.update(SRTable.TABLE_SR,
-                        values,
-                        selection,
-                        selArgs);
+                rowsUpdated = sqlDB.update(SRTable.TABLE_NAME, values, selection, selArgs);
                 break;
             case SR_ID:
-                id = uri.getLastPathSegment();
-                if (TextUtils.isEmpty(selection)) {
-                    rowsUpdated = sqlDB.update(SRTable.TABLE_SR,
-                            values,
-                            SRTable.COLUMN_ID + "=" + id,
-                            null);
-                } else {
-                    rowsUpdated = sqlDB.update(SRTable.TABLE_SR,
-                            values,
-                            SRTable.COLUMN_ID + "=" + id
-                                    + " and "
-                                    + selection,
-                            selArgs);
-                }
+                rowsUpdated = updateIdTypeUri(uri, values, selection, selArgs, 
+                        sqlDB, SRTable.TABLE_NAME);
                 break;
             case DAILIES:
-                rowsUpdated = sqlDB.update(DailyTable.TABLE_DAILY,
-                        values,
-                        selection,
-                        selArgs);
+                rowsUpdated = sqlDB.update(DailyTable.TABLE_NAME, values, selection, selArgs);
                 break;
             case DAILY_ID:
-                id = uri.getLastPathSegment();
-                if (TextUtils.isEmpty(selection)) {
-                    rowsUpdated = sqlDB.update(DailyTable.TABLE_DAILY,
-                            values,
-                            DailyTable.COLUMN_ID + "=" + id,
-                            null);
-                } else {
-                    rowsUpdated = sqlDB.update(DailyTable.TABLE_DAILY,
-                            values,
-                            DailyTable.COLUMN_ID + "=" + id
-                                    + " and "
-                                    + selection,
-                            selArgs);
-                }
+                rowsUpdated = updateIdTypeUri(uri, values, selection, selArgs,
+                        sqlDB, DailyTable.TABLE_NAME);
                 break;
             case PARTS:
-                rowsUpdated = sqlDB.update(PartTable.TABLE_PART,
-                        values,
-                        selection,
-                        selArgs);
+                rowsUpdated = sqlDB.update(PartTable.TABLE_NAME, values, selection, selArgs);
                 break;
             case PART_ID:
-                id = uri.getLastPathSegment();
-                if (TextUtils.isEmpty(selection)) {
-                    rowsUpdated = sqlDB.update(PartTable.TABLE_PART,
-                            values,
-                            PartTable.COLUMN_ID + "=" + id,
-                            null);
-                } else {
-                    rowsUpdated = sqlDB.update(PartTable.TABLE_PART,
-                            values,
-                            PartTable.COLUMN_ID + "=" + id
-                                    + " and "
-                                    + selection,
-                            selArgs);
-                }
+                rowsUpdated = updateIdTypeUri(uri, values, selection, selArgs,
+                        sqlDB, PartTable.TABLE_NAME);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -404,67 +334,27 @@ public class SRContentProvider extends ContentProvider {
     }
 
     /**
-     * Checks to ensure that a projection specifies only valid columns of
-     * the SR table.
-     *
-     * @param projection The projection to test for validity.
+     * Helper method to update an item represented by an ID type Uri 
+     * @param uri Uri to update
+     * @param values Values to update items represented by Uri with
+     * @param selection Selection to select items to update with
+     * @param selArgs arguments for selection
+     * @param sqlDB db to perform update on
+     * @param table table to perform update on
+     * @return number of rows updated
      */
-    private void checkSRColumns(String[] projection) {
-        String[] available = {SRTable.COLUMN_CUSTOMER_NAME,
-                SRTable.COLUMN_DESCRIPTION, SRTable.COLUMN_ID,
-                SRTable.COLUMN_MODEL_NUMBER, SRTable.COLUMN_SERIAL_NUMBER,
-                SRTable.COLUMN_SR_NUMBER, SRTable.COLUMN_BUSINESS_NAME};
-        if (projection != null) {
-            HashSet<String> requestedColumns = new
-                    HashSet<String>(Arrays.asList(projection));
-            HashSet<String> availableColumns = new
-                    HashSet<String>(Arrays.asList(available));
-            // check if all columns which are requested are available
-            if (!availableColumns.containsAll(requestedColumns)) {
-                throw new IllegalArgumentException(
-                        "Unknown columns in projection");
-            }
+    private int updateIdTypeUri(Uri uri, ContentValues values, String selection, String[] selArgs, 
+                                SQLiteDatabase sqlDB, String table) {
+        String id = uri.getLastPathSegment();
+        if (StringUtils.isBlank(selection)) {
+            selection = "_id = " + id;
+        } else {
+            selection = "_id = " + id + selection;
         }
+        return sqlDB.update(table, values, selection, selArgs);
     }
 
-    /**
-     * Checks to ensure that a projection contains only valid columns of the
-     * daily table.
-     *
-     * @param projection The projection to check.
-     */
-    private void checkDailyColumns(String[] projection) {
-        String[] available = {DailyTable.COLUMN_COMMENT,
-                DailyTable.COLUMN_DAY, DailyTable.COLUMN_END_HOUR,
-                DailyTable.COLUMN_ID, DailyTable.COLUMN_SR_ID,
-                DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_MONTH,
-                DailyTable.COLUMN_YEAR, DailyTable.COLUMN_START_MIN,
-                DailyTable.COLUMN_END_MIN,
-                DailyTable.COLUMN_TRAVEL_TIME};
-        if (projection != null) {
-            HashSet<String> requestedColumns = new
-                    HashSet<String>(Arrays.asList(projection));
-            HashSet<String> availableColumns = new
-                    HashSet<String>(Arrays.asList(available));
-            // check if all columns which are requested are available
-            if (!availableColumns.containsAll(requestedColumns)) {
-                throw new IllegalArgumentException(
-                        "Unknown columns in projection");
-            }
-        }
-    }
-
-    /**
-     * Checks to make sure that a projection only contains valid columns of
-     * part table.
-     *
-     * @param projection The projection to check for validity.
-     */
-    private void checkPartColumns(String[] projection) {
-        String[] available = {PartTable.COLUMN_DESCRIPTION,
-                PartTable.COLUMN_ID, PartTable.COLUMN_QUANTITY,
-                PartTable.COLUMN_SOURCE, PartTable.COLUMN_SR_ID,
-                PartTable.COLUMN_USED, PartTable.COLUMN_PART_NUMBER};
+    private void checkColumns(String[] projection, String[] available) {
         if (projection != null) {
             HashSet<String> requestedColumns = new
                     HashSet<String>(Arrays.asList(projection));

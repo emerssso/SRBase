@@ -16,7 +16,7 @@ public class PartTable {
     /**
      * The table name constant.
      */
-    public static final String TABLE_PART = "part";
+    public static final String TABLE_NAME = "part";
 
     /**
      * The _id primary key column required by Android APIs.
@@ -61,7 +61,7 @@ public class PartTable {
      * The SQL command for creating the table.
      */
     private static final String DATABASE_CREATE = "create table "
-            + TABLE_PART + "(" + COLUMN_ID
+            + TABLE_NAME + "(" + COLUMN_ID
             + " integer primary key autoincrement, "
             + COLUMN_SR_ID + " text not null, "
             + COLUMN_PART_NUMBER + " text not null, "

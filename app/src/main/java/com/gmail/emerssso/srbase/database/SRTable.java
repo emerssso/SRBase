@@ -18,7 +18,7 @@ public class SRTable {
     /**
      * The name of the table.
      */
-    public static final String TABLE_SR = "SR";
+    public static final String TABLE_NAME = "SR";
 
     /**
      * The _id primary key column needed by Android APIs.
@@ -60,7 +60,7 @@ public class SRTable {
      * The SQL to create the SR table.
      */
     private static final String DATABASE_CREATE = "create table "
-            + TABLE_SR + "(" + COLUMN_ID
+            + TABLE_NAME + "(" + COLUMN_ID
             + " integer primary key autoincrement, "
             + COLUMN_SR_NUMBER + " text not null, "
             + COLUMN_CUSTOMER_NAME + " text not null, "
@@ -94,7 +94,7 @@ public class SRTable {
             Log.w(SRTable.class.getSimpleName(), "Upgrading database from version "
                     + oldVersion + " to " + newVersion
                     + ", which will add a business name column.");
-            database.execSQL("ALTER TABLE " + TABLE_SR +
+            database.execSQL("ALTER TABLE " + TABLE_NAME +
                     " ADD " + COLUMN_BUSINESS_NAME + " text not null default '';");
         }
     }

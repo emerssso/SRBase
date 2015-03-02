@@ -14,7 +14,7 @@ public class DailyTable {
     /**
      * The name of the table, in constant form.
      */
-    public static final String TABLE_DAILY = "daily";
+    public static final String TABLE_NAME = "daily";
 
     /**
      * The name of the primary key column, as per Android best practice.
@@ -81,7 +81,7 @@ public class DailyTable {
      * This string contains the SQL for creating this table.
      */
     private static final String DATABASE_CREATE = "create table "
-            + TABLE_DAILY + "(" + COLUMN_ID
+            + TABLE_NAME + "(" + COLUMN_ID
             + " integer primary key autoincrement, "
             + COLUMN_SR_ID + " text not null, "
             + COLUMN_DAY + " integer, "
