@@ -5,7 +5,6 @@ package com.gmail.emerssso.srbase;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 import com.gmail.emerssso.srbase.database.DailyTable;
 import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
+import com.gmail.emerssso.srbase.models.Daily;
 
 import java.util.Calendar;
 
@@ -61,35 +61,7 @@ public class EditDailyActivity extends EditSubItemActivity {
      */
     private TextView endTime;
 
-    /**
-     * The SR ID associated with the day.
-     */
-    private String srId;
-
-    /**
-     * The saved Uri when loading an old Daily.
-     */
-    private Uri savedUri;
-
-    /**
-     * The start hour.
-     */
-    private int startHour;
-
-    /**
-     * The start minute.
-     */
-    private int startMin;
-
-    /**
-     * The end hour.
-     */
-    private int endHour;
-
-    /**
-     * The end minute.
-     */
-    private int endMin;
+    private Daily day = new Daily();
 
     /* (non-Javadoc)
      * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -98,12 +70,6 @@ public class EditDailyActivity extends EditSubItemActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_daily_activity);
-
-        //these are set to -1 initially so we know they
-        //need to be set later if the user wants to use
-        //the current time as the start or end, without
-        //having to open the dialog.
-        startHour = startMin = endHour = endMin = -1;
 
         date = (DatePicker) findViewById(R.id.date_picker);
         date.init(1, 1, 1, null);
@@ -121,16 +87,12 @@ public class EditDailyActivity extends EditSubItemActivity {
         savedUri = (savedInstanceState == null) ? null :
                 (Uri) savedInstanceState.getParcelable(
                         SRContentProvider.DAILY_CONTENT_ITEM_TYPE);
-        //any time savedUri is set, we also want to set
-        //super.savedUri, so that we delete the right thing.
-        super.savedUri = savedUri;
 
         if (extras != null) {
-            srId = extras.getString(DailyTable.COLUMN_SR_ID);
+            day.setSrId(extras.getString(DailyTable.COLUMN_SR_ID));
 
             savedUri = extras
                     .getParcelable(SRContentProvider.DAILY_CONTENT_ITEM_TYPE);
-            super.savedUri = savedUri;
 
             if (savedUri != null)
                 fillData(savedUri);
@@ -149,24 +111,18 @@ public class EditDailyActivity extends EditSubItemActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //set hours/minutes for current if not set
-                final Calendar c = Calendar.getInstance();
-                if (startHour == -1) startHour = c.get(Calendar.HOUR_OF_DAY);
-                if (startMin == -1) startMin = c.get(Calendar.MINUTE);
-                if (endMin == -1) endMin = c.get(Calendar.MINUTE);
-                if (endHour == -1) endHour = c.get(Calendar.HOUR_OF_DAY);
+                setUpTimes();
 
                 //make sure start is before end.
-                if (startHour > endHour ||
-                        (startHour == endHour && startMin > endMin)) {
+                if (day.startAndEndReversed()) {
                     Toast.makeText(EditDailyActivity.this,
                             "Start Time is after End Time!",
                             Toast.LENGTH_LONG).show();
-                    return;
+                } else {
+                    saveState();
+                    setResult(RESULT_OK);
+                    finish();
                 }
-                saveState();
-                setResult(RESULT_OK);
-                finish();
             }
         });
 
@@ -183,7 +139,7 @@ public class EditDailyActivity extends EditSubItemActivity {
     @Override
     protected Intent createIntentForParent() {
         Intent i = new Intent(this, ViewSRActivity.class);
-        Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + srId);
+        Uri todoUri = Uri.parse(SRContentProvider.SR_CONTENT_URI + "/" + day.getSrId());
         i.putExtra(SRContentProvider.SR_CONTENT_ITEM_TYPE, todoUri);
         return i;
     }
@@ -194,12 +150,12 @@ public class EditDailyActivity extends EditSubItemActivity {
      */
     private void addPart() {
         Intent i = new Intent(this, EditPartActivity.class);
-        i.putExtra(PartTable.COLUMN_SR_ID, srId);
+        i.putExtra(PartTable.COLUMN_SR_ID, day.getSrId());
         startActivity(i);
     }
 
     /**
-     * Convenience method to generate properly formated time string
+     * Convenience method to generate properly formatted time string
      *
      * @param hour Hour of time to produce
      * @param min  Minute of time to produce
@@ -215,12 +171,10 @@ public class EditDailyActivity extends EditSubItemActivity {
             } else ampm = "am";
         }
 
-
         if (min < 10)
             return hour + ":0" + min + ampm;
         else
             return hour + ":" + min + ampm;
-
     }
 
     /**
@@ -229,40 +183,19 @@ public class EditDailyActivity extends EditSubItemActivity {
      * @param uri the Uri to load data from
      */
     private void fillData(Uri uri) {
-        String[] projection = {DailyTable.COLUMN_COMMENT,
-                DailyTable.COLUMN_DAY, DailyTable.COLUMN_END_HOUR,
-                DailyTable.COLUMN_MONTH, DailyTable.COLUMN_YEAR,
-                DailyTable.COLUMN_START_HOUR, DailyTable.COLUMN_TRAVEL_TIME,
-                DailyTable.COLUMN_START_MIN, DailyTable.COLUMN_END_MIN,
-                DailyTable.COLUMN_SR_ID};
         Cursor cursor = getContentResolver()
-                .query(uri, projection, null, null, null);
+                .query(uri, DailyTable.COLUMNS, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
 
-            date.updateDate(cursor.getInt(cursor
-                            .getColumnIndexOrThrow(DailyTable.COLUMN_YEAR)),
-                    cursor.getInt(cursor.getColumnIndexOrThrow
-                            (DailyTable.COLUMN_MONTH)) - 1, cursor.getInt(
-                            cursor.getColumnIndexOrThrow(DailyTable.COLUMN_DAY)));
-            startHour = cursor.getInt(cursor
-                    .getColumnIndexOrThrow(DailyTable.COLUMN_START_HOUR));
-            startMin = cursor.getInt(cursor
-                    .getColumnIndexOrThrow(DailyTable.COLUMN_START_MIN));
-            endHour = cursor.getInt(cursor
-                    .getColumnIndexOrThrow(DailyTable.COLUMN_END_HOUR));
-            endMin = cursor.getInt(cursor
-                    .getColumnIndexOrThrow(DailyTable.COLUMN_END_MIN));
+            day = Daily.fromCursor(cursor);
 
-            travelTime.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(DailyTable.COLUMN_TRAVEL_TIME)));
-            comment.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(DailyTable.COLUMN_COMMENT)));
-            srId = cursor.getString(cursor
-                    .getColumnIndexOrThrow(DailyTable.COLUMN_SR_ID));
+            date.updateDate(day.getYear(), day.getMonth()-1, day.getDay());
+            travelTime.setText(day.getTravelTime());
+            comment.setText(day.getComment());
 
-            startTime.setText(displayTime(startHour, startMin));
-            endTime.setText(displayTime(endHour, endMin));
+            startTime.setText(displayTime(day.getStartHour(), day.getStartMin()));
+            endTime.setText(displayTime(day.getEndHour(), day.getEndMin()));
 
             cursor.close();
         }
@@ -282,40 +215,35 @@ public class EditDailyActivity extends EditSubItemActivity {
      * Save the form state into the database.
      */
     private void saveState() {
+        
+        if(day == null) {
+            day = new Daily();
+        }
 
-        int day = date.getDayOfMonth();
-        int month = date.getMonth();
-        int year = date.getYear();
-        String travel = travelTime.getText().toString();
-        String dayComment = comment.getText().toString();
+        day.setDay(date.getDayOfMonth());
+        day.setMonth(date.getMonth()+1);
+        day.setYear(date.getYear());
+        day.setTravelTime(travelTime.getText().toString());
+        day.setComment(comment.getText().toString());
 
-        final Calendar c = Calendar.getInstance();
-        if (startHour == -1) startHour = c.get(Calendar.HOUR_OF_DAY);
-        if (startMin == -1) startMin = c.get(Calendar.MINUTE);
-        if (endMin == -1) endMin = c.get(Calendar.MINUTE);
-        if (endHour == -1) endHour = c.get(Calendar.HOUR_OF_DAY);
-
-        ContentValues values = new ContentValues();
-        values.put(DailyTable.COLUMN_DAY, day);
-        values.put(DailyTable.COLUMN_MONTH, month + 1);
-        values.put(DailyTable.COLUMN_YEAR, year);
-        values.put(DailyTable.COLUMN_START_HOUR, startHour);
-        values.put(DailyTable.COLUMN_START_MIN, startMin);
-        values.put(DailyTable.COLUMN_END_HOUR, endHour);
-        values.put(DailyTable.COLUMN_END_MIN, endMin);
-        values.put(DailyTable.COLUMN_TRAVEL_TIME, travel);
-        values.put(DailyTable.COLUMN_COMMENT, dayComment);
-        values.put(DailyTable.COLUMN_SR_ID, srId);
+        setUpTimes();
 
         if (savedUri == null) {
             // New Daily
             savedUri = getContentResolver()
-                    .insert(SRContentProvider.DAILY_CONTENT_URI, values);
-            super.savedUri = savedUri;
+                    .insert(SRContentProvider.DAILY_CONTENT_URI, day.toContentValues());
         } else {
             // Update Daily
-            getContentResolver().update(savedUri, values, null, null);
+            getContentResolver().update(savedUri, day.toContentValues(), null, null);
         }
+    }
+
+    private void setUpTimes() {
+        final Calendar c = Calendar.getInstance();
+        if (day.getStartHour() == -1) day.setStartHour(c.get(Calendar.HOUR_OF_DAY));
+        if (day.getStartMin() == -1) day.setStartMin(c.get(Calendar.MINUTE));
+        if (day.getEndHour() == -1) day.setEndHour(c.get(Calendar.HOUR_OF_DAY));
+        if (day.getEndMin() == -1) day.setEndMin(c.get(Calendar.MINUTE));
     }
 
     /**
@@ -328,13 +256,13 @@ public class EditDailyActivity extends EditSubItemActivity {
      */
     protected void setTime(int hour, int minute, boolean start) {
         if (start) {
-            startHour = hour;
-            startMin = minute;
-            startTime.setText(displayTime(startHour, startMin));
+            day.setStartHour(hour);
+            day.setStartMin(minute);
+            startTime.setText(displayTime(day.getStartHour(), day.getStartMin()));
         } else {
-            endHour = hour;
-            endMin = minute;
-            endTime.setText(displayTime(endHour, endMin));
+            day.setEndHour(hour);
+            day.setEndMin(minute);
+            endTime.setText(displayTime(day.getEndHour(), day.getEndMin()));
         }
     }
 
@@ -345,7 +273,8 @@ public class EditDailyActivity extends EditSubItemActivity {
      */
     @SuppressWarnings("UnusedParameters")
     public void showStartTimePickerDialog(View v) {
-        TimePickerFragment newFragment = TimePickerFragment.newInstance(true, startHour, startMin);
+        TimePickerFragment newFragment = TimePickerFragment.newInstance(
+                true, day.getStartHour(), day.getStartMin());
         newFragment.show(getFragmentManager(), TIME_PICKER_FRAGMENT_TAG);
     }
 
@@ -356,7 +285,8 @@ public class EditDailyActivity extends EditSubItemActivity {
      */
     @SuppressWarnings("UnusedParameters")
     public void showEndTimePickerDialog(View v) {
-        TimePickerFragment newFragment = TimePickerFragment.newInstance(false, endHour, endMin);
+        TimePickerFragment newFragment = TimePickerFragment.newInstance(
+                false, day.getEndHour(), day.getEndMin());
         newFragment.show(getFragmentManager(), TIME_PICKER_FRAGMENT_TAG);
     }
 
@@ -370,17 +300,9 @@ public class EditDailyActivity extends EditSubItemActivity {
         public static final String START_KEY = "TimePickerFragment.Start";
         public static final String HOUR_KEY = "TimePickerFragment.Hour";
         public static final String MINUTE_KEY = "TimePickerFragment.Minute";
-        /**
-         * The start.
-         */
+
         private boolean start;
-        /**
-         * The hour.
-         */
         private int hour = -1;
-        /**
-         * The minute.
-         */
         private int minute = -1;
 
         public static TimePickerFragment newInstance(boolean start, int hour, int minute) {

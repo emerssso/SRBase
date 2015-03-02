@@ -2,6 +2,7 @@ package com.gmail.emerssso.srbase;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -117,5 +118,15 @@ public class TestExistingEditDailyActivity {
         activity.findViewById(R.id.daily_confirm).performClick();
         
         assertEquals( "Start Time is after End Time!", ShadowToast.getTextOfLatestToast());
+    }
+    
+    @Test
+    public void testOnSaveInstanceState() {
+        comment.setText("new comment");
+        Bundle b = new Bundle();
+        activity.onSaveInstanceState(b);
+
+        assertEquals(dayUri, b.getParcelable(SRContentProvider.DAILY_CONTENT_ITEM_TYPE));
+        
     }
 }

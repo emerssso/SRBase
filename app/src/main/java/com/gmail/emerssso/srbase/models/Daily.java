@@ -18,10 +18,10 @@ public class Daily {
     private int day;
     private int month;
     private int year;
-    private int startHour;
-    private int startMin;
-    private int endHour;
-    private int endMin;
+    private int startHour = -1;
+    private int startMin = -1;
+    private int endHour = -1;
+    private int endMin = -1;
     private String travelTime;
     private String comment;
 
@@ -126,6 +126,16 @@ public class Daily {
 
     public String getComment() {
         return comment;
+    }
+
+    /**
+     * Checks to ensure that start is before end
+     * @return true if start before end, else false
+     */
+    public boolean startAndEndReversed() {
+        return startHour > endHour ||
+                (startHour == endHour && startMin > endMin);
+        
     }
 
     public void setComment(String comment) {
