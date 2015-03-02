@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,9 @@ import com.gmail.emerssso.srbase.database.DailyTable;
 import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
 import com.gmail.emerssso.srbase.database.SRTable;
+import com.gmail.emerssso.srbase.models.SR;
+
+import org.apache.commons.lang.StringUtils;
 
 // TODO: Auto-generated Javadoc
 
@@ -30,6 +34,7 @@ import com.gmail.emerssso.srbase.database.SRTable;
  */
 public class EditSRActivity extends DeletableActivity {
 
+    private static final String TAG = "EditSRActivity";
     /**
      * The SR number.
      */
@@ -107,6 +112,10 @@ public class EditSRActivity extends DeletableActivity {
                     .getParcelable(SRContentProvider.SR_CONTENT_ITEM_TYPE);
             fillData(savedUri);
         }
+        
+        if(savedUri != null) {
+            myId = savedUri.getLastPathSegment();
+        }
 
         mEnter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,22 +185,15 @@ public class EditSRActivity extends DeletableActivity {
         if (cursor != null) {
             cursor.moveToFirst();
 
-            mSRNumber.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(SRTable.COLUMN_SR_NUMBER)));
-            mCustomer.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(SRTable.COLUMN_CUSTOMER_NAME)));
-            mBusinessName.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(SRTable.COLUMN_BUSINESS_NAME)));
-            mModelNumber.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(SRTable.COLUMN_MODEL_NUMBER)));
-            mSerialNumber.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(SRTable.COLUMN_SERIAL_NUMBER)));
-            mDescription.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(SRTable.COLUMN_DESCRIPTION)));
-            myId = Integer.toString(cursor.getInt(cursor
-                    .getColumnIndexOrThrow(SRTable.COLUMN_ID)));
-
+            SR sr = SR.fromCursor(cursor);
             cursor.close();
+            
+            mSRNumber.setText(sr.getNumber());
+            mCustomer.setText(sr.getCustomerName());
+            mBusinessName.setText(sr.getBusinessName());
+            mModelNumber.setText(sr.getModelNumber());
+            mSerialNumber.setText(sr.getSerialNumber());
+            mDescription.setText(sr.getDescription());
         }
     }
 
@@ -209,45 +211,29 @@ public class EditSRActivity extends DeletableActivity {
      */
     private void saveState() {
 
-        String srNumber = mSRNumber.getText().toString();
+        SR sr = new SR();
+        sr.setNumber(mSRNumber.getText().toString());
 
-        if (srNumber.length() == 0)
-            return;
+        if (!StringUtils.isBlank(sr.getNumber())) {
 
-        String customer = mCustomer.getText().toString();
-        String modelNumber = mModelNumber.getText().toString();
-        String serialNumber = mSerialNumber.getText().toString();
-        String description = mDescription.getText().toString();
-        String businessName = mBusinessName.getText().toString();
+            sr.setCustomerName(mCustomer.getText().toString());
+            sr.setBusinessName(mBusinessName.getText().toString());
+            sr.setModelNumber(mModelNumber.getText().toString());
+            sr.setSerialNumber(mSerialNumber.getText().toString());
+            sr.setDescription(mDescription.getText().toString());
 
-        ContentValues values = new ContentValues();
-        values.put(SRTable.COLUMN_SR_NUMBER, srNumber);
-        values.put(SRTable.COLUMN_CUSTOMER_NAME, customer);
-        values.put(SRTable.COLUMN_MODEL_NUMBER, modelNumber);
-        values.put(SRTable.COLUMN_SERIAL_NUMBER, serialNumber);
-        values.put(SRTable.COLUMN_DESCRIPTION, description);
-        values.put(SRTable.COLUMN_BUSINESS_NAME, businessName);
+            if (savedUri == null) {
+                // New SR
+                savedUri = getContentResolver()
+                        .insert(SRContentProvider.SR_CONTENT_URI, sr.toContentValues());
 
-        if (savedUri == null) {
-            // New SR
-            savedUri = getContentResolver()
-                    .insert(SRContentProvider.SR_CONTENT_URI, values);
-
-            Cursor cursor = getContentResolver().query(savedUri,
-                    new String[]{SRTable.COLUMN_ID},
-                    SRTable.COLUMN_SR_NUMBER + " = ?",
-                    new String[]{srNumber}, null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-                int myIdNum = cursor.getInt(cursor
-                        .getColumnIndexOrThrow(SRTable.COLUMN_ID));
-                myId = String.valueOf(myIdNum);
-
-                cursor.close();
+                myId = savedUri.getLastPathSegment();
+            } else {
+                // Update SR
+                getContentResolver().update(savedUri, sr.toContentValues(), null, null);
             }
         } else {
-            // Update SR
-            getContentResolver().update(savedUri, values, null, null);
+            Log.d(TAG, "aborting save, SR number is blank");
         }
     }
 

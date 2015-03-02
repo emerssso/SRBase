@@ -83,8 +83,7 @@ public class TestExistingEditSRActivity {
 
     @After
     public void tearDownActivity() {
-        resolver.delete(SRContentProvider.SR_CONTENT_URI, SRTable.COLUMN_SR_NUMBER + " = ? ",
-                new String[]{srOne.getNumber()});
+        resolver.delete(uri, null, null);
         controller.destroy();
     }
 
@@ -140,8 +139,6 @@ public class TestExistingEditSRActivity {
         query.close();
 
         assertEquals(srOne, srTwo);
-
-        resolver.delete(uri, null, null);
     }
 
     @Test
