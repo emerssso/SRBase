@@ -10,7 +10,10 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.gmail.emerssso.srbase.database.DailyTable;
+import com.gmail.emerssso.srbase.database.PartTable;
 import com.gmail.emerssso.srbase.database.SRContentProvider;
+import com.gmail.emerssso.srbase.database.SRTable;
 import com.gmail.emerssso.srbase.models.Daily;
 import com.gmail.emerssso.srbase.models.SR;
 
@@ -194,5 +197,29 @@ public class TestViewSRActivity {
         customerName.performClick();
         
         assertEquals("No Matching Contact Found", ShadowToast.getTextOfLatestToast());
+    }
+    
+    @Test
+    public void testClickPartButton() {
+        Button partsListButton = (Button) activity.findViewById(R.id.view_parts_list);
+        partsListButton.performClick();
+        
+        Intent expected = new Intent(activity, ListPartsActivity.class);
+        expected.putExtra(PartTable.COLUMN_SR_ID, srUri.getLastPathSegment());
+        expected.putExtra(SRTable.COLUMN_SR_NUMBER, srOne.getNumber());
+        
+        assertEquals(expected, Robolectric.shadowOf(activity).getNextStartedActivity());
+    }
+    
+    @Test
+    public void testClickCommentsButton() {
+        Button commentsListButton = (Button) activity.findViewById(R.id.view_comments_list);
+        commentsListButton.performClick();
+
+        Intent expected = new Intent(activity, ListDailiesActivity.class);
+        expected.putExtra(DailyTable.COLUMN_SR_ID, srUri.getLastPathSegment());
+        expected.putExtra(SRTable.COLUMN_SR_NUMBER, srOne.getNumber());
+
+        assertEquals(expected, Robolectric.shadowOf(activity).getNextStartedActivity());
     }
 }
